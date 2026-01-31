@@ -103,9 +103,19 @@ function loadRawEvents(drug) {
   
   const objects = JSON.parse(fs.readFileSync(objectsPath, 'utf-8'));
   
-  // Extract the raw event data from each object
-  return objects.map(obj => obj.content || obj).filter(Boolean);
-}
+ // Extract the raw event data from each object
+  // Content may be a JSON string that needs parsing
+  return objects.map(obj => {
+    if (!obj.content) return null;
+    if (typeof obj.content === 'string') {
+      try {
+        return JSON.parse(obj.content);
+      } catch (e) {
+        return null;
+      }
+    }
+    return obj.content;
+  }).filter(Boolean);
 
 // ============================================
 // Reaction Filter (same snapshot, just filtered)
