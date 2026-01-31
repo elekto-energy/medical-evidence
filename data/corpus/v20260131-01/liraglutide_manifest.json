@@ -1,0 +1,93 @@
+{
+  "version": "v20260131-01",
+  "created_at": "2026-01-31T08:23:09.054Z",
+  "source": "OpenFDA FAERS",
+  "drug": "liraglutide",
+  "total_events": 500,
+  "total_available": 4993,
+  "api_last_updated": "2025-10-30",
+  "disclaimer": "Do not rely on openFDA to make decisions regarding medical care. While we make every effort to ensure that data is accurate, you should assume all results are unvalidated. We may limit or otherwise restrict your access to the API in line with our Terms of Service.",
+  "top_reactions": [
+    {
+      "reaction": "Nausea",
+      "count": 39
+    },
+    {
+      "reaction": "Vomiting",
+      "count": 33
+    },
+    {
+      "reaction": "Diabetic ketoacidosis",
+      "count": 29
+    },
+    {
+      "reaction": "Hypoglycaemia",
+      "count": 20
+    },
+    {
+      "reaction": "Pancreatitis",
+      "count": 16
+    },
+    {
+      "reaction": "Abdominal pain",
+      "count": 16
+    },
+    {
+      "reaction": "Dehydration",
+      "count": 16
+    },
+    {
+      "reaction": "Malaise",
+      "count": 14
+    },
+    {
+      "reaction": "Renal failure acute",
+      "count": 14
+    },
+    {
+      "reaction": "Decreased appetite",
+      "count": 14
+    },
+    {
+      "reaction": "Dyspnoea",
+      "count": 13
+    },
+    {
+      "reaction": "Dizziness",
+      "count": 13
+    },
+    {
+      "reaction": "Acute kidney injury",
+      "count": 13
+    },
+    {
+      "reaction": "International normalised ratio increased",
+      "count": 12
+    },
+    {
+      "reaction": "Diarrhoea",
+      "count": 12
+    },
+    {
+      "reaction": "Pancreatitis acute",
+      "count": 12
+    },
+    {
+      "reaction": "Gastrointestinal carcinoma",
+      "count": 12
+    },
+    {
+      "reaction": "Epistaxis",
+      "count": 11
+    },
+    {
+      "reaction": "Headache",
+      "count": 11
+    },
+    {
+      "reaction": "Dry mouth",
+      "count": 11
+    }
+  ],
+  "root_hash": "dcaa2be530619a85a3a1afd314cddfed93d87bb1ccf47e2b628381d8cf369817"
+}

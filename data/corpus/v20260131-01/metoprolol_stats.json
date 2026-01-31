@@ -1,0 +1,54 @@
+{
+  "drug": "metoprolol",
+  "corpus_version": "v20260131-01",
+  "generated_at": "2026-01-31T08:27:21.363Z",
+  "source": "FDA FAERS via OpenFDA",
+  "stats": {
+    "total_reports": 500,
+    "seriousness": {
+      "serious": 353,
+      "non_serious": 147,
+      "unknown": 0
+    },
+    "age_distribution": {
+      "0-17": 2,
+      "18-40": 8,
+      "41-64": 150,
+      "65-84": 217,
+      "85+": 24,
+      "Unknown": 99
+    },
+    "sex_distribution": {
+      "Male": 221,
+      "Female": 257,
+      "Unknown": 22
+    },
+    "outcome_distribution": {
+      "Recovered/Resolved": 338,
+      "Recovering/Resolving": 85,
+      "Not Recovered/Not Resolved": 280,
+      "Recovered with Sequelae": 6,
+      "Fatal": 44,
+      "Unknown": 862
+    },
+    "country_distribution": {
+      "US": 422,
+      "DE": 33,
+      "NL": 7,
+      "RO": 5,
+      "CA": 5,
+      "SE": 4,
+      "CH": 3,
+      "IT": 3,
+      "NO": 2,
+      "NZ": 2,
+      "Other": 14
+    },
+    "reports_by_year": {
+      "2013": 2,
+      "2014": 498
+    }
+  },
+  "disclaimer": "Based on reported adverse events in FDA FAERS. This visualization does not imply causality or risk.",
+  "stats_hash": "3bae8e3a2a42fe889223ad2f7f14e3538808ce4184b5a342ad24daea03c713db"
+}

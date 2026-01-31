@@ -1,0 +1,93 @@
+{
+  "version": "v20260131-01",
+  "created_at": "2026-01-31T08:23:53.956Z",
+  "source": "OpenFDA FAERS",
+  "drug": "metoprolol",
+  "total_events": 500,
+  "total_available": 315332,
+  "api_last_updated": "2025-10-30",
+  "disclaimer": "Do not rely on openFDA to make decisions regarding medical care. While we make every effort to ensure that data is accurate, you should assume all results are unvalidated. We may limit or otherwise restrict your access to the API in line with our Terms of Service.",
+  "top_reactions": [
+    {
+      "reaction": "Fatigue",
+      "count": 31
+    },
+    {
+      "reaction": "Gastrointestinal haemorrhage",
+      "count": 29
+    },
+    {
+      "reaction": "Dyspnoea",
+      "count": 26
+    },
+    {
+      "reaction": "Dizziness",
+      "count": 25
+    },
+    {
+      "reaction": "Anaemia",
+      "count": 24
+    },
+    {
+      "reaction": "Asthenia",
+      "count": 21
+    },
+    {
+      "reaction": "Drug ineffective",
+      "count": 21
+    },
+    {
+      "reaction": "Drug interaction",
+      "count": 20
+    },
+    {
+      "reaction": "Diarrhoea",
+      "count": 19
+    },
+    {
+      "reaction": "Multiple injuries",
+      "count": 19
+    },
+    {
+      "reaction": "Nausea",
+      "count": 17
+    },
+    {
+      "reaction": "Malaise",
+      "count": 17
+    },
+    {
+      "reaction": "Hypertension",
+      "count": 16
+    },
+    {
+      "reaction": "Rash",
+      "count": 16
+    },
+    {
+      "reaction": "Vomiting",
+      "count": 15
+    },
+    {
+      "reaction": "Syncope",
+      "count": 15
+    },
+    {
+      "reaction": "Headache",
+      "count": 14
+    },
+    {
+      "reaction": "Weight decreased",
+      "count": 14
+    },
+    {
+      "reaction": "Off label use",
+      "count": 14
+    },
+    {
+      "reaction": "Arthralgia",
+      "count": 14
+    }
+  ],
+  "root_hash": "74ea231075086738243f673e8c6500197807714dc1bf3aba9e5bddd03bc99276"
+}

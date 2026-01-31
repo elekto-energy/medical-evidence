@@ -1,0 +1,54 @@
+{
+  "drug": "venlafaxine",
+  "corpus_version": "v20260131-01",
+  "generated_at": "2026-01-31T08:27:22.735Z",
+  "source": "FDA FAERS via OpenFDA",
+  "stats": {
+    "total_reports": 500,
+    "seriousness": {
+      "serious": 387,
+      "non_serious": 113,
+      "unknown": 0
+    },
+    "age_distribution": {
+      "0-17": 19,
+      "18-40": 73,
+      "41-64": 199,
+      "65-84": 81,
+      "85+": 8,
+      "Unknown": 120
+    },
+    "sex_distribution": {
+      "Male": 153,
+      "Female": 328,
+      "Unknown": 19
+    },
+    "outcome_distribution": {
+      "Recovered/Resolved": 329,
+      "Recovering/Resolving": 122,
+      "Not Recovered/Not Resolved": 267,
+      "Recovered with Sequelae": 22,
+      "Fatal": 80,
+      "Unknown": 827
+    },
+    "country_distribution": {
+      "US": 302,
+      "GB": 54,
+      "DE": 25,
+      "FR": 23,
+      "CA": 13,
+      "BR": 11,
+      "IT": 11,
+      "SE": 10,
+      "BE": 9,
+      "AU": 8,
+      "Other": 34
+    },
+    "reports_by_year": {
+      "2013": 2,
+      "2014": 498
+    }
+  },
+  "disclaimer": "Based on reported adverse events in FDA FAERS. This visualization does not imply causality or risk.",
+  "stats_hash": "4a5a779f1523f9bcb060129a9574af377de221f55face2189ccaa2dccb5fb880"
+}

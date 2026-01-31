@@ -1,0 +1,93 @@
+{
+  "version": "v20260131-01",
+  "created_at": "2026-01-31T08:25:27.995Z",
+  "source": "OpenFDA FAERS",
+  "drug": "paracetamol",
+  "total_events": 500,
+  "total_available": 111374,
+  "api_last_updated": "2025-10-30",
+  "disclaimer": "Do not rely on openFDA to make decisions regarding medical care. While we make every effort to ensure that data is accurate, you should assume all results are unvalidated. We may limit or otherwise restrict your access to the API in line with our Terms of Service.",
+  "top_reactions": [
+    {
+      "reaction": "Exposure via ingestion",
+      "count": 106
+    },
+    {
+      "reaction": "Poisoning",
+      "count": 70
+    },
+    {
+      "reaction": "Drug abuse",
+      "count": 65
+    },
+    {
+      "reaction": "Completed suicide",
+      "count": 49
+    },
+    {
+      "reaction": "Toxicity to various agents",
+      "count": 42
+    },
+    {
+      "reaction": "Nausea",
+      "count": 25
+    },
+    {
+      "reaction": "Pain",
+      "count": 23
+    },
+    {
+      "reaction": "Pyrexia",
+      "count": 22
+    },
+    {
+      "reaction": "Vomiting",
+      "count": 21
+    },
+    {
+      "reaction": "Hypoaesthesia",
+      "count": 20
+    },
+    {
+      "reaction": "Drug interaction",
+      "count": 19
+    },
+    {
+      "reaction": "Diarrhoea",
+      "count": 18
+    },
+    {
+      "reaction": "Cardiac arrest",
+      "count": 18
+    },
+    {
+      "reaction": "Respiratory arrest",
+      "count": 17
+    },
+    {
+      "reaction": "Pain in extremity",
+      "count": 16
+    },
+    {
+      "reaction": "Intentional drug misuse",
+      "count": 15
+    },
+    {
+      "reaction": "Dizziness",
+      "count": 14
+    },
+    {
+      "reaction": "Renal failure acute",
+      "count": 13
+    },
+    {
+      "reaction": "Renal failure",
+      "count": 13
+    },
+    {
+      "reaction": "Malaise",
+      "count": 12
+    }
+  ],
+  "root_hash": "8c1c065725e1104a32d62a1470a65414fbabea000aca989ba6fbe828cfdd98ec"
+}

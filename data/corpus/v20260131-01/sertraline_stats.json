@@ -1,0 +1,54 @@
+{
+  "drug": "sertraline",
+  "corpus_version": "v20260131-01",
+  "generated_at": "2026-01-31T08:27:22.090Z",
+  "source": "FDA FAERS via OpenFDA",
+  "stats": {
+    "total_reports": 500,
+    "seriousness": {
+      "serious": 424,
+      "non_serious": 76,
+      "unknown": 0
+    },
+    "age_distribution": {
+      "0-17": 27,
+      "18-40": 128,
+      "41-64": 157,
+      "65-84": 86,
+      "85+": 9,
+      "Unknown": 93
+    },
+    "sex_distribution": {
+      "Male": 162,
+      "Female": 317,
+      "Unknown": 21
+    },
+    "outcome_distribution": {
+      "Recovered/Resolved": 352,
+      "Recovering/Resolving": 137,
+      "Not Recovered/Not Resolved": 478,
+      "Recovered with Sequelae": 48,
+      "Fatal": 73,
+      "Unknown": 1006
+    },
+    "country_distribution": {
+      "US": 242,
+      "GB": 136,
+      "IT": 32,
+      "DE": 23,
+      "FR": 10,
+      "CA": 8,
+      "BR": 7,
+      "AT": 6,
+      "TR": 5,
+      "SE": 3,
+      "Other": 28
+    },
+    "reports_by_year": {
+      "2013": 1,
+      "2014": 499
+    }
+  },
+  "disclaimer": "Based on reported adverse events in FDA FAERS. This visualization does not imply causality or risk.",
+  "stats_hash": "ed6efcac66588569e3494678a81f1b4e2607d5d296e2a93fba25fa1d229b08e1"
+}

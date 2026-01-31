@@ -1,0 +1,93 @@
+{
+  "version": "v20260131-01",
+  "created_at": "2026-01-31T08:23:17.739Z",
+  "source": "OpenFDA FAERS",
+  "drug": "atorvastatin",
+  "total_events": 500,
+  "total_available": 318653,
+  "api_last_updated": "2025-10-30",
+  "disclaimer": "Do not rely on openFDA to make decisions regarding medical care. While we make every effort to ensure that data is accurate, you should assume all results are unvalidated. We may limit or otherwise restrict your access to the API in line with our Terms of Service.",
+  "top_reactions": [
+    {
+      "reaction": "Type 2 diabetes mellitus",
+      "count": 138
+    },
+    {
+      "reaction": "Myalgia",
+      "count": 36
+    },
+    {
+      "reaction": "Muscle spasms",
+      "count": 19
+    },
+    {
+      "reaction": "Drug ineffective",
+      "count": 19
+    },
+    {
+      "reaction": "Dizziness",
+      "count": 18
+    },
+    {
+      "reaction": "Pain in extremity",
+      "count": 18
+    },
+    {
+      "reaction": "Dyspnoea",
+      "count": 17
+    },
+    {
+      "reaction": "Fatigue",
+      "count": 17
+    },
+    {
+      "reaction": "Pyrexia",
+      "count": 17
+    },
+    {
+      "reaction": "Nausea",
+      "count": 17
+    },
+    {
+      "reaction": "Arthralgia",
+      "count": 17
+    },
+    {
+      "reaction": "Cerebrovascular accident",
+      "count": 14
+    },
+    {
+      "reaction": "Haematuria",
+      "count": 14
+    },
+    {
+      "reaction": "Anaemia",
+      "count": 14
+    },
+    {
+      "reaction": "Diarrhoea",
+      "count": 14
+    },
+    {
+      "reaction": "Urinary tract infection",
+      "count": 13
+    },
+    {
+      "reaction": "Pain",
+      "count": 13
+    },
+    {
+      "reaction": "Rash",
+      "count": 12
+    },
+    {
+      "reaction": "Neuropathy peripheral",
+      "count": 12
+    },
+    {
+      "reaction": "Pruritus",
+      "count": 12
+    }
+  ],
+  "root_hash": "5fa2607c500c14471bc87a2e26fe1ded36ce66112d76a25306ccdaa40dc38241"
+}

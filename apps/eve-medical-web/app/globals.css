@@ -1,0 +1,137 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Clinical Hightech - Light Mode (default) */
+  --eve-bg: #f0f4f8;
+  --eve-card: #ffffff;
+  --eve-border: #d1dce8;
+  --eve-muted: #5a6b82;
+  --eve-accent: #00b8a0;
+  --eve-text: #1a2744;
+  --eve-text-strong: #0a0f1a;
+  --eve-verify: #7c3aed;
+}
+
+.dark {
+  /* Clinical Hightech - Dark Mode */
+  --eve-bg: #0a0f1a;
+  --eve-card: #0f1628;
+  --eve-border: #1a2744;
+  --eve-muted: #7a8ba8;
+  --eve-accent: #00e5c7;
+  --eve-text: #e4e9f2;
+  --eve-text-strong: #ffffff;
+  --eve-verify: #a78bfa;
+}
+
+body {
+  background: var(--eve-bg);
+  color: var(--eve-text);
+  transition: background 0.3s, color 0.3s;
+}
+
+/* Override Tailwind colors with CSS variables */
+.bg-eve-bg { background-color: var(--eve-bg) !important; }
+.bg-eve-card { background-color: var(--eve-card) !important; }
+.border-eve-border { border-color: var(--eve-border) !important; }
+.text-eve-muted { color: var(--eve-muted) !important; }
+.text-eve-accent { color: var(--eve-accent) !important; }
+
+/* Verification panel special styling */
+.verification-panel {
+  background: linear-gradient(135deg, #0f1628 0%, #1a1535 100%);
+  border: 1px solid #2d2b55;
+}
+
+.hash-text {
+  font-family: 'JetBrains Mono', Monaco, Consolas, monospace;
+  color: #a78bfa;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+}
+
+
+
+/* Glowing accent effect */
+.glow-accent {
+  box-shadow: 0 0 20px rgba(0, 229, 199, 0.15);
+}
+
+.glow-verify {
+  box-shadow: 0 0 20px rgba(167, 139, 250, 0.15);
+}
+
+/* Status badge styles */
+.badge-verified {
+  background: linear-gradient(135deg, rgba(0, 229, 199, 0.15) 0%, rgba(0, 168, 255, 0.15) 100%);
+  border: 1px solid rgba(0, 229, 199, 0.3);
+  color: #00e5c7;
+}
+
+.badge-trinity {
+  background: linear-gradient(135deg, rgba(167, 139, 250, 0.15) 0%, rgba(0, 168, 255, 0.15) 100%);
+  border: 1px solid rgba(167, 139, 250, 0.3);
+  color: #a78bfa;
+}
+
+/* Light mode overrides (now dark mode overrides) */
+.dark .verification-panel {
+  background: linear-gradient(135deg, #0f1628 0%, #1a1535 100%);
+  border: 1px solid #2d2b55;
+}
+
+.dark .hash-text {
+  color: #a78bfa;
+}
+
+.dark .badge-verified {
+  background: linear-gradient(135deg, rgba(0, 229, 199, 0.15) 0%, rgba(0, 168, 255, 0.15) 100%);
+  border: 1px solid rgba(0, 229, 199, 0.3);
+  color: #00e5c7;
+}
+
+.dark .badge-trinity {
+  background: linear-gradient(135deg, rgba(167, 139, 250, 0.15) 0%, rgba(0, 168, 255, 0.15) 100%);
+  border: 1px solid rgba(167, 139, 250, 0.3);
+  color: #a78bfa;
+}
+
+.dark select, .dark input {
+  background-color: var(--eve-card);
+  border-color: var(--eve-border);
+  color: var(--eve-text);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--eve-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--eve-border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2a3a5c;
+}
+
+/* Animated gradient border */
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animated-border {
+  background: linear-gradient(90deg, #00e5c7, #00a8ff, #a78bfa, #00e5c7);
+  background-size: 300% 300%;
+  animation: gradient-shift 4s ease infinite;
+}

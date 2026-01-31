@@ -1,0 +1,93 @@
+{
+  "version": "v20260131-01",
+  "created_at": "2026-01-31T08:24:58.291Z",
+  "source": "OpenFDA FAERS",
+  "drug": "diazepam",
+  "total_events": 500,
+  "total_available": 88038,
+  "api_last_updated": "2025-10-30",
+  "disclaimer": "Do not rely on openFDA to make decisions regarding medical care. While we make every effort to ensure that data is accurate, you should assume all results are unvalidated. We may limit or otherwise restrict your access to the API in line with our Terms of Service.",
+  "top_reactions": [
+    {
+      "reaction": "Toxicity to various agents",
+      "count": 219
+    },
+    {
+      "reaction": "Drug abuse",
+      "count": 173
+    },
+    {
+      "reaction": "Exposure via ingestion",
+      "count": 58
+    },
+    {
+      "reaction": "Drug interaction",
+      "count": 31
+    },
+    {
+      "reaction": "Poisoning",
+      "count": 31
+    },
+    {
+      "reaction": "Respiratory arrest",
+      "count": 28
+    },
+    {
+      "reaction": "Fatigue",
+      "count": 27
+    },
+    {
+      "reaction": "Cardiac arrest",
+      "count": 26
+    },
+    {
+      "reaction": "Pain",
+      "count": 20
+    },
+    {
+      "reaction": "Headache",
+      "count": 20
+    },
+    {
+      "reaction": "Nausea",
+      "count": 19
+    },
+    {
+      "reaction": "Drug ineffective",
+      "count": 17
+    },
+    {
+      "reaction": "Diarrhoea",
+      "count": 17
+    },
+    {
+      "reaction": "Depression",
+      "count": 17
+    },
+    {
+      "reaction": "Anxiety",
+      "count": 14
+    },
+    {
+      "reaction": "Tachycardia",
+      "count": 13
+    },
+    {
+      "reaction": "Dyspnoea",
+      "count": 13
+    },
+    {
+      "reaction": "Completed suicide",
+      "count": 13
+    },
+    {
+      "reaction": "Dizziness",
+      "count": 13
+    },
+    {
+      "reaction": "Hyperhidrosis",
+      "count": 13
+    }
+  ],
+  "root_hash": "92295c248ebcff004a2df689288e4e13cf01c2bc1a7df7d00eb99ab6f5752eb8"
+}

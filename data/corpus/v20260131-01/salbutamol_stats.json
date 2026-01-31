@@ -1,0 +1,54 @@
+{
+  "drug": "salbutamol",
+  "corpus_version": "v20260131-01",
+  "generated_at": "2026-01-31T08:27:21.998Z",
+  "source": "FDA FAERS via OpenFDA",
+  "stats": {
+    "total_reports": 500,
+    "seriousness": {
+      "serious": 485,
+      "non_serious": 15,
+      "unknown": 0
+    },
+    "age_distribution": {
+      "0-17": 15,
+      "18-40": 46,
+      "41-64": 153,
+      "65-84": 203,
+      "85+": 29,
+      "Unknown": 54
+    },
+    "sex_distribution": {
+      "Male": 202,
+      "Female": 277,
+      "Unknown": 21
+    },
+    "outcome_distribution": {
+      "Recovered/Resolved": 439,
+      "Recovering/Resolving": 259,
+      "Not Recovered/Not Resolved": 193,
+      "Recovered with Sequelae": 32,
+      "Fatal": 55,
+      "Unknown": 919
+    },
+    "country_distribution": {
+      "GB": 231,
+      "US": 134,
+      "CA": 44,
+      "DE": 17,
+      "AU": 11,
+      "ES": 9,
+      "NL": 8,
+      "IE": 5,
+      "PL": 5,
+      "BR": 4,
+      "Other": 32
+    },
+    "reports_by_year": {
+      "2013": 1,
+      "2014": 499
+    }
+  },
+  "disclaimer": "Based on reported adverse events in FDA FAERS. This visualization does not imply causality or risk.",
+  "stats_hash": "7ec42bbb3eb755298a2203c01a03f93df627507b74578fdd9f6ac62fe395724b"
+}

@@ -1,0 +1,93 @@
+{
+  "version": "v20260131-01",
+  "created_at": "2026-01-31T08:23:02.373Z",
+  "source": "OpenFDA FAERS",
+  "drug": "empagliflozin",
+  "total_events": 500,
+  "total_available": 9302,
+  "api_last_updated": "2025-10-30",
+  "disclaimer": "Do not rely on openFDA to make decisions regarding medical care. While we make every effort to ensure that data is accurate, you should assume all results are unvalidated. We may limit or otherwise restrict your access to the API in line with our Terms of Service.",
+  "top_reactions": [
+    {
+      "reaction": "Diabetic ketoacidosis",
+      "count": 59
+    },
+    {
+      "reaction": "Urine ketone body present",
+      "count": 29
+    },
+    {
+      "reaction": "Nausea",
+      "count": 23
+    },
+    {
+      "reaction": "Vomiting",
+      "count": 21
+    },
+    {
+      "reaction": "Metabolic acidosis",
+      "count": 18
+    },
+    {
+      "reaction": "Ketoacidosis",
+      "count": 18
+    },
+    {
+      "reaction": "Fatigue",
+      "count": 18
+    },
+    {
+      "reaction": "Diarrhoea",
+      "count": 17
+    },
+    {
+      "reaction": "Blood glucose increased",
+      "count": 16
+    },
+    {
+      "reaction": "Urinary tract infection",
+      "count": 16
+    },
+    {
+      "reaction": "Rash",
+      "count": 15
+    },
+    {
+      "reaction": "Dizziness",
+      "count": 15
+    },
+    {
+      "reaction": "Hypoglycaemia",
+      "count": 13
+    },
+    {
+      "reaction": "Acute kidney injury",
+      "count": 13
+    },
+    {
+      "reaction": "Malaise",
+      "count": 12
+    },
+    {
+      "reaction": "Blood ketone body increased",
+      "count": 12
+    },
+    {
+      "reaction": "Drug ineffective",
+      "count": 12
+    },
+    {
+      "reaction": "Renal impairment",
+      "count": 12
+    },
+    {
+      "reaction": "Completed suicide",
+      "count": 12
+    },
+    {
+      "reaction": "Pyrexia",
+      "count": 11
+    }
+  ],
+  "root_hash": "f3463d0ed14f8670389249bbdeafcff93ad033a059e3d4593de82fd3e7aad951"
+}

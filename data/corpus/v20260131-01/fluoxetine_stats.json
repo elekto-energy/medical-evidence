@@ -1,0 +1,53 @@
+{
+  "drug": "fluoxetine",
+  "corpus_version": "v20260131-01",
+  "generated_at": "2026-01-31T08:27:20.236Z",
+  "source": "FDA FAERS via OpenFDA",
+  "stats": {
+    "total_reports": 500,
+    "seriousness": {
+      "serious": 413,
+      "non_serious": 87,
+      "unknown": 0
+    },
+    "age_distribution": {
+      "0-17": 34,
+      "18-40": 126,
+      "41-64": 196,
+      "65-84": 64,
+      "85+": 14,
+      "Unknown": 66
+    },
+    "sex_distribution": {
+      "Male": 161,
+      "Female": 326,
+      "Unknown": 13
+    },
+    "outcome_distribution": {
+      "Recovered/Resolved": 416,
+      "Recovering/Resolving": 171,
+      "Not Recovered/Not Resolved": 282,
+      "Recovered with Sequelae": 42,
+      "Fatal": 79,
+      "Unknown": 914
+    },
+    "country_distribution": {
+      "US": 293,
+      "GB": 124,
+      "BR": 25,
+      "SE": 10,
+      "AU": 9,
+      "NL": 7,
+      "IT": 5,
+      "FR": 4,
+      "ES": 4,
+      "CA": 3,
+      "Other": 16
+    },
+    "reports_by_year": {
+      "2014": 500
+    }
+  },
+  "disclaimer": "Based on reported adverse events in FDA FAERS. This visualization does not imply causality or risk.",
+  "stats_hash": "1468f0556c41b182b0ee54e6e0b8ebe8dc05ee88e388c9ae82e9228478ce8f1e"
+}

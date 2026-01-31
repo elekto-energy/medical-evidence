@@ -1,0 +1,53 @@
+{
+  "drug": "aspirin",
+  "corpus_version": "v20260131-01",
+  "generated_at": "2026-01-31T08:27:19.096Z",
+  "source": "FDA FAERS via OpenFDA",
+  "stats": {
+    "total_reports": 500,
+    "seriousness": {
+      "serious": 286,
+      "non_serious": 214,
+      "unknown": 0
+    },
+    "age_distribution": {
+      "0-17": 5,
+      "18-40": 10,
+      "41-64": 117,
+      "65-84": 235,
+      "85+": 30,
+      "Unknown": 103
+    },
+    "sex_distribution": {
+      "Male": 239,
+      "Female": 242,
+      "Unknown": 19
+    },
+    "outcome_distribution": {
+      "Recovered/Resolved": 284,
+      "Recovering/Resolving": 109,
+      "Not Recovered/Not Resolved": 359,
+      "Recovered with Sequelae": 24,
+      "Fatal": 47,
+      "Unknown": 1110
+    },
+    "country_distribution": {
+      "US": 427,
+      "GB": 34,
+      "JP": 7,
+      "DE": 6,
+      "MX": 3,
+      "CA": 3,
+      "CZ": 3,
+      "IT": 3,
+      "DK": 2,
+      "BR": 1,
+      "Other": 11
+    },
+    "reports_by_year": {
+      "2014": 500
+    }
+  },
+  "disclaimer": "Based on reported adverse events in FDA FAERS. This visualization does not imply causality or risk.",
+  "stats_hash": "a64e8a50f2eb4eceaf553159d2fa6a5bc3eca74a0fc3fa0ad82ce4008ec0c015"
+}

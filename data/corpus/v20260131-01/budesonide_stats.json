@@ -1,0 +1,54 @@
+{
+  "drug": "budesonide",
+  "corpus_version": "v20260131-01",
+  "generated_at": "2026-01-31T08:27:19.427Z",
+  "source": "FDA FAERS via OpenFDA",
+  "stats": {
+    "total_reports": 500,
+    "seriousness": {
+      "serious": 427,
+      "non_serious": 73,
+      "unknown": 0
+    },
+    "age_distribution": {
+      "0-17": 35,
+      "18-40": 73,
+      "41-64": 119,
+      "65-84": 157,
+      "85+": 20,
+      "Unknown": 96
+    },
+    "sex_distribution": {
+      "Male": 223,
+      "Female": 258,
+      "Unknown": 19
+    },
+    "outcome_distribution": {
+      "Recovered/Resolved": 371,
+      "Recovering/Resolving": 223,
+      "Not Recovered/Not Resolved": 217,
+      "Recovered with Sequelae": 8,
+      "Fatal": 53,
+      "Unknown": 887
+    },
+    "country_distribution": {
+      "US": 262,
+      "GB": 71,
+      "CN": 26,
+      "BR": 21,
+      "DE": 20,
+      "CA": 19,
+      "ES": 10,
+      "IT": 7,
+      "MX": 6,
+      "FR": 6,
+      "Other": 52
+    },
+    "reports_by_year": {
+      "2013": 4,
+      "2014": 496
+    }
+  },
+  "disclaimer": "Based on reported adverse events in FDA FAERS. This visualization does not imply causality or risk.",
+  "stats_hash": "5fde51986b81d6e5887a878036f10c5df949846ef6fa301f28565cde34faac60"
+}

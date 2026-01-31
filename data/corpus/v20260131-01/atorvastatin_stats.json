@@ -1,0 +1,54 @@
+{
+  "drug": "atorvastatin",
+  "corpus_version": "v20260131-01",
+  "generated_at": "2026-01-31T08:27:19.178Z",
+  "source": "FDA FAERS via OpenFDA",
+  "stats": {
+    "total_reports": 500,
+    "seriousness": {
+      "serious": 412,
+      "non_serious": 88,
+      "unknown": 0
+    },
+    "age_distribution": {
+      "0-17": 0,
+      "18-40": 12,
+      "41-64": 211,
+      "65-84": 200,
+      "85+": 19,
+      "Unknown": 58
+    },
+    "sex_distribution": {
+      "Male": 165,
+      "Female": 320,
+      "Unknown": 15
+    },
+    "outcome_distribution": {
+      "Recovered/Resolved": 193,
+      "Recovering/Resolving": 116,
+      "Not Recovered/Not Resolved": 282,
+      "Recovered with Sequelae": 45,
+      "Fatal": 25,
+      "Unknown": 614
+    },
+    "country_distribution": {
+      "US": 341,
+      "GB": 66,
+      "IT": 18,
+      "CA": 11,
+      "JP": 8,
+      "DE": 7,
+      "FR": 7,
+      "AU": 6,
+      "BR": 4,
+      "IN": 4,
+      "Other": 28
+    },
+    "reports_by_year": {
+      "2013": 2,
+      "2014": 498
+    }
+  },
+  "disclaimer": "Based on reported adverse events in FDA FAERS. This visualization does not imply causality or risk.",
+  "stats_hash": "84af98f310babb63ebf681aede5d9b27668917fb84ef0d9ab0d79859b86c506c"
+}

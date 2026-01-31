@@ -1,0 +1,53 @@
+{
+  "drug": "glimepiride",
+  "corpus_version": "v20260131-01",
+  "generated_at": "2026-01-31T08:27:20.516Z",
+  "source": "FDA FAERS via OpenFDA",
+  "stats": {
+    "total_reports": 500,
+    "seriousness": {
+      "serious": 314,
+      "non_serious": 186,
+      "unknown": 0
+    },
+    "age_distribution": {
+      "0-17": 3,
+      "18-40": 3,
+      "41-64": 166,
+      "65-84": 224,
+      "85+": 19,
+      "Unknown": 85
+    },
+    "sex_distribution": {
+      "Male": 267,
+      "Female": 224,
+      "Unknown": 9
+    },
+    "outcome_distribution": {
+      "Recovered/Resolved": 327,
+      "Recovering/Resolving": 132,
+      "Not Recovered/Not Resolved": 254,
+      "Recovered with Sequelae": 6,
+      "Fatal": 46,
+      "Unknown": 895
+    },
+    "country_distribution": {
+      "US": 371,
+      "JP": 38,
+      "GB": 26,
+      "BR": 19,
+      "DE": 9,
+      "FR": 7,
+      "DZ": 5,
+      "IT": 4,
+      "IN": 3,
+      "ES": 2,
+      "Other": 16
+    },
+    "reports_by_year": {
+      "2014": 500
+    }
+  },
+  "disclaimer": "Based on reported adverse events in FDA FAERS. This visualization does not imply causality or risk.",
+  "stats_hash": "efc4d6fb88619a5f48d52c0483bdcad5d7b5f63fcc1cf1a5685ed8b1c9b9cfad"
+}

@@ -1,0 +1,54 @@
+{
+  "drug": "apixaban",
+  "corpus_version": "v20260131-01",
+  "generated_at": "2026-01-31T08:27:18.943Z",
+  "source": "FDA FAERS via OpenFDA",
+  "stats": {
+    "total_reports": 500,
+    "seriousness": {
+      "serious": 450,
+      "non_serious": 50,
+      "unknown": 0
+    },
+    "age_distribution": {
+      "0-17": 2,
+      "18-40": 4,
+      "41-64": 41,
+      "65-84": 258,
+      "85+": 63,
+      "Unknown": 132
+    },
+    "sex_distribution": {
+      "Male": 250,
+      "Female": 218,
+      "Unknown": 32
+    },
+    "outcome_distribution": {
+      "Recovered/Resolved": 236,
+      "Recovering/Resolving": 103,
+      "Not Recovered/Not Resolved": 248,
+      "Recovered with Sequelae": 16,
+      "Fatal": 121,
+      "Unknown": 648
+    },
+    "country_distribution": {
+      "US": 162,
+      "GB": 95,
+      "JP": 92,
+      "DE": 37,
+      "AR": 16,
+      "CA": 15,
+      "CO": 12,
+      "ES": 11,
+      "FR": 7,
+      "AU": 5,
+      "Other": 48
+    },
+    "reports_by_year": {
+      "2014": 251,
+      "2015": 249
+    }
+  },
+  "disclaimer": "Based on reported adverse events in FDA FAERS. This visualization does not imply causality or risk.",
+  "stats_hash": "9d3b06955e8dab2351441cd2a55d5d3df7e7e1aebb15029e79a6b57b316be137"
+}

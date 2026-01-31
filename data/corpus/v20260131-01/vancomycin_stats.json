@@ -1,0 +1,53 @@
+{
+  "drug": "vancomycin",
+  "corpus_version": "v20260131-01",
+  "generated_at": "2026-01-31T08:27:22.652Z",
+  "source": "FDA FAERS via OpenFDA",
+  "stats": {
+    "total_reports": 500,
+    "seriousness": {
+      "serious": 466,
+      "non_serious": 34,
+      "unknown": 0
+    },
+    "age_distribution": {
+      "0-17": 45,
+      "18-40": 61,
+      "41-64": 171,
+      "65-84": 141,
+      "85+": 13,
+      "Unknown": 69
+    },
+    "sex_distribution": {
+      "Male": 234,
+      "Female": 210,
+      "Unknown": 56
+    },
+    "outcome_distribution": {
+      "Recovered/Resolved": 354,
+      "Recovering/Resolving": 122,
+      "Not Recovered/Not Resolved": 200,
+      "Recovered with Sequelae": 8,
+      "Fatal": 144,
+      "Unknown": 1257
+    },
+    "country_distribution": {
+      "US": 298,
+      "JP": 46,
+      "FR": 39,
+      "GB": 22,
+      "CA": 17,
+      "CH": 8,
+      "AU": 7,
+      "DE": 7,
+      "IE": 5,
+      "CN": 5,
+      "Other": 46
+    },
+    "reports_by_year": {
+      "2014": 500
+    }
+  },
+  "disclaimer": "Based on reported adverse events in FDA FAERS. This visualization does not imply causality or risk.",
+  "stats_hash": "9d2bfc7950a4fbacf3a0fe1c89ab5024aa56b3f972947d7954a5161ea9e2df56"
+}

@@ -1,0 +1,93 @@
+{
+  "version": "v20260131-01",
+  "created_at": "2026-01-31T08:22:41.259Z",
+  "source": "OpenFDA FAERS",
+  "drug": "glimepiride",
+  "total_events": 500,
+  "total_available": 38966,
+  "api_last_updated": "2025-10-30",
+  "disclaimer": "Do not rely on openFDA to make decisions regarding medical care. While we make every effort to ensure that data is accurate, you should assume all results are unvalidated. We may limit or otherwise restrict your access to the API in line with our Terms of Service.",
+  "top_reactions": [
+    {
+      "reaction": "Blood glucose increased",
+      "count": 38
+    },
+    {
+      "reaction": "Drug ineffective",
+      "count": 35
+    },
+    {
+      "reaction": "Renal failure",
+      "count": 28
+    },
+    {
+      "reaction": "Dyspnoea",
+      "count": 26
+    },
+    {
+      "reaction": "Weight decreased",
+      "count": 24
+    },
+    {
+      "reaction": "Pneumonia",
+      "count": 23
+    },
+    {
+      "reaction": "Nausea",
+      "count": 22
+    },
+    {
+      "reaction": "Toxicity to various agents",
+      "count": 22
+    },
+    {
+      "reaction": "Dizziness",
+      "count": 21
+    },
+    {
+      "reaction": "Malaise",
+      "count": 21
+    },
+    {
+      "reaction": "Product quality issue",
+      "count": 19
+    },
+    {
+      "reaction": "General physical health deterioration",
+      "count": 19
+    },
+    {
+      "reaction": "Diarrhoea",
+      "count": 18
+    },
+    {
+      "reaction": "Injection site haemorrhage",
+      "count": 18
+    },
+    {
+      "reaction": "Pain",
+      "count": 17
+    },
+    {
+      "reaction": "Asthenia",
+      "count": 17
+    },
+    {
+      "reaction": "Drug dose omission",
+      "count": 17
+    },
+    {
+      "reaction": "Fatigue",
+      "count": 16
+    },
+    {
+      "reaction": "Decreased appetite",
+      "count": 16
+    },
+    {
+      "reaction": "Off label use",
+      "count": 15
+    }
+  ],
+  "root_hash": "eb8f4c18e0e2f1566f68a4336747f8036d4baf87229a1b99a2d73c85426111bf"
+}

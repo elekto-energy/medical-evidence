@@ -1,0 +1,54 @@
+{
+  "drug": "azithromycin",
+  "corpus_version": "v20260131-01",
+  "generated_at": "2026-01-31T08:27:19.279Z",
+  "source": "FDA FAERS via OpenFDA",
+  "stats": {
+    "total_reports": 500,
+    "seriousness": {
+      "serious": 404,
+      "non_serious": 96,
+      "unknown": 0
+    },
+    "age_distribution": {
+      "0-17": 33,
+      "18-40": 151,
+      "41-64": 131,
+      "65-84": 103,
+      "85+": 13,
+      "Unknown": 69
+    },
+    "sex_distribution": {
+      "Male": 172,
+      "Female": 304,
+      "Unknown": 24
+    },
+    "outcome_distribution": {
+      "Recovered/Resolved": 284,
+      "Recovering/Resolving": 94,
+      "Not Recovered/Not Resolved": 209,
+      "Recovered with Sequelae": 2,
+      "Fatal": 84,
+      "Unknown": 990
+    },
+    "country_distribution": {
+      "US": 369,
+      "GB": 37,
+      "CA": 18,
+      "IT": 10,
+      "BR": 9,
+      "FR": 7,
+      "CN": 7,
+      "JP": 5,
+      "UG": 5,
+      "DE": 5,
+      "Other": 28
+    },
+    "reports_by_year": {
+      "2013": 1,
+      "2014": 499
+    }
+  },
+  "disclaimer": "Based on reported adverse events in FDA FAERS. This visualization does not imply causality or risk.",
+  "stats_hash": "5ff39fe9a10ac4bb7e267ac81bec39eb8c5caa77d3e754d09051458084f35e90"
+}

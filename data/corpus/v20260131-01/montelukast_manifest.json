@@ -1,0 +1,93 @@
+{
+  "version": "v20260131-01",
+  "created_at": "2026-01-31T08:27:06.564Z",
+  "source": "OpenFDA FAERS",
+  "drug": "montelukast",
+  "total_events": 500,
+  "total_available": 78995,
+  "api_last_updated": "2025-10-30",
+  "disclaimer": "Do not rely on openFDA to make decisions regarding medical care. While we make every effort to ensure that data is accurate, you should assume all results are unvalidated. We may limit or otherwise restrict your access to the API in line with our Terms of Service.",
+  "top_reactions": [
+    {
+      "reaction": "Drug ineffective",
+      "count": 47
+    },
+    {
+      "reaction": "Dyspnoea",
+      "count": 44
+    },
+    {
+      "reaction": "Asthma",
+      "count": 35
+    },
+    {
+      "reaction": "Pain",
+      "count": 32
+    },
+    {
+      "reaction": "Cough",
+      "count": 28
+    },
+    {
+      "reaction": "Insomnia",
+      "count": 25
+    },
+    {
+      "reaction": "Headache",
+      "count": 25
+    },
+    {
+      "reaction": "Fatigue",
+      "count": 23
+    },
+    {
+      "reaction": "Diarrhoea",
+      "count": 22
+    },
+    {
+      "reaction": "Rash",
+      "count": 22
+    },
+    {
+      "reaction": "Pneumonia",
+      "count": 22
+    },
+    {
+      "reaction": "Pruritus",
+      "count": 21
+    },
+    {
+      "reaction": "Nausea",
+      "count": 21
+    },
+    {
+      "reaction": "Fall",
+      "count": 20
+    },
+    {
+      "reaction": "Dizziness",
+      "count": 19
+    },
+    {
+      "reaction": "Off label use",
+      "count": 19
+    },
+    {
+      "reaction": "Feeling abnormal",
+      "count": 19
+    },
+    {
+      "reaction": "Wheezing",
+      "count": 19
+    },
+    {
+      "reaction": "Angioedema",
+      "count": 18
+    },
+    {
+      "reaction": "Hypersensitivity",
+      "count": 17
+    }
+  ],
+  "root_hash": "085cf4345f9693cda88aad38186874708ff20bbb8a0ccc2578c817968a5b4d7b"
+}

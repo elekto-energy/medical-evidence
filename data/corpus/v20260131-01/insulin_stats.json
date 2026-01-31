@@ -1,0 +1,54 @@
+{
+  "drug": "insulin",
+  "corpus_version": "v20260131-01",
+  "generated_at": "2026-01-31T08:27:20.967Z",
+  "source": "FDA FAERS via OpenFDA",
+  "stats": {
+    "total_reports": 500,
+    "seriousness": {
+      "serious": 432,
+      "non_serious": 68,
+      "unknown": 0
+    },
+    "age_distribution": {
+      "0-17": 10,
+      "18-40": 35,
+      "41-64": 184,
+      "65-84": 158,
+      "85+": 20,
+      "Unknown": 93
+    },
+    "sex_distribution": {
+      "Male": 231,
+      "Female": 244,
+      "Unknown": 25
+    },
+    "outcome_distribution": {
+      "Recovered/Resolved": 374,
+      "Recovering/Resolving": 124,
+      "Not Recovered/Not Resolved": 336,
+      "Recovered with Sequelae": 12,
+      "Fatal": 91,
+      "Unknown": 931
+    },
+    "country_distribution": {
+      "US": 300,
+      "DE": 24,
+      "CA": 22,
+      "JP": 18,
+      "GB": 17,
+      "BR": 17,
+      "IT": 12,
+      "CO": 9,
+      "IN": 7,
+      "FR": 7,
+      "Other": 67
+    },
+    "reports_by_year": {
+      "2013": 2,
+      "2014": 498
+    }
+  },
+  "disclaimer": "Based on reported adverse events in FDA FAERS. This visualization does not imply causality or risk.",
+  "stats_hash": "2b417c0d36421df0a871029c50a9cc93b841a772d5e27e42f634dce0ec1defdc"
+}

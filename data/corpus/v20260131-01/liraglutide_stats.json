@@ -1,0 +1,57 @@
+{
+  "drug": "liraglutide",
+  "corpus_version": "v20260131-01",
+  "generated_at": "2026-01-31T08:27:21.029Z",
+  "source": "FDA FAERS via OpenFDA",
+  "stats": {
+    "total_reports": 500,
+    "seriousness": {
+      "serious": 431,
+      "non_serious": 69,
+      "unknown": 0
+    },
+    "age_distribution": {
+      "0-17": 3,
+      "18-40": 25,
+      "41-64": 232,
+      "65-84": 161,
+      "85+": 4,
+      "Unknown": 75
+    },
+    "sex_distribution": {
+      "Male": 233,
+      "Female": 233,
+      "Unknown": 34
+    },
+    "outcome_distribution": {
+      "Recovered/Resolved": 412,
+      "Recovering/Resolving": 110,
+      "Not Recovered/Not Resolved": 195,
+      "Recovered with Sequelae": 32,
+      "Fatal": 48,
+      "Unknown": 458
+    },
+    "country_distribution": {
+      "US": 196,
+      "GB": 109,
+      "BR": 28,
+      "CA": 18,
+      "DE": 15,
+      "NL": 11,
+      "DK": 11,
+      "JP": 10,
+      "RU": 8,
+      "ZA": 7,
+      "Other": 87
+    },
+    "reports_by_year": {
+      "2012": 1,
+      "2013": 39,
+      "2014": 160,
+      "2015": 142,
+      "2016": 158
+    }
+  },
+  "disclaimer": "Based on reported adverse events in FDA FAERS. This visualization does not imply causality or risk.",
+  "stats_hash": "6d4b56fa130812f522713d2a0b7f86e04bf21d245fbd480743233b7ddfc3f9b7"
+}

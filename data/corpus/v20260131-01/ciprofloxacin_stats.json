@@ -1,0 +1,54 @@
+{
+  "drug": "ciprofloxacin",
+  "corpus_version": "v20260131-01",
+  "generated_at": "2026-01-31T08:27:19.629Z",
+  "source": "FDA FAERS via OpenFDA",
+  "stats": {
+    "total_reports": 500,
+    "seriousness": {
+      "serious": 451,
+      "non_serious": 49,
+      "unknown": 0
+    },
+    "age_distribution": {
+      "0-17": 15,
+      "18-40": 83,
+      "41-64": 147,
+      "65-84": 150,
+      "85+": 22,
+      "Unknown": 83
+    },
+    "sex_distribution": {
+      "Male": 196,
+      "Female": 264,
+      "Unknown": 40
+    },
+    "outcome_distribution": {
+      "Recovered/Resolved": 343,
+      "Recovering/Resolving": 112,
+      "Not Recovered/Not Resolved": 315,
+      "Recovered with Sequelae": 9,
+      "Fatal": 62,
+      "Unknown": 1044
+    },
+    "country_distribution": {
+      "US": 255,
+      "GB": 104,
+      "DE": 23,
+      "CA": 21,
+      "IT": 11,
+      "ES": 8,
+      "FR": 8,
+      "NL": 5,
+      "SE": 5,
+      "BR": 5,
+      "Other": 55
+    },
+    "reports_by_year": {
+      "2013": 1,
+      "2014": 499
+    }
+  },
+  "disclaimer": "Based on reported adverse events in FDA FAERS. This visualization does not imply causality or risk.",
+  "stats_hash": "780095aed3068eaf324d36001363a970912e379ac0752c9693b48009062a1d57"
+}

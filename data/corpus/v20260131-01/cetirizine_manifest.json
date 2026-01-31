@@ -1,0 +1,93 @@
+{
+  "version": "v20260131-01",
+  "created_at": "2026-01-31T08:27:17.761Z",
+  "source": "OpenFDA FAERS",
+  "drug": "cetirizine",
+  "total_events": 500,
+  "total_available": 77078,
+  "api_last_updated": "2025-10-30",
+  "disclaimer": "Do not rely on openFDA to make decisions regarding medical care. While we make every effort to ensure that data is accurate, you should assume all results are unvalidated. We may limit or otherwise restrict your access to the API in line with our Terms of Service.",
+  "top_reactions": [
+    {
+      "reaction": "Fatigue",
+      "count": 52
+    },
+    {
+      "reaction": "Drug ineffective",
+      "count": 51
+    },
+    {
+      "reaction": "Pruritus",
+      "count": 35
+    },
+    {
+      "reaction": "Abdominal pain",
+      "count": 33
+    },
+    {
+      "reaction": "Urticaria",
+      "count": 26
+    },
+    {
+      "reaction": "Dizziness",
+      "count": 25
+    },
+    {
+      "reaction": "Dyspnoea",
+      "count": 25
+    },
+    {
+      "reaction": "Nausea",
+      "count": 25
+    },
+    {
+      "reaction": "Product quality issue",
+      "count": 24
+    },
+    {
+      "reaction": "Somnolence",
+      "count": 22
+    },
+    {
+      "reaction": "Malaise",
+      "count": 22
+    },
+    {
+      "reaction": "Off label use",
+      "count": 21
+    },
+    {
+      "reaction": "Headache",
+      "count": 21
+    },
+    {
+      "reaction": "Diarrhoea",
+      "count": 20
+    },
+    {
+      "reaction": "Weight increased",
+      "count": 19
+    },
+    {
+      "reaction": "No adverse event",
+      "count": 19
+    },
+    {
+      "reaction": "Hyperhidrosis",
+      "count": 18
+    },
+    {
+      "reaction": "Dyskinesia",
+      "count": 17
+    },
+    {
+      "reaction": "Pain",
+      "count": 17
+    },
+    {
+      "reaction": "Dysuria",
+      "count": 16
+    }
+  ],
+  "root_hash": "498013608119d41a37172693e3a400c2ee096a4fc30be9a27550d1bc333373e9"
+}

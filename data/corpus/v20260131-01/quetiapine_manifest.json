@@ -1,0 +1,93 @@
+{
+  "version": "v20260131-01",
+  "created_at": "2026-01-31T08:24:45.393Z",
+  "source": "OpenFDA FAERS",
+  "drug": "quetiapine",
+  "total_events": 500,
+  "total_available": 103883,
+  "api_last_updated": "2025-10-30",
+  "disclaimer": "Do not rely on openFDA to make decisions regarding medical care. While we make every effort to ensure that data is accurate, you should assume all results are unvalidated. We may limit or otherwise restrict your access to the API in line with our Terms of Service.",
+  "top_reactions": [
+    {
+      "reaction": "Drug interaction",
+      "count": 47
+    },
+    {
+      "reaction": "Agitation",
+      "count": 37
+    },
+    {
+      "reaction": "Toxicity to various agents",
+      "count": 37
+    },
+    {
+      "reaction": "Depression",
+      "count": 33
+    },
+    {
+      "reaction": "Completed suicide",
+      "count": 32
+    },
+    {
+      "reaction": "Aggression",
+      "count": 27
+    },
+    {
+      "reaction": "Somnolence",
+      "count": 27
+    },
+    {
+      "reaction": "Tremor",
+      "count": 27
+    },
+    {
+      "reaction": "Suicidal ideation",
+      "count": 27
+    },
+    {
+      "reaction": "Drug ineffective",
+      "count": 24
+    },
+    {
+      "reaction": "Dyspnoea",
+      "count": 20
+    },
+    {
+      "reaction": "Muscle spasms",
+      "count": 19
+    },
+    {
+      "reaction": "Gait disturbance",
+      "count": 18
+    },
+    {
+      "reaction": "Weight increased",
+      "count": 17
+    },
+    {
+      "reaction": "Foetal exposure during pregnancy",
+      "count": 17
+    },
+    {
+      "reaction": "Mania",
+      "count": 17
+    },
+    {
+      "reaction": "Pyrexia",
+      "count": 17
+    },
+    {
+      "reaction": "Condition aggravated",
+      "count": 17
+    },
+    {
+      "reaction": "Sedation",
+      "count": 16
+    },
+    {
+      "reaction": "Asthenia",
+      "count": 16
+    }
+  ],
+  "root_hash": "0b7b95cc4bbc1de3148141ae7746cb1339e05ec123fc7ec3e9f626026960a583"
+}

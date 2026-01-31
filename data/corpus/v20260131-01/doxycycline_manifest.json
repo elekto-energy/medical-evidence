@@ -1,0 +1,93 @@
+{
+  "version": "v20260131-01",
+  "created_at": "2026-01-31T08:26:14.134Z",
+  "source": "OpenFDA FAERS",
+  "drug": "doxycycline",
+  "total_events": 500,
+  "total_available": 67508,
+  "api_last_updated": "2025-10-30",
+  "disclaimer": "Do not rely on openFDA to make decisions regarding medical care. While we make every effort to ensure that data is accurate, you should assume all results are unvalidated. We may limit or otherwise restrict your access to the API in line with our Terms of Service.",
+  "top_reactions": [
+    {
+      "reaction": "Drug hypersensitivity",
+      "count": 34
+    },
+    {
+      "reaction": "Rash",
+      "count": 34
+    },
+    {
+      "reaction": "Fatigue",
+      "count": 31
+    },
+    {
+      "reaction": "Nausea",
+      "count": 31
+    },
+    {
+      "reaction": "Pain",
+      "count": 26
+    },
+    {
+      "reaction": "Dyspnoea",
+      "count": 22
+    },
+    {
+      "reaction": "Erythema",
+      "count": 21
+    },
+    {
+      "reaction": "Syncope",
+      "count": 21
+    },
+    {
+      "reaction": "Asthenia",
+      "count": 18
+    },
+    {
+      "reaction": "Malaise",
+      "count": 18
+    },
+    {
+      "reaction": "Vomiting",
+      "count": 16
+    },
+    {
+      "reaction": "Dizziness",
+      "count": 15
+    },
+    {
+      "reaction": "Headache",
+      "count": 15
+    },
+    {
+      "reaction": "Pyrexia",
+      "count": 15
+    },
+    {
+      "reaction": "Chest pain",
+      "count": 15
+    },
+    {
+      "reaction": "Gait disturbance",
+      "count": 15
+    },
+    {
+      "reaction": "Chlamydial infection",
+      "count": 15
+    },
+    {
+      "reaction": "Pathogen resistance",
+      "count": 15
+    },
+    {
+      "reaction": "Treatment failure",
+      "count": 15
+    },
+    {
+      "reaction": "Condition aggravated",
+      "count": 14
+    }
+  ],
+  "root_hash": "a09646f8c4b0f2e5f802a32d18f2c4adb55019e5d3dacbc21702b970bee20425"
+}

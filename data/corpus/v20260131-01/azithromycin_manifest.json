@@ -1,0 +1,93 @@
+{
+  "version": "v20260131-01",
+  "created_at": "2026-01-31T08:26:20.977Z",
+  "source": "OpenFDA FAERS",
+  "drug": "azithromycin",
+  "total_events": 500,
+  "total_available": 74492,
+  "api_last_updated": "2025-10-30",
+  "disclaimer": "Do not rely on openFDA to make decisions regarding medical care. While we make every effort to ensure that data is accurate, you should assume all results are unvalidated. We may limit or otherwise restrict your access to the API in line with our Terms of Service.",
+  "top_reactions": [
+    {
+      "reaction": "Nausea",
+      "count": 33
+    },
+    {
+      "reaction": "Pneumonia",
+      "count": 30
+    },
+    {
+      "reaction": "Diarrhoea",
+      "count": 27
+    },
+    {
+      "reaction": "Dyspnoea",
+      "count": 26
+    },
+    {
+      "reaction": "Drug hypersensitivity",
+      "count": 26
+    },
+    {
+      "reaction": "Haemorrhage",
+      "count": 25
+    },
+    {
+      "reaction": "Vomiting",
+      "count": 23
+    },
+    {
+      "reaction": "Cough",
+      "count": 22
+    },
+    {
+      "reaction": "Abdominal pain",
+      "count": 19
+    },
+    {
+      "reaction": "Pyrexia",
+      "count": 19
+    },
+    {
+      "reaction": "Pain",
+      "count": 18
+    },
+    {
+      "reaction": "Condition aggravated",
+      "count": 18
+    },
+    {
+      "reaction": "Anaemia",
+      "count": 17
+    },
+    {
+      "reaction": "Fatigue",
+      "count": 16
+    },
+    {
+      "reaction": "Pulmonary embolism",
+      "count": 16
+    },
+    {
+      "reaction": "Pathogen resistance",
+      "count": 16
+    },
+    {
+      "reaction": "Rash",
+      "count": 15
+    },
+    {
+      "reaction": "Drug ineffective",
+      "count": 15
+    },
+    {
+      "reaction": "Abortion incomplete",
+      "count": 15
+    },
+    {
+      "reaction": "Drug interaction",
+      "count": 15
+    }
+  ],
+  "root_hash": "1d161e901bc0f2e1f2d6eade390e3465f047beca5b5f42f6a1c9c121fdf94b95"
+}

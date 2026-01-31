@@ -1,0 +1,54 @@
+{
+  "drug": "escitalopram",
+  "corpus_version": "v20260131-01",
+  "generated_at": "2026-01-31T08:27:20.131Z",
+  "source": "FDA FAERS via OpenFDA",
+  "stats": {
+    "total_reports": 500,
+    "seriousness": {
+      "serious": 433,
+      "non_serious": 67,
+      "unknown": 0
+    },
+    "age_distribution": {
+      "0-17": 25,
+      "18-40": 76,
+      "41-64": 180,
+      "65-84": 104,
+      "85+": 38,
+      "Unknown": 77
+    },
+    "sex_distribution": {
+      "Male": 157,
+      "Female": 326,
+      "Unknown": 17
+    },
+    "outcome_distribution": {
+      "Recovered/Resolved": 520,
+      "Recovering/Resolving": 110,
+      "Not Recovered/Not Resolved": 248,
+      "Recovered with Sequelae": 18,
+      "Fatal": 67,
+      "Unknown": 850
+    },
+    "country_distribution": {
+      "US": 244,
+      "DK": 105,
+      "CA": 21,
+      "ES": 20,
+      "IT": 20,
+      "AU": 13,
+      "BR": 13,
+      "GB": 12,
+      "BE": 10,
+      "FR": 7,
+      "Other": 35
+    },
+    "reports_by_year": {
+      "2013": 1,
+      "2014": 499
+    }
+  },
+  "disclaimer": "Based on reported adverse events in FDA FAERS. This visualization does not imply causality or risk.",
+  "stats_hash": "52323b3546be4208856f19108cfe49f7ad6a0d75c9fdc7bbb25c576b7f3fe814"
+}

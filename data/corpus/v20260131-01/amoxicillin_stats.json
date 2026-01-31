@@ -1,0 +1,53 @@
+{
+  "drug": "amoxicillin",
+  "corpus_version": "v20260131-01",
+  "generated_at": "2026-01-31T08:27:18.867Z",
+  "source": "FDA FAERS via OpenFDA",
+  "stats": {
+    "total_reports": 500,
+    "seriousness": {
+      "serious": 440,
+      "non_serious": 60,
+      "unknown": 0
+    },
+    "age_distribution": {
+      "0-17": 31,
+      "18-40": 81,
+      "41-64": 149,
+      "65-84": 136,
+      "85+": 21,
+      "Unknown": 82
+    },
+    "sex_distribution": {
+      "Male": 214,
+      "Female": 260,
+      "Unknown": 26
+    },
+    "outcome_distribution": {
+      "Recovered/Resolved": 449,
+      "Recovering/Resolving": 148,
+      "Not Recovered/Not Resolved": 163,
+      "Recovered with Sequelae": 16,
+      "Fatal": 64,
+      "Unknown": 947
+    },
+    "country_distribution": {
+      "US": 192,
+      "GB": 118,
+      "IT": 72,
+      "FR": 33,
+      "ES": 11,
+      "BR": 8,
+      "JP": 8,
+      "DE": 7,
+      "CN": 5,
+      "TW": 5,
+      "Other": 41
+    },
+    "reports_by_year": {
+      "2014": 500
+    }
+  },
+  "disclaimer": "Based on reported adverse events in FDA FAERS. This visualization does not imply causality or risk.",
+  "stats_hash": "d7550ed0e39423cfce9fa688397393abd23f83fe7c2681df7091956aaff5b310"
+}

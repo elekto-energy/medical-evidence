@@ -1,0 +1,54 @@
+{
+  "drug": "ibuprofen",
+  "corpus_version": "v20260131-01",
+  "generated_at": "2026-01-31T08:27:20.879Z",
+  "source": "FDA FAERS via OpenFDA",
+  "stats": {
+    "total_reports": 500,
+    "seriousness": {
+      "serious": 390,
+      "non_serious": 110,
+      "unknown": 0
+    },
+    "age_distribution": {
+      "0-17": 77,
+      "18-40": 88,
+      "41-64": 159,
+      "65-84": 90,
+      "85+": 6,
+      "Unknown": 80
+    },
+    "sex_distribution": {
+      "Male": 146,
+      "Female": 299,
+      "Unknown": 55
+    },
+    "outcome_distribution": {
+      "Recovered/Resolved": 422,
+      "Recovering/Resolving": 106,
+      "Not Recovered/Not Resolved": 228,
+      "Recovered with Sequelae": 21,
+      "Fatal": 42,
+      "Unknown": 1038
+    },
+    "country_distribution": {
+      "US": 323,
+      "GB": 57,
+      "ES": 45,
+      "DE": 31,
+      "IT": 9,
+      "NL": 5,
+      "CA": 5,
+      "FR": 4,
+      "AU": 4,
+      "CZ": 2,
+      "Other": 15
+    },
+    "reports_by_year": {
+      "2013": 2,
+      "2014": 498
+    }
+  },
+  "disclaimer": "Based on reported adverse events in FDA FAERS. This visualization does not imply causality or risk.",
+  "stats_hash": "f243d2e7e08aef355437bfa5181b053292a895525e81e9f1f57334ea0da0975c"
+}

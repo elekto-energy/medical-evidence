@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+
+# Large data files (use separate data distribution)
+data/sources/openfda/*.json
+data/corpus/v*/ibuprofen_objects.json
+
+# Keep manifests and proofs (small files)
+!data/corpus/v*/*_manifest.json
+!data/corpus/v*/*_stats.json
+!data/proofs/*.json
+
+# Environment
+.env
+.env.local
+*.log
+
+# Build artifacts
+.next/
+dist/
+build/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/

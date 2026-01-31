@@ -1,0 +1,54 @@
+{
+  "drug": "sitagliptin",
+  "corpus_version": "v20260131-01",
+  "generated_at": "2026-01-31T08:27:22.360Z",
+  "source": "FDA FAERS via OpenFDA",
+  "stats": {
+    "total_reports": 500,
+    "seriousness": {
+      "serious": 466,
+      "non_serious": 34,
+      "unknown": 0
+    },
+    "age_distribution": {
+      "0-17": 4,
+      "18-40": 14,
+      "41-64": 173,
+      "65-84": 225,
+      "85+": 17,
+      "Unknown": 67
+    },
+    "sex_distribution": {
+      "Male": 269,
+      "Female": 198,
+      "Unknown": 33
+    },
+    "outcome_distribution": {
+      "Recovered/Resolved": 550,
+      "Recovering/Resolving": 157,
+      "Not Recovered/Not Resolved": 191,
+      "Recovered with Sequelae": 15,
+      "Fatal": 70,
+      "Unknown": 564
+    },
+    "country_distribution": {
+      "US": 142,
+      "GB": 133,
+      "JP": 60,
+      "DE": 38,
+      "FR": 22,
+      "CN": 13,
+      "CA": 13,
+      "IN": 9,
+      "AU": 9,
+      "ES": 9,
+      "Other": 52
+    },
+    "reports_by_year": {
+      "2014": 393,
+      "2015": 107
+    }
+  },
+  "disclaimer": "Based on reported adverse events in FDA FAERS. This visualization does not imply causality or risk.",
+  "stats_hash": "a553ea40ed1e588baafe113152c9ca96352acbc93acfc453c4e972d2dc392777"
+}

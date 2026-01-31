@@ -1,0 +1,93 @@
+{
+  "version": "v20260131-01",
+  "created_at": "2026-01-31T08:26:55.584Z",
+  "source": "OpenFDA FAERS",
+  "drug": "fluticasone",
+  "total_events": 500,
+  "total_available": 92169,
+  "api_last_updated": "2025-10-30",
+  "disclaimer": "Do not rely on openFDA to make decisions regarding medical care. While we make every effort to ensure that data is accurate, you should assume all results are unvalidated. We may limit or otherwise restrict your access to the API in line with our Terms of Service.",
+  "top_reactions": [
+    {
+      "reaction": "Dyspnoea",
+      "count": 44
+    },
+    {
+      "reaction": "Fatigue",
+      "count": 37
+    },
+    {
+      "reaction": "Drug ineffective",
+      "count": 35
+    },
+    {
+      "reaction": "Pneumonia",
+      "count": 32
+    },
+    {
+      "reaction": "Asthenia",
+      "count": 29
+    },
+    {
+      "reaction": "Diarrhoea",
+      "count": 28
+    },
+    {
+      "reaction": "Nausea",
+      "count": 25
+    },
+    {
+      "reaction": "Dizziness",
+      "count": 25
+    },
+    {
+      "reaction": "Cough",
+      "count": 24
+    },
+    {
+      "reaction": "Headache",
+      "count": 24
+    },
+    {
+      "reaction": "Pain",
+      "count": 23
+    },
+    {
+      "reaction": "Asthma",
+      "count": 23
+    },
+    {
+      "reaction": "Chest pain",
+      "count": 22
+    },
+    {
+      "reaction": "Arthralgia",
+      "count": 21
+    },
+    {
+      "reaction": "Product quality issue",
+      "count": 21
+    },
+    {
+      "reaction": "Malaise",
+      "count": 19
+    },
+    {
+      "reaction": "Weight increased",
+      "count": 18
+    },
+    {
+      "reaction": "Pyrexia",
+      "count": 18
+    },
+    {
+      "reaction": "Hypertension",
+      "count": 17
+    },
+    {
+      "reaction": "Bronchitis",
+      "count": 16
+    }
+  ],
+  "root_hash": "b81d197ae9cdfc57fc4eb5289bd964e4f49d3206cdc82f143d7d24c2704e4f61"
+}

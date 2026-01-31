@@ -1,0 +1,56 @@
+{
+  "drug": "empagliflozin",
+  "corpus_version": "v20260131-01",
+  "generated_at": "2026-01-31T08:27:20.026Z",
+  "source": "FDA FAERS via OpenFDA",
+  "stats": {
+    "total_reports": 500,
+    "seriousness": {
+      "serious": 389,
+      "non_serious": 111,
+      "unknown": 0
+    },
+    "age_distribution": {
+      "0-17": 2,
+      "18-40": 25,
+      "41-64": 225,
+      "65-84": 177,
+      "85+": 6,
+      "Unknown": 65
+    },
+    "sex_distribution": {
+      "Male": 303,
+      "Female": 166,
+      "Unknown": 31
+    },
+    "outcome_distribution": {
+      "Recovered/Resolved": 470,
+      "Recovering/Resolving": 102,
+      "Not Recovered/Not Resolved": 225,
+      "Recovered with Sequelae": 12,
+      "Fatal": 44,
+      "Unknown": 465
+    },
+    "country_distribution": {
+      "US": 189,
+      "JP": 96,
+      "GB": 72,
+      "DE": 26,
+      "ES": 11,
+      "CA": 10,
+      "AU": 10,
+      "CZ": 9,
+      "SK": 8,
+      "IT": 7,
+      "Other": 62
+    },
+    "reports_by_year": {
+      "2015": 21,
+      "2016": 95,
+      "2017": 200,
+      "2018": 184
+    }
+  },
+  "disclaimer": "Based on reported adverse events in FDA FAERS. This visualization does not imply causality or risk.",
+  "stats_hash": "58e1f06d8edbccbde333b57c0ce03e8ae072574e794dbfa110ae2bdb5f0058a7"
+}

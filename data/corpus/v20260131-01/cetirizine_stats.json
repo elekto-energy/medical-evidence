@@ -1,0 +1,54 @@
+{
+  "drug": "cetirizine",
+  "corpus_version": "v20260131-01",
+  "generated_at": "2026-01-31T08:27:19.539Z",
+  "source": "FDA FAERS via OpenFDA",
+  "stats": {
+    "total_reports": 500,
+    "seriousness": {
+      "serious": 323,
+      "non_serious": 177,
+      "unknown": 0
+    },
+    "age_distribution": {
+      "0-17": 67,
+      "18-40": 82,
+      "41-64": 142,
+      "65-84": 132,
+      "85+": 16,
+      "Unknown": 61
+    },
+    "sex_distribution": {
+      "Male": 195,
+      "Female": 291,
+      "Unknown": 14
+    },
+    "outcome_distribution": {
+      "Recovered/Resolved": 388,
+      "Recovering/Resolving": 143,
+      "Not Recovered/Not Resolved": 250,
+      "Recovered with Sequelae": 11,
+      "Fatal": 23,
+      "Unknown": 927
+    },
+    "country_distribution": {
+      "US": 299,
+      "GB": 118,
+      "FR": 16,
+      "CA": 13,
+      "SE": 12,
+      "DE": 8,
+      "IT": 8,
+      "JP": 5,
+      "NL": 5,
+      "NZ": 2,
+      "Other": 14
+    },
+    "reports_by_year": {
+      "2013": 1,
+      "2014": 499
+    }
+  },
+  "disclaimer": "Based on reported adverse events in FDA FAERS. This visualization does not imply causality or risk.",
+  "stats_hash": "26fa53d067dea1a4009731c386e876ff701530faa688c2e7dd7be53d60a62cf5"
+}

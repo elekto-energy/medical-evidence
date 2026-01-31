@@ -1,0 +1,54 @@
+{
+  "drug": "metformin",
+  "corpus_version": "v20260131-01",
+  "generated_at": "2026-01-31T08:27:21.247Z",
+  "source": "FDA FAERS via OpenFDA",
+  "stats": {
+    "total_reports": 500,
+    "seriousness": {
+      "serious": 374,
+      "non_serious": 126,
+      "unknown": 0
+    },
+    "age_distribution": {
+      "0-17": 1,
+      "18-40": 13,
+      "41-64": 202,
+      "65-84": 166,
+      "85+": 11,
+      "Unknown": 107
+    },
+    "sex_distribution": {
+      "Male": 208,
+      "Female": 266,
+      "Unknown": 26
+    },
+    "outcome_distribution": {
+      "Recovered/Resolved": 349,
+      "Recovering/Resolving": 99,
+      "Not Recovered/Not Resolved": 259,
+      "Recovered with Sequelae": 43,
+      "Fatal": 60,
+      "Unknown": 834
+    },
+    "country_distribution": {
+      "US": 319,
+      "GB": 43,
+      "IT": 20,
+      "DE": 16,
+      "CA": 16,
+      "FR": 11,
+      "BD": 8,
+      "ES": 8,
+      "AU": 6,
+      "BR": 5,
+      "Other": 48
+    },
+    "reports_by_year": {
+      "2013": 3,
+      "2014": 497
+    }
+  },
+  "disclaimer": "Based on reported adverse events in FDA FAERS. This visualization does not imply causality or risk.",
+  "stats_hash": "ac59078766041e6f11821030d5ba826883cca89a84ead39e7b57a7c815c17f26"
+}

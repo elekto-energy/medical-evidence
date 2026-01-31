@@ -1,0 +1,54 @@
+{
+  "drug": "montelukast",
+  "corpus_version": "v20260131-01",
+  "generated_at": "2026-01-31T08:27:21.467Z",
+  "source": "FDA FAERS via OpenFDA",
+  "stats": {
+    "total_reports": 500,
+    "seriousness": {
+      "serious": 383,
+      "non_serious": 117,
+      "unknown": 0
+    },
+    "age_distribution": {
+      "0-17": 78,
+      "18-40": 71,
+      "41-64": 129,
+      "65-84": 122,
+      "85+": 9,
+      "Unknown": 91
+    },
+    "sex_distribution": {
+      "Male": 144,
+      "Female": 341,
+      "Unknown": 15
+    },
+    "outcome_distribution": {
+      "Recovered/Resolved": 381,
+      "Recovering/Resolving": 180,
+      "Not Recovered/Not Resolved": 330,
+      "Recovered with Sequelae": 10,
+      "Fatal": 21,
+      "Unknown": 976
+    },
+    "country_distribution": {
+      "US": 327,
+      "GB": 94,
+      "JP": 11,
+      "CA": 11,
+      "PL": 8,
+      "SE": 6,
+      "DE": 6,
+      "FR": 5,
+      "BE": 5,
+      "ES": 4,
+      "Other": 23
+    },
+    "reports_by_year": {
+      "2013": 1,
+      "2014": 499
+    }
+  },
+  "disclaimer": "Based on reported adverse events in FDA FAERS. This visualization does not imply causality or risk.",
+  "stats_hash": "8718af61075daf03c92c9ee22346d184063a29489d493a2a0cbf980f816133e9"
+}

@@ -1,0 +1,54 @@
+{
+  "drug": "naproxen",
+  "corpus_version": "v20260131-01",
+  "generated_at": "2026-01-31T08:27:21.589Z",
+  "source": "FDA FAERS via OpenFDA",
+  "stats": {
+    "total_reports": 500,
+    "seriousness": {
+      "serious": 395,
+      "non_serious": 105,
+      "unknown": 0
+    },
+    "age_distribution": {
+      "0-17": 8,
+      "18-40": 75,
+      "41-64": 216,
+      "65-84": 104,
+      "85+": 14,
+      "Unknown": 83
+    },
+    "sex_distribution": {
+      "Male": 145,
+      "Female": 343,
+      "Unknown": 12
+    },
+    "outcome_distribution": {
+      "Recovered/Resolved": 362,
+      "Recovering/Resolving": 165,
+      "Not Recovered/Not Resolved": 268,
+      "Recovered with Sequelae": 11,
+      "Fatal": 55,
+      "Unknown": 885
+    },
+    "country_distribution": {
+      "US": 276,
+      "GB": 149,
+      "CA": 32,
+      "ES": 7,
+      "BR": 7,
+      "AU": 5,
+      "NL": 3,
+      "AR": 3,
+      "SE": 3,
+      "FR": 3,
+      "Other": 12
+    },
+    "reports_by_year": {
+      "2013": 1,
+      "2014": 499
+    }
+  },
+  "disclaimer": "Based on reported adverse events in FDA FAERS. This visualization does not imply causality or risk.",
+  "stats_hash": "17d33c5dd01bd29ff92c12b5cf0ac6a42a9fc255c761f5c6b5034cd77a589ae5"
+}

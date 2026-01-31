@@ -1,0 +1,93 @@
+{
+  "version": "v20260131-01",
+  "created_at": "2026-01-31T08:26:43.790Z",
+  "source": "OpenFDA FAERS",
+  "drug": "budesonide",
+  "total_events": 500,
+  "total_available": 55587,
+  "api_last_updated": "2025-10-30",
+  "disclaimer": "Do not rely on openFDA to make decisions regarding medical care. While we make every effort to ensure that data is accurate, you should assume all results are unvalidated. We may limit or otherwise restrict your access to the API in line with our Terms of Service.",
+  "top_reactions": [
+    {
+      "reaction": "Dyspnoea",
+      "count": 53
+    },
+    {
+      "reaction": "Diarrhoea",
+      "count": 32
+    },
+    {
+      "reaction": "Cough",
+      "count": 24
+    },
+    {
+      "reaction": "Off label use",
+      "count": 24
+    },
+    {
+      "reaction": "Asthma",
+      "count": 24
+    },
+    {
+      "reaction": "Crohn^s disease",
+      "count": 23
+    },
+    {
+      "reaction": "Fatigue",
+      "count": 23
+    },
+    {
+      "reaction": "Drug interaction",
+      "count": 22
+    },
+    {
+      "reaction": "Pneumonia",
+      "count": 20
+    },
+    {
+      "reaction": "Pruritus",
+      "count": 19
+    },
+    {
+      "reaction": "Nausea",
+      "count": 19
+    },
+    {
+      "reaction": "Pyrexia",
+      "count": 18
+    },
+    {
+      "reaction": "Wheezing",
+      "count": 17
+    },
+    {
+      "reaction": "Headache",
+      "count": 17
+    },
+    {
+      "reaction": "Weight decreased",
+      "count": 17
+    },
+    {
+      "reaction": "Vomiting",
+      "count": 17
+    },
+    {
+      "reaction": "Chronic obstructive pulmonary disease",
+      "count": 16
+    },
+    {
+      "reaction": "Dizziness",
+      "count": 16
+    },
+    {
+      "reaction": "Hypotension",
+      "count": 16
+    },
+    {
+      "reaction": "Malaise",
+      "count": 15
+    }
+  ],
+  "root_hash": "157a81d385c0b8e4d06c4e9b9551520705778fa07e8d1536f31ab15514942645"
+}

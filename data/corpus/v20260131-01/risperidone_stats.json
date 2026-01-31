@@ -1,0 +1,53 @@
+{
+  "drug": "risperidone",
+  "corpus_version": "v20260131-01",
+  "generated_at": "2026-01-31T08:27:21.878Z",
+  "source": "FDA FAERS via OpenFDA",
+  "stats": {
+    "total_reports": 500,
+    "seriousness": {
+      "serious": 467,
+      "non_serious": 33,
+      "unknown": 0
+    },
+    "age_distribution": {
+      "0-17": 73,
+      "18-40": 131,
+      "41-64": 122,
+      "65-84": 84,
+      "85+": 16,
+      "Unknown": 74
+    },
+    "sex_distribution": {
+      "Male": 256,
+      "Female": 213,
+      "Unknown": 31
+    },
+    "outcome_distribution": {
+      "Recovered/Resolved": 481,
+      "Recovering/Resolving": 198,
+      "Not Recovered/Not Resolved": 268,
+      "Recovered with Sequelae": 59,
+      "Fatal": 81,
+      "Unknown": 770
+    },
+    "country_distribution": {
+      "US": 127,
+      "GB": 79,
+      "IT": 55,
+      "JP": 50,
+      "FR": 25,
+      "AU": 17,
+      "CA": 16,
+      "NL": 16,
+      "TR": 13,
+      "BR": 13,
+      "Other": 89
+    },
+    "reports_by_year": {
+      "2014": 500
+    }
+  },
+  "disclaimer": "Based on reported adverse events in FDA FAERS. This visualization does not imply causality or risk.",
+  "stats_hash": "6d7c34f7be1205e4fba26cb3c531a119e665f88af0beb47fb8171214d0b8c43b"
+}

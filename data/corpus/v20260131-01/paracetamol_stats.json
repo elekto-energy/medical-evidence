@@ -1,0 +1,54 @@
+{
+  "drug": "paracetamol",
+  "corpus_version": "v20260131-01",
+  "generated_at": "2026-01-31T08:27:21.682Z",
+  "source": "FDA FAERS via OpenFDA",
+  "stats": {
+    "total_reports": 500,
+    "seriousness": {
+      "serious": 491,
+      "non_serious": 9,
+      "unknown": 0
+    },
+    "age_distribution": {
+      "0-17": 16,
+      "18-40": 104,
+      "41-64": 194,
+      "65-84": 127,
+      "85+": 21,
+      "Unknown": 38
+    },
+    "sex_distribution": {
+      "Male": 197,
+      "Female": 284,
+      "Unknown": 19
+    },
+    "outcome_distribution": {
+      "Recovered/Resolved": 386,
+      "Recovering/Resolving": 80,
+      "Not Recovered/Not Resolved": 166,
+      "Recovered with Sequelae": 115,
+      "Fatal": 42,
+      "Unknown": 663
+    },
+    "country_distribution": {
+      "US": 188,
+      "GB": 134,
+      "FR": 46,
+      "IT": 19,
+      "AU": 16,
+      "DE": 14,
+      "NL": 14,
+      "ES": 9,
+      "MX": 7,
+      "IE": 7,
+      "Other": 46
+    },
+    "reports_by_year": {
+      "2013": 2,
+      "2014": 498
+    }
+  },
+  "disclaimer": "Based on reported adverse events in FDA FAERS. This visualization does not imply causality or risk.",
+  "stats_hash": "9a41421fdac901be69e9c6c23b90d2523dda9ecbda21915973e00d9275872d4c"
+}

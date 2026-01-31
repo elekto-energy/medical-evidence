@@ -1,0 +1,54 @@
+{
+  "drug": "tramadol",
+  "corpus_version": "v20260131-01",
+  "generated_at": "2026-01-31T08:27:22.516Z",
+  "source": "FDA FAERS via OpenFDA",
+  "stats": {
+    "total_reports": 500,
+    "seriousness": {
+      "serious": 408,
+      "non_serious": 92,
+      "unknown": 0
+    },
+    "age_distribution": {
+      "0-17": 2,
+      "18-40": 80,
+      "41-64": 207,
+      "65-84": 124,
+      "85+": 18,
+      "Unknown": 69
+    },
+    "sex_distribution": {
+      "Male": 190,
+      "Female": 295,
+      "Unknown": 15
+    },
+    "outcome_distribution": {
+      "Recovered/Resolved": 351,
+      "Recovering/Resolving": 141,
+      "Not Recovered/Not Resolved": 298,
+      "Recovered with Sequelae": 54,
+      "Fatal": 91,
+      "Unknown": 1002
+    },
+    "country_distribution": {
+      "US": 326,
+      "GB": 72,
+      "FR": 31,
+      "IN": 7,
+      "DE": 6,
+      "NL": 6,
+      "ES": 4,
+      "CA": 4,
+      "JP": 4,
+      "SE": 4,
+      "Other": 36
+    },
+    "reports_by_year": {
+      "2013": 2,
+      "2014": 498
+    }
+  },
+  "disclaimer": "Based on reported adverse events in FDA FAERS. This visualization does not imply causality or risk.",
+  "stats_hash": "3f0b7301f09c7f53d4ce155c45b0edbfb5fd5ec01b34632a8d9a46b23d15d060"
+}

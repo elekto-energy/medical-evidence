@@ -1,0 +1,54 @@
+{
+  "drug": "fluticasone",
+  "corpus_version": "v20260131-01",
+  "generated_at": "2026-01-31T08:27:20.408Z",
+  "source": "FDA FAERS via OpenFDA",
+  "stats": {
+    "total_reports": 500,
+    "seriousness": {
+      "serious": 397,
+      "non_serious": 103,
+      "unknown": 0
+    },
+    "age_distribution": {
+      "0-17": 18,
+      "18-40": 39,
+      "41-64": 185,
+      "65-84": 173,
+      "85+": 10,
+      "Unknown": 75
+    },
+    "sex_distribution": {
+      "Male": 179,
+      "Female": 310,
+      "Unknown": 11
+    },
+    "outcome_distribution": {
+      "Recovered/Resolved": 397,
+      "Recovering/Resolving": 138,
+      "Not Recovered/Not Resolved": 252,
+      "Recovered with Sequelae": 7,
+      "Fatal": 56,
+      "Unknown": 1153
+    },
+    "country_distribution": {
+      "US": 380,
+      "GB": 45,
+      "CA": 16,
+      "PL": 13,
+      "IT": 5,
+      "AU": 5,
+      "FR": 4,
+      "DE": 4,
+      "JP": 3,
+      "NL": 3,
+      "Other": 22
+    },
+    "reports_by_year": {
+      "2013": 1,
+      "2014": 499
+    }
+  },
+  "disclaimer": "Based on reported adverse events in FDA FAERS. This visualization does not imply causality or risk.",
+  "stats_hash": "585de8ef9aedbb5963fa0d7fd0f279d08503628bab45f950bec65770b8d1c270"
+}

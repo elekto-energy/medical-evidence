@@ -1,0 +1,54 @@
+{
+  "drug": "doxycycline",
+  "corpus_version": "v20260131-01",
+  "generated_at": "2026-01-31T08:27:19.935Z",
+  "source": "FDA FAERS via OpenFDA",
+  "stats": {
+    "total_reports": 500,
+    "seriousness": {
+      "serious": 377,
+      "non_serious": 123,
+      "unknown": 0
+    },
+    "age_distribution": {
+      "0-17": 13,
+      "18-40": 105,
+      "41-64": 171,
+      "65-84": 131,
+      "85+": 20,
+      "Unknown": 60
+    },
+    "sex_distribution": {
+      "Male": 159,
+      "Female": 320,
+      "Unknown": 21
+    },
+    "outcome_distribution": {
+      "Recovered/Resolved": 420,
+      "Recovering/Resolving": 173,
+      "Not Recovered/Not Resolved": 237,
+      "Recovered with Sequelae": 6,
+      "Fatal": 40,
+      "Unknown": 699
+    },
+    "country_distribution": {
+      "US": 305,
+      "GB": 142,
+      "NL": 9,
+      "DE": 7,
+      "FR": 6,
+      "CA": 5,
+      "ES": 4,
+      "Unknown": 4,
+      "AU": 3,
+      "BR": 3,
+      "Other": 12
+    },
+    "reports_by_year": {
+      "2013": 1,
+      "2014": 499
+    }
+  },
+  "disclaimer": "Based on reported adverse events in FDA FAERS. This visualization does not imply causality or risk.",
+  "stats_hash": "87e444d977528ee81825d0b98a9d2edcbbf73d77db86efd8aaa9a87c8958cebb"
+}

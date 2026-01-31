@@ -1,0 +1,53 @@
+{
+  "drug": "quetiapine",
+  "corpus_version": "v20260131-01",
+  "generated_at": "2026-01-31T08:27:21.772Z",
+  "source": "FDA FAERS via OpenFDA",
+  "stats": {
+    "total_reports": 500,
+    "seriousness": {
+      "serious": 472,
+      "non_serious": 28,
+      "unknown": 0
+    },
+    "age_distribution": {
+      "0-17": 42,
+      "18-40": 128,
+      "41-64": 195,
+      "65-84": 69,
+      "85+": 15,
+      "Unknown": 51
+    },
+    "sex_distribution": {
+      "Male": 208,
+      "Female": 280,
+      "Unknown": 12
+    },
+    "outcome_distribution": {
+      "Recovered/Resolved": 305,
+      "Recovering/Resolving": 159,
+      "Not Recovered/Not Resolved": 571,
+      "Recovered with Sequelae": 9,
+      "Fatal": 75,
+      "Unknown": 793
+    },
+    "country_distribution": {
+      "US": 188,
+      "GB": 84,
+      "AU": 48,
+      "CA": 26,
+      "DE": 20,
+      "IT": 17,
+      "JP": 12,
+      "TW": 12,
+      "AT": 10,
+      "SE": 9,
+      "Other": 74
+    },
+    "reports_by_year": {
+      "2014": 500
+    }
+  },
+  "disclaimer": "Based on reported adverse events in FDA FAERS. This visualization does not imply causality or risk.",
+  "stats_hash": "6f67e09a25375f109d4f9f797f66205d707eb626e81ef3d3674a43bb20642f54"
+}

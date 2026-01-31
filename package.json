@@ -1,0 +1,50 @@
+{
+  "name": "005-medical-evidence",
+  "version": "0.1.0",
+  "description": "EVE-Powered Medical Evidence Platform - Patent Pending",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:api": "cd apps/api && npm run dev",
+    "dev:web": "cd apps/web && npm run dev",
+    "build": "npm run build:packages && npm run build:apps",
+    "build:packages": "npm run build --workspaces --if-present",
+    "build:apps": "npm run build -w apps/api -w apps/web",
+    "ingest:openfda": "npx ts-node packages/ingest/openfda.ts",
+    "corpus:build": "npx ts-node scripts/build-corpus.ts",
+    "prove:latest": "npx ts-node scripts/prove-corpus.ts",
+    "verify": "npx ts-node scripts/verify-proof.ts",
+    "test": "vitest",
+    "test:golden": "vitest run tests/golden"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "ts-node": "^10.9.0",
+    "typescript": "^5.3.0",
+    "vitest": "^1.0.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "author": "Joakim Eklund <joakim@organiq.se>",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/organiq/005-medical-evidence"
+  },
+  "keywords": [
+    "medical",
+    "evidence",
+    "fda",
+    "deterministic",
+    "ai",
+    "eve",
+    "witness-mode"
+  ],
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.72.1"
+  }
+}

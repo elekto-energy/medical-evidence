@@ -1,0 +1,93 @@
+{
+  "version": "v20260131-01",
+  "created_at": "2026-01-31T08:22:52.730Z",
+  "source": "OpenFDA FAERS",
+  "drug": "sitagliptin",
+  "total_events": 500,
+  "total_available": 15775,
+  "api_last_updated": "2025-10-30",
+  "disclaimer": "Do not rely on openFDA to make decisions regarding medical care. While we make every effort to ensure that data is accurate, you should assume all results are unvalidated. We may limit or otherwise restrict your access to the API in line with our Terms of Service.",
+  "top_reactions": [
+    {
+      "reaction": "Diarrhoea",
+      "count": 36
+    },
+    {
+      "reaction": "Vomiting",
+      "count": 35
+    },
+    {
+      "reaction": "Fatigue",
+      "count": 30
+    },
+    {
+      "reaction": "Balance disorder",
+      "count": 25
+    },
+    {
+      "reaction": "Nausea",
+      "count": 24
+    },
+    {
+      "reaction": "Dehydration",
+      "count": 21
+    },
+    {
+      "reaction": "Muscular weakness",
+      "count": 21
+    },
+    {
+      "reaction": "Renal failure acute",
+      "count": 19
+    },
+    {
+      "reaction": "Blood glucose increased",
+      "count": 15
+    },
+    {
+      "reaction": "Anaemia",
+      "count": 15
+    },
+    {
+      "reaction": "Abdominal pain",
+      "count": 15
+    },
+    {
+      "reaction": "Myalgia",
+      "count": 15
+    },
+    {
+      "reaction": "Urinary tract infection",
+      "count": 14
+    },
+    {
+      "reaction": "Pneumonia",
+      "count": 14
+    },
+    {
+      "reaction": "Malaise",
+      "count": 13
+    },
+    {
+      "reaction": "Dyspepsia",
+      "count": 13
+    },
+    {
+      "reaction": "Headache",
+      "count": 13
+    },
+    {
+      "reaction": "Pain",
+      "count": 12
+    },
+    {
+      "reaction": "Dyspnoea",
+      "count": 12
+    },
+    {
+      "reaction": "Hypotension",
+      "count": 12
+    }
+  ],
+  "root_hash": "2cd01dfd52885050e922f1a81c16016171ea65b2cfd12fddd6072eeacb1349e2"
+}

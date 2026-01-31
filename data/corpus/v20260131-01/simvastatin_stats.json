@@ -1,0 +1,54 @@
+{
+  "drug": "simvastatin",
+  "corpus_version": "v20260131-01",
+  "generated_at": "2026-01-31T08:27:22.218Z",
+  "source": "FDA FAERS via OpenFDA",
+  "stats": {
+    "total_reports": 500,
+    "seriousness": {
+      "serious": 391,
+      "non_serious": 109,
+      "unknown": 0
+    },
+    "age_distribution": {
+      "0-17": 0,
+      "18-40": 8,
+      "41-64": 171,
+      "65-84": 213,
+      "85+": 20,
+      "Unknown": 88
+    },
+    "sex_distribution": {
+      "Male": 212,
+      "Female": 271,
+      "Unknown": 17
+    },
+    "outcome_distribution": {
+      "Recovered/Resolved": 350,
+      "Recovering/Resolving": 150,
+      "Not Recovered/Not Resolved": 312,
+      "Recovered with Sequelae": 42,
+      "Fatal": 35,
+      "Unknown": 864
+    },
+    "country_distribution": {
+      "US": 305,
+      "GB": 81,
+      "DE": 39,
+      "IT": 16,
+      "BR": 15,
+      "DK": 7,
+      "ES": 5,
+      "FR": 5,
+      "NO": 4,
+      "SE": 4,
+      "Other": 19
+    },
+    "reports_by_year": {
+      "2013": 2,
+      "2014": 498
+    }
+  },
+  "disclaimer": "Based on reported adverse events in FDA FAERS. This visualization does not imply causality or risk.",
+  "stats_hash": "931cc9fa0e21487a8ad0232c2d049420fd2b177c88a5556eec23b46a10eb1699"
+}

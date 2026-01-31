@@ -1,0 +1,199 @@
+{
+  "version": "v20260131-01",
+  "created_at": "2026-01-31T08:35:40.695Z",
+  "root_hash": "ec5727564d1ed19be5b08b26d3866f446b12d3d388f5a8cd713332c6d97ad264",
+  "leaf_count": 18000,
+  "tree_depth": 16,
+  "algorithm": "SHA-256",
+  "sources": [
+    {
+      "drug": "amlodipine",
+      "events": 500,
+      "source": "OpenFDA FAERS"
+    },
+    {
+      "drug": "amoxicillin",
+      "events": 500,
+      "source": "OpenFDA FAERS"
+    },
+    {
+      "drug": "apixaban",
+      "events": 500,
+      "source": "OpenFDA FAERS"
+    },
+    {
+      "drug": "aspirin",
+      "events": 500,
+      "source": "OpenFDA FAERS"
+    },
+    {
+      "drug": "atorvastatin",
+      "events": 500,
+      "source": "OpenFDA FAERS"
+    },
+    {
+      "drug": "azithromycin",
+      "events": 500,
+      "source": "OpenFDA FAERS"
+    },
+    {
+      "drug": "budesonide",
+      "events": 500,
+      "source": "OpenFDA FAERS"
+    },
+    {
+      "drug": "cetirizine",
+      "events": 500,
+      "source": "OpenFDA FAERS"
+    },
+    {
+      "drug": "ciprofloxacin",
+      "events": 500,
+      "source": "OpenFDA FAERS"
+    },
+    {
+      "drug": "diazepam",
+      "events": 500,
+      "source": "OpenFDA FAERS"
+    },
+    {
+      "drug": "diclofenac",
+      "events": 500,
+      "source": "OpenFDA FAERS"
+    },
+    {
+      "drug": "doxycycline",
+      "events": 500,
+      "source": "OpenFDA FAERS"
+    },
+    {
+      "drug": "empagliflozin",
+      "events": 500,
+      "source": "OpenFDA FAERS"
+    },
+    {
+      "drug": "escitalopram",
+      "events": 500,
+      "source": "OpenFDA FAERS"
+    },
+    {
+      "drug": "fluoxetine",
+      "events": 500,
+      "source": "OpenFDA FAERS"
+    },
+    {
+      "drug": "fluticasone",
+      "events": 500,
+      "source": "OpenFDA FAERS"
+    },
+    {
+      "drug": "glimepiride",
+      "events": 500,
+      "source": "OpenFDA FAERS"
+    },
+    {
+      "drug": "ibuprofen",
+      "events": 500,
+      "source": "OpenFDA FAERS"
+    },
+    {
+      "drug": "insulin",
+      "events": 500,
+      "source": "OpenFDA FAERS"
+    },
+    {
+      "drug": "liraglutide",
+      "events": 500,
+      "source": "OpenFDA FAERS"
+    },
+    {
+      "drug": "lisinopril",
+      "events": 500,
+      "source": "OpenFDA FAERS"
+    },
+    {
+      "drug": "metformin",
+      "events": 500,
+      "source": "OpenFDA FAERS"
+    },
+    {
+      "drug": "metoprolol",
+      "events": 500,
+      "source": "OpenFDA FAERS"
+    },
+    {
+      "drug": "montelukast",
+      "events": 500,
+      "source": "OpenFDA FAERS"
+    },
+    {
+      "drug": "naproxen",
+      "events": 500,
+      "source": "OpenFDA FAERS"
+    },
+    {
+      "drug": "paracetamol",
+      "events": 500,
+      "source": "OpenFDA FAERS"
+    },
+    {
+      "drug": "quetiapine",
+      "events": 500,
+      "source": "OpenFDA FAERS"
+    },
+    {
+      "drug": "risperidone",
+      "events": 500,
+      "source": "OpenFDA FAERS"
+    },
+    {
+      "drug": "salbutamol",
+      "events": 500,
+      "source": "OpenFDA FAERS"
+    },
+    {
+      "drug": "sertraline",
+      "events": 500,
+      "source": "OpenFDA FAERS"
+    },
+    {
+      "drug": "simvastatin",
+      "events": 500,
+      "source": "OpenFDA FAERS"
+    },
+    {
+      "drug": "sitagliptin",
+      "events": 500,
+      "source": "OpenFDA FAERS"
+    },
+    {
+      "drug": "tramadol",
+      "events": 500,
+      "source": "OpenFDA FAERS"
+    },
+    {
+      "drug": "vancomycin",
+      "events": 500,
+      "source": "OpenFDA FAERS"
+    },
+    {
+      "drug": "venlafaxine",
+      "events": 500,
+      "source": "OpenFDA FAERS"
+    },
+    {
+      "drug": "warfarin",
+      "events": 500,
+      "source": "OpenFDA FAERS"
+    }
+  ],
+  "verification_instructions": {
+    "description": "To verify a single object offline:",
+    "steps": [
+      "1. Hash the object content with SHA-256",
+      "2. Find the leaf in the tree",
+      "3. Follow the path to root, hashing pairs",
+      "4. Compare final hash with root_hash"
+    ]
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "drug": "warfarin",
+  "corpus_version": "v20260131-01",
+  "generated_at": "2026-01-31T08:27:22.812Z",
+  "source": "FDA FAERS via OpenFDA",
+  "stats": {
+    "total_reports": 500,
+    "seriousness": {
+      "serious": 422,
+      "non_serious": 78,
+      "unknown": 0
+    },
+    "age_distribution": {
+      "0-17": 4,
+      "18-40": 21,
+      "41-64": 138,
+      "65-84": 238,
+      "85+": 36,
+      "Unknown": 63
+    },
+    "sex_distribution": {
+      "Male": 236,
+      "Female": 249,
+      "Unknown": 15
+    },
+    "outcome_distribution": {
+      "Recovered/Resolved": 305,
+      "Recovering/Resolving": 157,
+      "Not Recovered/Not Resolved": 103,
+      "Recovered with Sequelae": 5,
+      "Fatal": 58,
+      "Unknown": 706
+    },
+    "country_distribution": {
+      "US": 368,
+      "GB": 47,
+      "JP": 37,
+      "CA": 10,
+      "IT": 6,
+      "AU": 6,
+      "KR": 3,
+      "DK": 3,
+      "BR": 3,
+      "HK": 2,
+      "Other": 15
+    },
+    "reports_by_year": {
+      "2013": 1,
+      "2014": 499
+    }
+  },
+  "disclaimer": "Based on reported adverse events in FDA FAERS. This visualization does not imply causality or risk.",
+  "stats_hash": "d2f6cefcc7ee0fcbdfe5b30e6623c75554982e61c723dcfc096be2bcfd82c080"
+}
