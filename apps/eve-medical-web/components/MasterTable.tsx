@@ -9,8 +9,8 @@ interface Drug {
   total_in_fda: number
   therapeutic_area?: string
   atc_code?: string
-  serious_percent?: number
-  fatal_count?: number
+  serious_percent?: number | null
+  fatal_count?: number | null
 }
 
 interface Props {
@@ -30,7 +30,7 @@ export function MasterTable({ drugs }: Props) {
   const [filter, setFilter] = useState('')
   const [sort, setSort] = useState<'name' | 'events'>('name')
   
-  const areas = [...new Set(drugs.map(d => d.therapeutic_area).filter(Boolean))]
+  const areas = Array.from(new Set(drugs.map(d => d.therapeutic_area).filter(Boolean)))
   
   let filtered = drugs
   if (filter) {
