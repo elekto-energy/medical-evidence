@@ -92,14 +92,19 @@ function loadStats(version, drug) {
 
 function loadRawEvents(drug) {
   const drugSafe = drug.toLowerCase().replace(/[^a-z0-9]/g, '_');
-  const sourcesDir = path.join(__dirname, '..', '..', 'data', 'sources', 'openfda');
+  const version = getLatestVersion();
   
-  // Find the raw file
-  const files = fs.readdirSync(sourcesDir).filter(f => f.startsWith(drugSafe + '_raw_'));
-  if (files.length === 0) return [];
+  if (!version) return [];
   
-  const rawData = JSON.parse(fs.readFileSync(path.join(sourcesDir, files[0]), 'utf-8'));
-  return rawData.results || [];
+  // Load from corpus objects (already processed and verified)
+  const objectsPath = path.join(CORPUS_DIR, version, `${drugSafe}_objects.json`);
+  
+  if (!fs.existsSync(objectsPath)) return [];
+  
+  const objects = JSON.parse(fs.readFileSync(objectsPath, 'utf-8'));
+  
+  // Extract the raw event data from each object
+  return objects.map(obj => obj.content || obj).filter(Boolean);
 }
 
 // ============================================
