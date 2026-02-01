@@ -84,7 +84,7 @@ export function DrugDetail({ data }: Props) {
             <div className="evidence-stat">
               <div className="evidence-stat-value">{data.summary.total_events}</div>
               <div className="evidence-stat-label">Events in Corpus</div>
-              <div className="text-[10px] text-eve-muted mt-1">{data.corpus_version}</div>
+              <div className="text-[10px] text-eve-muted mt-1">{data.corpus?.version || data.corpus_version}</div>
             </div>
             <div className="evidence-stat">
               <div className="evidence-stat-value">{data.summary.total_in_fda.toLocaleString()}</div>
@@ -160,8 +160,8 @@ export function DrugDetail({ data }: Props) {
           <div className="verification-panel p-4 mb-4">
             <h3 className="text-sm font-medium text-eve-muted mb-2">Verification Data</h3>
             <div className="hash-text space-y-1">
-              <div><span className="text-eve-accent">Corpus Version:</span> {data.corpus_version}</div>
-              <div><span className="text-eve-accent">Root Hash:</span> {data.root_hash}</div>
+              <div><span className="text-eve-accent">Corpus Version:</span> {data.corpus?.version || data.corpus_version}</div>
+              <div><span className="text-eve-accent">Root Hash:</span> {data.corpus?.root_hash || data.root_hash}</div>
               <div><span className="text-eve-accent">Stats Hash:</span> {data.stats_hash || 'N/A'}</div>
               {data.eve_decision_id && (
                 <div><span className="text-eve-accent">EVE Decision ID:</span> {data.eve_decision_id}</div>
@@ -193,7 +193,7 @@ export function DrugDetail({ data }: Props) {
         <ReactionDrawer
           drug={data.drug}
           reaction={selectedReaction}
-          corpusVersion={data.corpus_version}
+          corpusVersion={data.corpus?.version || data.corpus_version || ''}
           onClose={() => setSelectedReaction(null)}
         />
       )}
