@@ -566,7 +566,8 @@ const server = http.createServer(async (req, res) => {
         return;
       }
       
-      const language = body.language || 'sv';
+      // Language: 'auto' (default) = LLM classifier, or explicit ISO code
+      const language = body.lang || body.language || 'auto';
       const version = getLatestVersion();
       const manifests = version ? loadManifests(version) : [];
       const knownDrugs = manifests.map(m => m.drug.toLowerCase());

@@ -1,22 +1,23 @@
-﻿/**
+/**
  * Natural Language Query Endpoint
  * 
  * Trinity Pipeline:
- *   1. Claude L2 (Parser) - Interprets question â†’ structured parameters
- *   2. EVE L1 (Query) - Deterministic query â†’ verified result
- *   3. Claude L2 (Renderer) - Formats EVE result â†’ readable answer
+ *   1. Claude L2 (Parser) - Interprets question → structured parameters
+ *   2. EVE L1 (Query) - Deterministic query → verified result
+ *   3. Claude L2 (Renderer) - Formats EVE result → readable answer
  * 
- * Claude is ONLY a linguistic adapter - never an expert.
- * All intelligence happens deterministically in EVE.
- * 
- * Language: User can ask in ANY language. Response is in same language.
+ * Language Detection (EVE-correct):
+ *   - LLM classifier (not word lists)
+ *   - Post-check with franc-min
+ *   - Re-render once if mismatch
+ *   - Full transparency in response
  * 
  * Patent: EVE-PAT-2026-001
  */
 
 const Anthropic = require('@anthropic-ai/sdk').default;
+const { franc } = require('franc-min');
 
-// Initialize client with explicit API key
 const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY,
 });
@@ -28,74 +29,100 @@ const VALID_PARAMS = {
   serious: [true, false]
 };
 
+// ISO 639-1 to full name mapping
+const LANGUAGE_NAMES = {
+  en: 'English',
+  sv: 'Swedish',
+  de: 'German',
+  fr: 'French',
+  es: 'Spanish',
+  it: 'Italian',
+  nl: 'Dutch',
+  da: 'Danish',
+  no: 'Norwegian',
+  fi: 'Finnish',
+  ja: 'Japanese',
+  zh: 'Chinese',
+  ko: 'Korean',
+  ar: 'Arabic',
+  ru: 'Russian',
+  pt: 'Portuguese',
+  pl: 'Polish',
+  tr: 'Turkish',
+  he: 'Hebrew',
+  th: 'Thai',
+  vi: 'Vietnamese',
+  hi: 'Hindi'
+};
+
+// franc uses ISO 639-3, map to ISO 639-1
+const FRANC_TO_ISO1 = {
+  'eng': 'en', 'swe': 'sv', 'deu': 'de', 'fra': 'fr', 'spa': 'es',
+  'ita': 'it', 'nld': 'nl', 'dan': 'da', 'nor': 'no', 'fin': 'fi',
+  'jpn': 'ja', 'cmn': 'zh', 'kor': 'ko', 'ara': 'ar', 'rus': 'ru',
+  'por': 'pt', 'pol': 'pl', 'tur': 'tr', 'heb': 'he', 'tha': 'th',
+  'vie': 'vi', 'hin': 'hi', 'und': 'en'
+};
+
 /**
- * Detect language from question using word frequency scoring
- * Highest score wins
+ * LLM-based language classifier
+ * Returns ISO 639-1 code + confidence
  */
-function detectLanguage(text) {
-  const normalizedText = text.toLowerCase();
-  
-  // Unique/distinctive words for each language (avoid cognates)
-  const langPatterns = {
-    de: {
-      // German-specific words with umlauts and unique patterns
-      words: ['Ã¼ber', 'gibt', 'fÃ¼r', 'und', 'ist', 'bei', 'alle', 'welche', 'berichte', 'nebenwirkungen', 'todesfÃ¤lle', 'frauen', 'mÃ¤nner', 'wie', 'viele', 'sind', 'die', 'der', 'ein', 'eine', 'auf', 'zu', 'haben', 'werden', 'kÃ¶nnen'],
-      score: 0
-    },
-    sv: {
-      // Swedish-specific words with Ã¶, Ã¤, Ã¥
-      words: ['fÃ¶r', 'och', 'Ã¤r', 'hos', 'alla', 'vilka', 'finns', 'det', 'rapporter', 'biverkningar', 'dÃ¶dsfall', 'kvinnor', 'mÃ¤n', 'Ã¤ldre', 'hur', 'mÃ¥nga', 'vad', 'som', 'pÃ¥', 'att', 'av', 'kan', 'har', 'ska', 'blir'],
-      score: 0
-    },
-    fr: {
-      // French-specific words with accents
-      words: ['pour', 'sont', 'avec', 'chez', 'tous', 'quels', 'existe', 'rapports', 'effets', 'dÃ©cÃ¨s', 'femmes', 'hommes', 'combien', 'les', 'sur', 'dans', 'que', 'qui', 'des', 'ont', 'Ã©tÃ©', 'Ãªtre', 'avoir'],
-      score: 0
-    },
-    es: {
-      // Spanish-specific words
-      words: ['para', 'cuÃ¡ntos', 'sobre', 'hay', 'con', 'los', 'las', 'efectos', 'muertes', 'mujeres', 'hombres', 'quÃ©', 'son', 'tiene', 'estÃ¡n', 'puede', 'estos', 'estas'],
-      score: 0
-    },
-    en: {
-      // English-specific words - expanded list with common question words
-      words: ['what', 'are', 'the', 'there', 'how', 'many', 'reports', 'deaths', 'effects', 'women', 'men', 'about', 'show', 'serious', 'common', 'side', 'have', 'been', 'which', 'does', 'this', 'that', 'most', 'any', 'with', 'from', 'were', 'reactions', 'patients', 'elderly', 'young', 'reported', 'adverse', 'events', 'over', 'under', 'between'],
-      score: 0
+async function classifyLanguage(text) {
+  const systemPrompt = `You are a language classifier.
+Return ONLY valid JSON. No explanation. No extra text.
+
+Classify the language of the following text.
+Use ISO 639-1 codes (en, sv, de, fr, ja, zh, ar, etc).
+
+Output format:
+{"lang":"xx","confidence":0.95}`;
+
+  try {
+    const response = await anthropic.messages.create({
+      model: 'claude-sonnet-4-20250514',
+      max_tokens: 50,
+      system: systemPrompt,
+      messages: [{ role: 'user', content: text }]
+    });
+
+    const result = response.content[0].text.trim();
+    const jsonMatch = result.match(/\{[\s\S]*\}/);
+    
+    if (!jsonMatch) {
+      return { lang: 'en', confidence: 0, source: 'fallback' };
     }
-  };
-  
-  // Score each language by counting matching words
-  for (const [lang, data] of Object.entries(langPatterns)) {
-    for (const word of data.words) {
-      // Match whole words only
-      const regex = new RegExp(`\\b${word}\\b`, 'i');
-      if (regex.test(normalizedText)) {
-        data.score++;
-      }
-    }
+    
+    const parsed = JSON.parse(jsonMatch[0]);
+    return {
+      lang: parsed.lang || 'en',
+      confidence: parsed.confidence || 0.5,
+      source: 'llm-classifier'
+    };
+  } catch (e) {
+    console.error('Language classification failed:', e.message);
+    return { lang: 'en', confidence: 0, source: 'error-fallback' };
   }
-  
-  // Find language with highest score
-  let maxScore = 0;
-  let detectedLang = 'en'; // Default
-  
-  for (const [lang, data] of Object.entries(langPatterns)) {
-    if (data.score > maxScore) {
-      maxScore = data.score;
-      detectedLang = lang;
-    }
-  }
-  
-  // If no clear winner (score = 0), default to English
-  return maxScore > 0 ? detectedLang : 'en';
 }
 
 /**
- * STEP 1: Parse natural language â†’ structured query
+ * Local post-check using franc-min
+ * Returns detected language or null if uncertain
+ */
+function postCheckLanguage(text) {
+  if (!text || text.length < 20) {
+    return null; // Too short to detect reliably
+  }
+  
+  const detected = franc(text, { minLength: 20 });
+  return FRANC_TO_ISO1[detected] || null;
+}
+
+/**
+ * STEP 1: Parse natural language → structured query
  * Claude L2 - Parser role ONLY
  */
 async function parseQuestion(question, knownDrugs) {
-  // System prompt is always in English for consistency
   const systemPrompt = `You are a PARSER for medical queries. Your ONLY task is to extract structured parameters.
 
 ALLOWED PARAMETERS:
@@ -119,11 +146,8 @@ Answer: {"drug":"metformin","sex":"Female","age_group":"65-84","serious":null,"r
 Question: "Serious reactions for warfarin?"
 Answer: {"drug":"warfarin","sex":null,"age_group":null,"serious":true,"reaction":null}
 
-Question: "Vilka biverkningar finns fÃ¶r aspirin?" (Swedish)
-Answer: {"drug":"aspirin","sex":null,"age_group":null,"serious":null,"reaction":null}
-
-Question: "Gibt es TodesfÃ¤lle fÃ¼r metformin?" (German)
-Answer: {"drug":"metformin","sex":null,"age_group":null,"serious":null,"reaction":"death"}`;
+Question: "アスピリンの副作用は何ですか？"
+Answer: {"drug":"aspirin","sex":null,"age_group":null,"serious":null,"reaction":null}`;
 
   const response = await anthropic.messages.create({
     model: 'claude-sonnet-4-20250514',
@@ -135,7 +159,6 @@ Answer: {"drug":"metformin","sex":null,"age_group":null,"serious":null,"reaction
   const text = response.content[0].text.trim();
   
   try {
-    // Extract JSON from response
     const jsonMatch = text.match(/\{[\s\S]*\}/);
     if (!jsonMatch) throw new Error('No JSON found');
     return JSON.parse(jsonMatch[0]);
@@ -145,26 +168,13 @@ Answer: {"drug":"metformin","sex":null,"age_group":null,"serious":null,"reaction
 }
 
 /**
- * STEP 3: Render EVE result â†’ natural language
+ * STEP 3: Render EVE result → natural language
  * Claude L2 - Renderer role ONLY
  * 
- * Responds in the SAME language as the question
+ * HARD language requirement - not a preference
  */
-async function renderAnswer(eveResult, language, originalQuestion) {
-  const languageMap = {
-    en: 'English',
-    sv: 'Swedish',
-    de: 'German',
-    fr: 'French',
-    es: 'Spanish',
-    it: 'Italian',
-    nl: 'Dutch',
-    da: 'Danish',
-    no: 'Norwegian',
-    fi: 'Finnish'
-  };
-  
-  const langName = languageMap[language] || 'English';
+async function renderAnswer(eveResult, lang, originalQuestion) {
+  const langName = LANGUAGE_NAMES[lang] || 'English';
   
   const systemPrompt = `You are a RENDERER.
 
@@ -172,7 +182,6 @@ CRITICAL LANGUAGE REQUIREMENT:
 - You MUST respond ONLY in ${langName}.
 - Do NOT mix languages.
 - Do NOT explain language choice.
-- If the input question is in ${langName}, the output MUST be in ${langName}.
 - If you cannot comply, respond with: "[LANGUAGE ERROR]".
 
 OUTPUT RULES:
@@ -207,11 +216,8 @@ ${eveResult.applied_filters.join(', ')}`;
 /**
  * Main handler for natural language queries
  */
-async function processNaturalQuery(question, language, guidedQueryFn, knownDrugs) {
+async function processNaturalQuery(question, requestedLang, guidedQueryFn, knownDrugs) {
   const startTime = Date.now();
-  
-  // Auto-detect language from question
-  const detectedLanguage = language || detectLanguage(question);
   
   const pipeline = {
     parse: { model: 'CLAUDE_L2', status: 'pending' },
@@ -219,7 +225,34 @@ async function processNaturalQuery(question, language, guidedQueryFn, knownDrugs
     render: { model: 'CLAUDE_L2', status: 'pending' }
   };
 
+  // Language detection metadata
+  let languageInfo = {
+    requested: requestedLang || 'auto',
+    detected: null,
+    confidence: null,
+    source: null,
+    post_check: null,
+    rerendered: false
+  };
+
   try {
+    // STEP 0: Determine language
+    let targetLang;
+    
+    if (requestedLang && requestedLang !== 'auto') {
+      // Explicit language - trust it
+      targetLang = requestedLang;
+      languageInfo.source = 'explicit';
+      languageInfo.confidence = 1.0;
+    } else {
+      // Auto-detect via LLM classifier
+      const classResult = await classifyLanguage(question);
+      targetLang = classResult.lang;
+      languageInfo.detected = classResult.lang;
+      languageInfo.confidence = classResult.confidence;
+      languageInfo.source = classResult.source;
+    }
+
     // STEP 1: Parse question
     const parseStart = Date.now();
     const params = await parseQuestion(question, knownDrugs);
@@ -232,17 +265,24 @@ async function processNaturalQuery(question, language, guidedQueryFn, knownDrugs
 
     // Validate drug was found
     if (!params.drug) {
-      const noMatchMsg = {
+      const errorMsgs = {
         en: 'Could not identify a drug in the question.',
-        sv: 'Kunde inte identifiera nÃ¥got lÃ¤kemedel i frÃ¥gan.',
+        sv: 'Kunde inte identifiera något läkemedel i frågan.',
         de: 'Konnte kein Medikament in der Frage identifizieren.',
-        fr: 'Impossible d\'identifier un mÃ©dicament dans la question.'
+        fr: 'Impossible d\'identifier un médicament dans la question.',
+        ja: '質問から薬を特定できませんでした。',
+        zh: '无法从问题中识别药物。',
+        ar: 'لم نتمكن من تحديد الدواء في السؤال.'
       };
       
       return {
         status: 'NO_MATCH',
-        error: noMatchMsg[detectedLanguage] || noMatchMsg.en,
+        error: errorMsgs[targetLang] || errorMsgs.en,
         available_drugs: knownDrugs,
+        language: {
+          ...languageInfo,
+          final: targetLang
+        },
         trinity: pipeline,
         processing_time_ms: Date.now() - startTime
       };
@@ -263,26 +303,53 @@ async function processNaturalQuery(question, language, guidedQueryFn, knownDrugs
       return {
         status: 'QUERY_ERROR',
         error: eveResult.error,
+        language: { ...languageInfo, final: targetLang },
         trinity: pipeline,
         processing_time_ms: Date.now() - startTime
       };
     }
 
-    // STEP 3: Render answer (in detected language)
+    // STEP 3: Render answer
     const renderStart = Date.now();
-    const answerText = await renderAnswer(eveResult, detectedLanguage, question);
+    let answerText = await renderAnswer(eveResult, targetLang, question);
     pipeline.render = {
       model: 'CLAUDE_L2',
       status: 'complete',
       time_ms: Date.now() - renderStart
     };
 
-    // Disclaimer in user's language
+    // STEP 4: Post-check with franc-min
+    const postCheckLang = postCheckLanguage(answerText);
+    languageInfo.post_check = postCheckLang;
+    
+    // If mismatch and we have enough confidence, re-render ONCE
+    if (postCheckLang && postCheckLang !== targetLang && languageInfo.confidence >= 0.7) {
+      console.log(`Language mismatch: expected ${targetLang}, got ${postCheckLang}. Re-rendering...`);
+      
+      const reRenderStart = Date.now();
+      answerText = await renderAnswer(eveResult, targetLang, question);
+      languageInfo.rerendered = true;
+      
+      pipeline.render.time_ms += (Date.now() - reRenderStart);
+      pipeline.render.rerendered = true;
+      
+      // Check again
+      const secondCheck = postCheckLanguage(answerText);
+      languageInfo.post_check_final = secondCheck;
+    }
+
+    // Disclaimer in target language
     const disclaimers = {
       en: 'This is descriptive statistics from reported adverse events in FDA FAERS. It does not constitute medical advice and does not imply causality.',
-      sv: 'Detta Ã¤r deskriptiv statistik baserad pÃ¥ rapporterade biverkningar i FDA FAERS. Det utgÃ¶r inte medicinsk rÃ¥dgivning och implicerar inte kausalitet.',
-      de: 'Dies ist deskriptive Statistik aus gemeldeten Nebenwirkungen in FDA FAERS. Sie stellt keine medizinische Beratung dar und impliziert keine KausalitÃ¤t.',
-      fr: 'Il s\'agit de statistiques descriptives basÃ©es sur les effets indÃ©sirables signalÃ©s dans FDA FAERS. Cela ne constitue pas un avis mÃ©dical et n\'implique pas de causalitÃ©.'
+      sv: 'Detta är deskriptiv statistik baserad på rapporterade biverkningar i FDA FAERS. Det utgör inte medicinsk rådgivning och implicerar inte kausalitet.',
+      de: 'Dies ist deskriptive Statistik aus gemeldeten Nebenwirkungen in FDA FAERS. Sie stellt keine medizinische Beratung dar und impliziert keine Kausalität.',
+      fr: 'Il s\'agit de statistiques descriptives basées sur les effets indésirables signalés dans FDA FAERS. Cela ne constitue pas un avis médical et n\'implique pas de causalité.',
+      ja: 'これはFDA FAERSに報告された副作用の記述統計です。医学的アドバイスではなく、因果関係を示すものではありません。',
+      zh: '这是FDA FAERS报告的不良事件的描述性统计。这不构成医学建议，也不意味着因果关系。',
+      ar: 'هذه إحصائيات وصفية من الأحداث السلبية المبلغ عنها في FDA FAERS. لا تشكل نصيحة طبية ولا تعني السببية.',
+      es: 'Estas son estadísticas descriptivas de eventos adversos reportados en FDA FAERS. No constituye consejo médico y no implica causalidad.',
+      ko: '이것은 FDA FAERS에 보고된 이상반응의 기술통계입니다. 의료 조언이 아니며 인과관계를 의미하지 않습니다.',
+      ru: 'Это описательная статистика зарегистрированных побочных эффектов в FDA FAERS. Это не является медицинским советом и не подразумевает причинно-следственную связь.'
     };
 
     // Build final response
@@ -303,8 +370,13 @@ async function processNaturalQuery(question, language, guidedQueryFn, knownDrugs
       },
       
       answer: {
-        language: detectedLanguage,
-        text: answerText
+        text: answerText,
+        language: targetLang,
+        language_name: LANGUAGE_NAMES[targetLang] || targetLang,
+        language_source: languageInfo.source,
+        confidence: languageInfo.confidence,
+        post_check: languageInfo.post_check,
+        rerendered: languageInfo.rerendered
       },
       
       evidence: {
@@ -321,7 +393,7 @@ async function processNaturalQuery(question, language, guidedQueryFn, knownDrugs
         reproducible: true
       },
       
-      disclaimer: disclaimers[detectedLanguage] || disclaimers.en,
+      disclaimer: disclaimers[targetLang] || disclaimers.en,
       
       processing_time_ms: Date.now() - startTime
     };
@@ -336,5 +408,4 @@ async function processNaturalQuery(question, language, guidedQueryFn, knownDrugs
   }
 }
 
-module.exports = { processNaturalQuery, parseQuestion, renderAnswer, detectLanguage };
-
+module.exports = { processNaturalQuery, parseQuestion, renderAnswer, classifyLanguage, postCheckLanguage };
