@@ -62,6 +62,30 @@ export function DrugDetail({ data }: Props) {
           </div>
         </div>
         
+        {/* What this is / is not */}
+        <div className="mt-6 mb-6 grid md:grid-cols-2 gap-4">
+          <div className="p-4 bg-eve-bg-subtle border border-eve-border rounded-xl">
+            <h3 className="text-sm font-medium text-eve-verified mb-2 flex items-center gap-2">
+              <span>✓</span> What this shows
+            </h3>
+            <ul className="text-xs text-eve-muted space-y-1">
+              <li>• Reported adverse events from FDA FAERS</li>
+              <li>• Descriptive statistics from a locked corpus</li>
+              <li>• Verifiable data with cryptographic hashes</li>
+            </ul>
+          </div>
+          <div className="p-4 bg-eve-bg-subtle border border-eve-border rounded-xl">
+            <h3 className="text-sm font-medium text-eve-notice mb-2 flex items-center gap-2">
+              <span>✗</span> What this is NOT
+            </h3>
+            <ul className="text-xs text-eve-muted space-y-1">
+              <li>• Not medical advice or recommendations</li>
+              <li>• Not proof of causality</li>
+              <li>• Not a complete safety profile</li>
+            </ul>
+          </div>
+        </div>
+        
         {/* Stats */}
         <div className="mt-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
@@ -183,4 +207,6 @@ export function DrugDetail({ data }: Props) {
     </>
   )
 }
+
+
 
