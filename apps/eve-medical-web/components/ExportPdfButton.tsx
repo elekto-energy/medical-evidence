@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState } from 'react'
 import type { QueryResponse } from '@/lib/types'
@@ -92,7 +92,7 @@ function generateReportElement(data: QueryResponse): string {
     : 0
   const fatalCount = stats?.outcome_distribution['Fatal'] || 0
   
-  const corpusVersion = data.corpus_version || 'Draft'
+  const corpusVersion = data.corpus.version || 'Draft'
   const eveDecisionId = data.eve_decision_id || 'Not assigned'
   const generatedDate = new Date().toISOString().slice(0, 10)
   
@@ -110,7 +110,7 @@ function generateReportElement(data: QueryResponse): string {
   return `<div style="font-family:-apple-system,BlinkMacSystemFont,SF Pro Text,Segoe UI,Roboto,sans-serif;padding:44px;color:#44403c;line-height:1.6;background:#fafaf9;">
   <div style="border-bottom:1px solid #e7e5e4;padding-bottom:20px;margin-bottom:28px;">
     <h1 style="font-size:28px;font-weight:600;text-transform:capitalize;color:#1c1917;margin:0 0 6px 0;">${data.drug}</h1>
-    <div style="font-size:14px;color:#78716c;">Adverse Event Summary · FDA FAERS</div>
+    <div style="font-size:14px;color:#78716c;">Adverse Event Summary Â· FDA FAERS</div>
     <div style="font-size:12px;color:#78716c;margin-top:8px;">Snapshot: ${corpusVersion}</div>
   </div>
   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px;">
@@ -171,9 +171,10 @@ function generateReportElement(data: QueryResponse): string {
     <strong style="color:#d97706;">Notice:</strong> This document is a visual export generated from EVE Medical Evidence. It reflects reported adverse event data from FDA FAERS and does not constitute medical advice or imply causality.
   </div>
   <div style="border-top:1px solid #e7e5e4;padding-top:18px;text-align:center;font-size:10px;color:#78716c;">
-    <div style="color:#0d9488;margin-bottom:6px;font-weight:500;">Presented via EVE · Evidence & Verification Engine</div>
-    <div>Snapshot: ${corpusVersion} · Generated: ${generatedDate}</div>
+    <div style="color:#0d9488;margin-bottom:6px;font-weight:500;">Presented via EVE Â· Evidence & Verification Engine</div>
+    <div>Snapshot: ${corpusVersion} Â· Generated: ${generatedDate}</div>
     <div style="margin-top:6px;">Patent Pending EVE-PAT-2026-001</div>
   </div>
 </div>`
 }
+
