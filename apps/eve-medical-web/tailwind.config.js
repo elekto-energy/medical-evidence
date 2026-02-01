@@ -4,48 +4,47 @@ module.exports = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        // EVE Medical - Clinical Hightech Palette
+        // EVE Medical — Clinical Archive Palette
+        // Neutral, low-affect, evidence-focused
         'eve': {
-          // Backgrounds - deep clinical blues
-          'bg': '#0a0f1a',
-          'card': '#0f1628',
-          'border': '#1a2744',
+          // Backgrounds — neutral gray
+          'bg': '#f5f6f8',
+          'card': '#ffffff',
+          'border': '#dce0e6',
           
           // Text
-          'muted': '#7a8ba8',
+          'text': '#2d3748',
+          'text-strong': '#1a202c',
+          'muted': '#64748b',
           
-          // Primary accent - clinical cyan/teal
-          'accent': '#00e5c7',
-          'accent-soft': '#00b8a0',
+          // Accent — muted blue-gray (not AI-blue)
+          'accent': '#5a7a94',
+          'accent-dim': 'rgba(90, 122, 148, 0.15)',
           
-          // Secondary - electric blue
-          'blue': '#00a8ff',
-          'blue-soft': '#0088d4',
+          // Verification — subtle
+          'verify': '#6b7c93',
           
-          // Status colors
-          'red': '#ff5a5a',
-          'yellow': '#ffc107',
-          'green': '#00d68f',
-          
-          // Special - verification purple
-          'verify': '#a78bfa',
-          'verify-bg': '#1a1535',
+          // Functional — minimal
+          'info': '#5a7a94',
+          'caution': '#8b7355',
         },
-        // ATC therapeutic area colors
+        // ATC therapeutic area colors — muted, categorical
         'atc': {
-          'A': '#f59e0b',
-          'C': '#ef4444',
-          'N': '#a78bfa',
-          'M': '#3b82f6',
-          'J': '#10b981',
-          'R': '#ec4899',
+          'A': '#7a8c6e',  // Metabolism
+          'C': '#6e7a8c',  // Cardiovascular
+          'N': '#8c7a6e',  // CNS
+          'M': '#7a6e8c',  // Musculoskeletal
+          'J': '#6e8c7a',  // Anti-infectives
+          'R': '#8c6e7a',  // Respiratory
         }
       },
       fontFamily: {
-        'mono': ['JetBrains Mono', 'Monaco', 'Consolas', 'monospace'],
+        'mono': ['SF Mono', 'Monaco', 'Consolas', 'monospace'],
+        'sans': ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
       },
     },
   },

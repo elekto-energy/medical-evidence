@@ -43,71 +43,71 @@ export function DrugDetail({ data }: Props) {
   
   return (
     <>
-      <div className="bg-eve-card border border-eve-border rounded-2xl overflow-hidden">
+      <div className="evidence-card">
         {/* Header */}
-        <div className="px-6 py-5 border-b border-eve-border flex justify-between items-center">
+        <div className="evidence-header flex justify-between items-center">
           <div className="flex items-center gap-4">
-            <span className={`w-10 h-10 rounded-lg flex items-center justify-center text-sm font-bold ${ATC_COLORS[atcCode]}`}>
+            <span className={`w-10 h-10 rounded-lg flex items-center justify-center text-sm font-semibold ${ATC_COLORS[atcCode]}`}>
               {atcCode}
             </span>
-            <h1 className="text-2xl font-bold capitalize">{data.drug}</h1>
+            <h1 className="text-2xl font-semibold capitalize text-eve-text-strong">{data.drug}</h1>
           </div>
           <div className="flex items-center gap-4">
             <ExportPdfButton data={data} />
             <div className="text-right text-sm text-eve-muted">
               <div>{data.processing_time_ms}ms</div>
-              <div>Trinity Level {data.trinity_level}</div>
+              <div className="badge-corpus">Level {data.trinity_level}</div>
             </div>
           </div>
         </div>
         
         {/* Stats */}
-        <div className="p-6">
+        <div className="mt-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-            <div className="bg-eve-bg rounded-xl p-4 text-center">
-              <div className="text-2xl font-bold text-eve-accent">{data.summary.total_events}</div>
-              <div className="text-xs text-eve-muted mt-1">Events in Corpus</div>
+            <div className="evidence-stat">
+              <div className="evidence-stat-value">{data.summary.total_events}</div>
+              <div className="evidence-stat-label">Events in Corpus</div>
             </div>
-            <div className="bg-eve-bg rounded-xl p-4 text-center">
-              <div className="text-2xl font-bold text-eve-accent">{data.summary.total_in_fda.toLocaleString()}</div>
-              <div className="text-xs text-eve-muted mt-1">Total in FDA</div>
+            <div className="evidence-stat">
+              <div className="evidence-stat-value">{data.summary.total_in_fda.toLocaleString()}</div>
+              <div className="evidence-stat-label">Total in FDA</div>
             </div>
-            <div className="bg-eve-bg rounded-xl p-4 text-center">
-              <div className="text-2xl font-bold text-eve-accent">{seriousPercent}%</div>
-              <div className="text-xs text-eve-muted mt-1">Serious Reports</div>
+            <div className="evidence-stat">
+              <div className="evidence-stat-value">{seriousPercent}%</div>
+              <div className="evidence-stat-label">Serious Reports</div>
             </div>
-            <div className="bg-eve-bg rounded-xl p-4 text-center">
-              <div className="text-2xl font-bold text-eve-red">{fatalCount}</div>
-              <div className="text-xs text-eve-muted mt-1">Fatal Outcomes</div>
+            <div className="evidence-stat">
+              <div className="evidence-stat-value">{fatalCount}</div>
+              <div className="evidence-stat-label">Fatal Outcomes</div>
             </div>
           </div>
           
           {/* Charts */}
           {stats && (
             <div className="grid md:grid-cols-2 gap-4 mb-6">
-              <div className="bg-eve-bg rounded-xl p-4">
-                <h3 className="text-sm font-medium text-eve-muted mb-3">⚠️ Seriousness</h3>
+              <div className="evidence-stat p-4">
+                <h3 className="text-sm font-medium text-eve-muted mb-3">Seriousness</h3>
                 <BarChart 
                   data={{ 'Serious': stats.seriousness.serious, 'Non-Serious': stats.seriousness.non_serious }}
-                  colorMap={{ 'Serious': 'bg-eve-red', 'Non-Serious': 'bg-eve-accent' }}
+                  colorMap={{ 'Serious': 'bg-eve-caution', 'Non-Serious': 'bg-eve-accent' }}
                 />
               </div>
-              <div className="bg-eve-bg rounded-xl p-4">
-                <h3 className="text-sm font-medium text-eve-muted mb-3">👥 Sex Distribution</h3>
+              <div className="evidence-stat p-4">
+                <h3 className="text-sm font-medium text-eve-muted mb-3">Sex Distribution</h3>
                 <BarChart 
                   data={stats.sex_distribution}
-                  colorMap={{ 'Male': 'bg-eve-blue', 'Female': 'bg-pink-400', 'Unknown': 'bg-eve-muted' }}
+                  colorMap={{ 'Male': 'bg-atc-C', 'Female': 'bg-atc-R', 'Unknown': 'bg-eve-muted' }}
                 />
               </div>
-              <div className="bg-eve-bg rounded-xl p-4">
-                <h3 className="text-sm font-medium text-eve-muted mb-3">📊 Age Distribution</h3>
+              <div className="evidence-stat p-4">
+                <h3 className="text-sm font-medium text-eve-muted mb-3">Age Distribution</h3>
                 <BarChart data={stats.age_distribution} />
               </div>
-              <div className="bg-eve-bg rounded-xl p-4">
-                <h3 className="text-sm font-medium text-eve-muted mb-3">🏥 Outcomes</h3>
+              <div className="evidence-stat p-4">
+                <h3 className="text-sm font-medium text-eve-muted mb-3">Outcomes</h3>
                 <BarChart 
                   data={stats.outcome_distribution}
-                  colorMap={{ 'Fatal': 'bg-eve-red', 'Recovered/Resolved': 'bg-eve-accent' }}
+                  colorMap={{ 'Fatal': 'bg-eve-caution', 'Recovered/Resolved': 'bg-eve-accent' }}
                 />
               </div>
             </div>
@@ -130,7 +130,7 @@ export function DrugDetail({ data }: Props) {
                 <button
                   key={r.reaction}
                   onClick={() => setSelectedReaction(r.reaction)}
-                  className="px-3 py-1.5 text-sm bg-eve-bg border border-eve-border rounded-lg hover:border-eve-accent transition"
+                  className="px-3 py-1.5 text-sm bg-eve-bg border border-eve-border rounded-lg hover:border-eve-accent transition-colors"
                 >
                   {r.reaction} <span className="text-eve-accent font-medium ml-1">{r.count}</span>
                 </button>
@@ -139,18 +139,22 @@ export function DrugDetail({ data }: Props) {
           </div>
           
           {/* Verification */}
-          <div className="bg-eve-bg rounded-xl p-4 mb-4">
-            <h3 className="text-sm font-medium text-eve-muted mb-2">🔐 Verification Data</h3>
-            <div className="font-mono text-xs text-eve-muted/70 space-y-1">
+          <div className="verification-panel p-4 mb-4">
+            <h3 className="text-sm font-medium text-eve-muted mb-2">Verification Data</h3>
+            <div className="hash-text space-y-1">
               <div><span className="text-eve-accent">Corpus Version:</span> {data.corpus_version}</div>
               <div><span className="text-eve-accent">Root Hash:</span> {data.root_hash}</div>
               <div><span className="text-eve-accent">Stats Hash:</span> {data.stats_hash || 'N/A'}</div>
+              {data.eve_decision_id && (
+                <div><span className="text-eve-accent">EVE Decision ID:</span> {data.eve_decision_id}</div>
+              )}
             </div>
           </div>
           
           {/* Disclaimer */}
-          <div className="bg-eve-yellow/10 border border-eve-yellow/20 rounded-xl p-4 text-sm text-eve-yellow">
-            ⚠️ {data.disclaimer}
+          <div className="disclaimer">
+            <span className="disclaimer-icon">ℹ</span>
+            {data.disclaimer}
           </div>
         </div>
       </div>

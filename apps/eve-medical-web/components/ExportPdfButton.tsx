@@ -3,6 +3,8 @@
 import { useState } from 'react'
 import type { QueryResponse } from '@/lib/types'
 
+// TODO (v2): Server-side PDF with X-Vault sealing for formal records
+
 interface Props {
   data: QueryResponse
 }
@@ -13,174 +15,186 @@ export function ExportPdfButton({ data }: Props) {
   const exportPdf = async () => {
     setLoading(true)
     
-    // Create printable HTML
-    const html = generateReportHtml(data)
-    
-    // Open in new window for printing
-    const printWindow = window.open('', '_blank')
-    if (printWindow) {
-      printWindow.document.write(html)
-      printWindow.document.close()
-      printWindow.onload = () => {
-        printWindow.print()
+    try {
+      // Dynamically import libraries (client-side only)
+      const [{ default: jsPDF }, { default: html2canvas }] = await Promise.all([
+        import('jspdf'),
+        import('html2canvas')
+      ])
+      
+      // Create a temporary container with the report content
+      const reportHtml = generateReportElement(data)
+      const container = document.createElement('div')
+      container.innerHTML = reportHtml
+      container.style.position = 'absolute'
+      container.style.left = '-9999px'
+      container.style.top = '0'
+      container.style.width = '794px'
+      container.style.background = '#ffffff'
+      document.body.appendChild(container)
+      
+      await new Promise(resolve => setTimeout(resolve, 100))
+      
+      const canvas = await html2canvas(container, {
+        scale: 2,
+        useCORS: true,
+        logging: false,
+        backgroundColor: '#ffffff'
+      })
+      
+      document.body.removeChild(container)
+      
+      const pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: 'a4'
+      })
+      
+      const imgData = canvas.toDataURL('image/png')
+      const pdfWidth = pdf.internal.pageSize.getWidth()
+      const pdfHeight = pdf.internal.pageSize.getHeight()
+      const imgWidth = pdfWidth
+      const imgHeight = (canvas.height * pdfWidth) / canvas.width
+      
+      let heightLeft = imgHeight
+      let position = 0
+      
+      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight)
+      heightLeft -= pdfHeight
+      
+      while (heightLeft > 0) {
+        position = heightLeft - imgHeight
+        pdf.addPage()
+        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight)
+        heightLeft -= pdfHeight
       }
+      
+      const filename = `${data.drug}_adverse_events_${data.corpus_version || 'draft'}.pdf`
+      pdf.save(filename)
+      
+    } catch (error) {
+      console.error('PDF export failed:', error)
+      alert('PDF export failed. Please try again.')
+    } finally {
+      setLoading(false)
     }
-    
-    setLoading(false)
   }
   
   return (
     <button
       onClick={exportPdf}
       disabled={loading}
-      className="inline-flex items-center gap-2 px-4 py-2 text-sm bg-eve-card border border-eve-border rounded-lg hover:border-eve-accent transition disabled:opacity-50"
+      className="inline-flex items-center gap-2 px-4 py-2 text-sm bg-eve-card border border-eve-border rounded-lg hover:border-eve-accent transition-colors disabled:opacity-50"
     >
-      📄 {loading ? 'Generating...' : 'Export PDF'}
+      {loading ? 'Generating PDF...' : 'Download PDF'}
     </button>
   )
 }
 
-function generateReportHtml(data: QueryResponse): string {
+function generateReportElement(data: QueryResponse): string {
   const stats = data.stats
   const seriousPercent = stats 
     ? Math.round((stats.seriousness.serious / (stats.seriousness.serious + stats.seriousness.non_serious)) * 100)
     : 0
   const fatalCount = stats?.outcome_distribution['Fatal'] || 0
   
+  const corpusVersion = data.corpus_version || 'Draft'
+  const eveDecisionId = data.eve_decision_id || 'Not assigned'
+  const generatedDate = new Date().toISOString().slice(0, 10)
+  
   const topReactions = data.summary.top_reactions.slice(0, 10)
-    .map(r => `<span style="background:#f0f0f0;padding:4px 8px;border-radius:4px;margin:2px;display:inline-block;">${r.reaction} (${r.count})</span>`)
-    .join('')
+    .map(r => `<span style="background:#f5f6f8;border:1px solid #dce0e6;padding:4px 10px;border-radius:4px;font-size:11px;display:inline-block;margin:2px;">${r.reaction} (${r.count})</span>`)
+    .join(' ')
   
   const sexRows = stats ? Object.entries(stats.sex_distribution)
     .filter(([, v]) => v > 0)
-    .map(([k, v]) => `<tr><td>${k}</td><td>${v}</td></tr>`)
+    .map(([k, v]) => `<tr><td style="padding:8px 12px;border-bottom:1px solid #dce0e6;">${k}</td><td style="padding:8px 12px;border-bottom:1px solid #dce0e6;">${v}</td></tr>`)
     .join('') : ''
   
   const ageRows = stats ? Object.entries(stats.age_distribution)
     .filter(([, v]) => v > 0)
-    .map(([k, v]) => `<tr><td>${k}</td><td>${v}</td></tr>`)
+    .map(([k, v]) => `<tr><td style="padding:8px 12px;border-bottom:1px solid #dce0e6;">${k}</td><td style="padding:8px 12px;border-bottom:1px solid #dce0e6;">${v}</td></tr>`)
     .join('') : ''
   
   const outcomeRows = stats ? Object.entries(stats.outcome_distribution)
     .filter(([, v]) => v > 0)
-    .map(([k, v]) => `<tr><td>${k}</td><td>${v}</td></tr>`)
+    .map(([k, v]) => `<tr><td style="padding:8px 12px;border-bottom:1px solid #dce0e6;">${k}</td><td style="padding:8px 12px;border-bottom:1px solid #dce0e6;">${v}</td></tr>`)
     .join('') : ''
 
-  return `
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>EVE Medical Evidence - ${data.drug}</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: 40px; max-width: 800px; margin: 0 auto; color: #333; }
-    h1 { font-size: 24px; margin-bottom: 8px; text-transform: capitalize; }
-    h2 { font-size: 14px; color: #666; margin-bottom: 24px; }
-    h3 { font-size: 12px; font-weight: 600; color: #333; margin: 16px 0 8px; text-transform: uppercase; letter-spacing: 0.5px; }
-    .header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #00d4aa; padding-bottom: 16px; margin-bottom: 24px; }
-    .logo { font-size: 12px; color: #00d4aa; font-weight: 600; }
-    .badge { background: #00d4aa; color: #000; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; }
-    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
-    .stat-box { background: #f5f5f5; border-radius: 8px; padding: 16px; text-align: center; }
-    .stat-value { font-size: 24px; font-weight: 700; color: #00a88a; }
-    .stat-value.fatal { color: #e53e3e; }
-    .stat-label { font-size: 10px; color: #666; margin-top: 4px; }
-    .section { margin-bottom: 24px; }
-    .reactions { line-height: 2; }
-    table { width: 100%; border-collapse: collapse; font-size: 12px; }
-    th, td { text-align: left; padding: 8px; border-bottom: 1px solid #e0e0e0; }
-    th { background: #f5f5f5; font-weight: 600; }
-    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-    .verification { background: #f0faf8; border: 1px solid #00d4aa; border-radius: 8px; padding: 16px; margin-top: 24px; }
-    .verification h3 { color: #00a88a; margin-top: 0; }
-    .hash { font-family: monospace; font-size: 9px; color: #666; word-break: break-all; margin: 4px 0; }
-    .disclaimer { background: #fff8e6; border: 1px solid #f0c000; border-radius: 8px; padding: 16px; margin-top: 24px; font-size: 11px; color: #856404; }
-    .footer { margin-top: 32px; padding-top: 16px; border-top: 1px solid #e0e0e0; font-size: 10px; color: #999; text-align: center; }
-    @media print {
-      body { padding: 20px; }
-      .no-print { display: none; }
-    }
-  </style>
-</head>
-<body>
-  <div class="header">
+  return `<div style="font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif;padding:40px;color:#2d3748;line-height:1.5;background:#fff;">
+  <div style="border-bottom:1px solid #dce0e6;padding-bottom:16px;margin-bottom:24px;">
+    <h1 style="font-size:26px;font-weight:600;text-transform:capitalize;color:#1a202c;margin:0 0 4px 0;">${data.drug}</h1>
+    <div style="font-size:13px;color:#64748b;">Adverse Event Summary from FDA FAERS</div>
+    <div style="font-size:11px;color:#64748b;margin-top:6px;">Snapshot: ${corpusVersion}</div>
+  </div>
+  
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px;">
+    <div style="background:#f5f6f8;border:1px solid #dce0e6;border-radius:6px;padding:14px;text-align:center;">
+      <div style="font-size:20px;font-weight:600;color:#1a202c;">${data.summary.total_events.toLocaleString()}</div>
+      <div style="font-size:9px;color:#64748b;margin-top:4px;text-transform:uppercase;letter-spacing:0.5px;">Events in Corpus</div>
+    </div>
+    <div style="background:#f5f6f8;border:1px solid #dce0e6;border-radius:6px;padding:14px;text-align:center;">
+      <div style="font-size:20px;font-weight:600;color:#1a202c;">${data.summary.total_in_fda.toLocaleString()}</div>
+      <div style="font-size:9px;color:#64748b;margin-top:4px;text-transform:uppercase;letter-spacing:0.5px;">Total in FDA</div>
+    </div>
+    <div style="background:#f5f6f8;border:1px solid #dce0e6;border-radius:6px;padding:14px;text-align:center;">
+      <div style="font-size:20px;font-weight:600;color:#1a202c;">${seriousPercent}%</div>
+      <div style="font-size:9px;color:#64748b;margin-top:4px;text-transform:uppercase;letter-spacing:0.5px;">Serious Reports</div>
+    </div>
+    <div style="background:#f5f6f8;border:1px solid #dce0e6;border-radius:6px;padding:14px;text-align:center;">
+      <div style="font-size:20px;font-weight:600;color:#1a202c;">${fatalCount.toLocaleString()}</div>
+      <div style="font-size:9px;color:#64748b;margin-top:4px;text-transform:uppercase;letter-spacing:0.5px;">Fatal Outcomes</div>
+    </div>
+  </div>
+  
+  <div style="margin-bottom:20px;">
+    <h3 style="font-size:10px;font-weight:600;color:#64748b;margin:0 0 10px 0;text-transform:uppercase;letter-spacing:0.5px;">Top Reported Reactions</h3>
+    <div style="line-height:2.2;">${topReactions}</div>
+  </div>
+  
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:16px;">
     <div>
-      <div class="logo">EVE MEDICAL EVIDENCE</div>
-      <h1>${data.drug}</h1>
-      <h2>Adverse Event Report · Corpus ${data.corpus_version}</h2>
-    </div>
-    <div class="badge">✓ VERIFIED</div>
-  </div>
-  
-  <div class="stats-grid">
-    <div class="stat-box">
-      <div class="stat-value">${data.summary.total_events}</div>
-      <div class="stat-label">Events in Corpus</div>
-    </div>
-    <div class="stat-box">
-      <div class="stat-value">${data.summary.total_in_fda.toLocaleString()}</div>
-      <div class="stat-label">Total in FDA</div>
-    </div>
-    <div class="stat-box">
-      <div class="stat-value">${seriousPercent}%</div>
-      <div class="stat-label">Serious Reports</div>
-    </div>
-    <div class="stat-box">
-      <div class="stat-value fatal">${fatalCount}</div>
-      <div class="stat-label">Fatal Outcomes</div>
-    </div>
-  </div>
-  
-  <div class="section">
-    <h3>Top Reported Reactions</h3>
-    <div class="reactions">${topReactions}</div>
-  </div>
-  
-  <div class="two-col">
-    <div class="section">
-      <h3>Sex Distribution</h3>
-      <table>
-        <tr><th>Sex</th><th>Count</th></tr>
+      <h3 style="font-size:10px;font-weight:600;color:#64748b;margin:0 0 8px 0;text-transform:uppercase;letter-spacing:0.5px;">Sex Distribution</h3>
+      <table style="width:100%;border-collapse:collapse;font-size:11px;">
+        <tr><th style="text-align:left;padding:8px 12px;background:#f5f6f8;font-weight:600;color:#64748b;font-size:9px;text-transform:uppercase;border-bottom:1px solid #dce0e6;">Sex</th><th style="text-align:left;padding:8px 12px;background:#f5f6f8;font-weight:600;color:#64748b;font-size:9px;text-transform:uppercase;border-bottom:1px solid #dce0e6;">Count</th></tr>
         ${sexRows}
       </table>
     </div>
-    <div class="section">
-      <h3>Age Distribution</h3>
-      <table>
-        <tr><th>Age Group</th><th>Count</th></tr>
+    <div>
+      <h3 style="font-size:10px;font-weight:600;color:#64748b;margin:0 0 8px 0;text-transform:uppercase;letter-spacing:0.5px;">Age Distribution</h3>
+      <table style="width:100%;border-collapse:collapse;font-size:11px;">
+        <tr><th style="text-align:left;padding:8px 12px;background:#f5f6f8;font-weight:600;color:#64748b;font-size:9px;text-transform:uppercase;border-bottom:1px solid #dce0e6;">Age Group</th><th style="text-align:left;padding:8px 12px;background:#f5f6f8;font-weight:600;color:#64748b;font-size:9px;text-transform:uppercase;border-bottom:1px solid #dce0e6;">Count</th></tr>
         ${ageRows}
       </table>
     </div>
   </div>
   
-  <div class="section">
-    <h3>Outcome Distribution</h3>
-    <table>
-      <tr><th>Outcome</th><th>Count</th></tr>
+  <div style="margin-bottom:20px;">
+    <h3 style="font-size:10px;font-weight:600;color:#64748b;margin:0 0 8px 0;text-transform:uppercase;letter-spacing:0.5px;">Outcome Distribution</h3>
+    <table style="width:100%;border-collapse:collapse;font-size:11px;">
+      <tr><th style="text-align:left;padding:8px 12px;background:#f5f6f8;font-weight:600;color:#64748b;font-size:9px;text-transform:uppercase;border-bottom:1px solid #dce0e6;">Outcome</th><th style="text-align:left;padding:8px 12px;background:#f5f6f8;font-weight:600;color:#64748b;font-size:9px;text-transform:uppercase;border-bottom:1px solid #dce0e6;">Count</th></tr>
       ${outcomeRows}
     </table>
   </div>
   
-  <div class="verification">
-    <h3>🔐 Verification Data</h3>
-    <div class="hash"><strong>Corpus Version:</strong> ${data.corpus_version}</div>
-    <div class="hash"><strong>Root Hash:</strong> ${data.root_hash}</div>
-    <div class="hash"><strong>Stats Hash:</strong> ${data.stats_hash || 'N/A'}</div>
-    <div class="hash"><strong>Response Hash:</strong> ${data.response_hash}</div>
+  <div style="background:#f5f6f8;border:1px solid #dce0e6;border-radius:6px;padding:14px;margin-bottom:16px;">
+    <h3 style="font-size:10px;font-weight:600;color:#5a7a94;margin:0 0 10px 0;text-transform:uppercase;letter-spacing:0.5px;">Verification Data</h3>
+    <div style="font-family:SF Mono,Monaco,Consolas,monospace;font-size:9px;color:#64748b;line-height:1.8;">
+      <div><span style="color:#5a7a94;font-weight:500;">EVE Decision ID:</span> ${eveDecisionId}</div>
+      <div><span style="color:#5a7a94;font-weight:500;">Corpus Version:</span> ${corpusVersion}</div>
+      <div><span style="color:#5a7a94;font-weight:500;">Root Hash:</span> ${data.root_hash || 'N/A'}</div>
+      <div><span style="color:#5a7a94;font-weight:500;">Stats Hash:</span> ${data.stats_hash || 'N/A'}</div>
+    </div>
   </div>
   
-  <div class="disclaimer">
-    <strong>⚠️ Disclaimer:</strong> ${data.disclaimer}
-    <br><br>
-    <strong>Stats Disclaimer:</strong> ${data.stats_disclaimer || 'Based on reported adverse events in FDA FAERS. This visualization does not imply causality or risk.'}
+  <div style="background:#f5f6f8;border:1px solid #dce0e6;border-radius:6px;padding:14px;font-size:10px;color:#64748b;line-height:1.6;margin-bottom:20px;">
+    <strong style="color:#5a7a94;">Notice:</strong> This document is a visual export generated from EVE Medical Evidence. It reflects reported adverse event data from FDA FAERS and does not constitute medical advice or imply causality. Always consult qualified healthcare professionals for medical decisions.
   </div>
   
-  <div class="footer">
-    <p>EVE Medical Evidence · Patent Pending EVE-PAT-2026-001 · Generated ${new Date().toISOString().slice(0, 10)}</p>
-    <p>© 2026 Organiq Sweden AB</p>
+  <div style="border-top:1px solid #dce0e6;padding-top:14px;text-align:center;font-size:9px;color:#64748b;">
+    <div style="color:#5a7a94;margin-bottom:4px;">Presented via EVE · Evidence & Verification Engine</div>
+    <div>Snapshot: ${corpusVersion} · Generated: ${generatedDate}</div>
+    <div style="margin-top:4px;">Patent Pending EVE-PAT-2026-001</div>
   </div>
-</body>
-</html>
-`
+</div>`
 }
