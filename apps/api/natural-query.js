@@ -29,18 +29,65 @@ const VALID_PARAMS = {
 };
 
 /**
- * Detect language from question
+ * Detect language from question using word frequency scoring
+ * Highest score wins
  */
 function detectLanguage(text) {
-  // Simple heuristics - extend as needed
-  const svWords = /\b(för|och|är|med|hos|alla|vilka|finns|det|rapporter|biverkningar|dödsfall|kvinnor|män|äldre)\b/i;
-  const deWords = /\b(für|und|ist|mit|bei|alle|welche|gibt|das|berichte|nebenwirkungen|todesfälle|frauen|männer)\b/i;
-  const frWords = /\b(pour|et|est|avec|chez|tous|quels|existe|des|rapports|effets|décès|femmes|hommes)\b/i;
+  const normalizedText = text.toLowerCase();
   
-  if (svWords.test(text)) return 'sv';
-  if (deWords.test(text)) return 'de';
-  if (frWords.test(text)) return 'fr';
-  return 'en'; // Default to English
+  // Unique/distinctive words for each language (avoid cognates)
+  const langPatterns = {
+    de: {
+      // German-specific words with umlauts and unique patterns
+      words: ['über', 'gibt', 'für', 'und', 'ist', 'bei', 'alle', 'welche', 'berichte', 'nebenwirkungen', 'todesfälle', 'frauen', 'männer', 'wie', 'viele', 'sind', 'die', 'der', 'ein', 'eine', 'es', 'auf', 'zu', 'haben', 'werden', 'können'],
+      score: 0
+    },
+    sv: {
+      // Swedish-specific words with ö, ä, å
+      words: ['för', 'och', 'är', 'hos', 'alla', 'vilka', 'finns', 'det', 'rapporter', 'biverkningar', 'dödsfall', 'kvinnor', 'män', 'äldre', 'hur', 'många', 'vad', 'som', 'på', 'att', 'av', 'kan', 'har', 'ska', 'blir'],
+      score: 0
+    },
+    fr: {
+      // French-specific words with accents
+      words: ['pour', 'sont', 'avec', 'chez', 'tous', 'quels', 'existe', 'rapports', 'effets', 'décès', 'femmes', 'hommes', 'combien', 'les', 'sur', 'dans', 'que', 'qui', 'des', 'il', 'elle', 'ont', 'été', 'être', 'avoir'],
+      score: 0
+    },
+    es: {
+      // Spanish-specific words
+      words: ['para', 'cuántos', 'sobre', 'hay', 'con', 'los', 'las', 'efectos', 'muertes', 'mujeres', 'hombres', 'qué', 'son', 'tiene', 'están', 'puede', 'estos', 'estas'],
+      score: 0
+    },
+    en: {
+      // English-specific words
+      words: ['for', 'and', 'are', 'there', 'how', 'many', 'what', 'the', 'reports', 'deaths', 'effects', 'women', 'men', 'about', 'show', 'serious', 'common', 'side', 'have', 'been', 'which', 'does', 'this', 'that'],
+      score: 0
+    }
+  };
+  
+  // Score each language by counting matching words
+  for (const [lang, data] of Object.entries(langPatterns)) {
+    for (const word of data.words) {
+      // Match whole words only
+      const regex = new RegExp(`\\b${word}\\b`, 'i');
+      if (regex.test(normalizedText)) {
+        data.score++;
+      }
+    }
+  }
+  
+  // Find language with highest score
+  let maxScore = 0;
+  let detectedLang = 'en'; // Default
+  
+  for (const [lang, data] of Object.entries(langPatterns)) {
+    if (data.score > maxScore) {
+      maxScore = data.score;
+      detectedLang = lang;
+    }
+  }
+  
+  // If no clear winner (score = 0), default to English
+  return maxScore > 0 ? detectedLang : 'en';
 }
 
 /**
