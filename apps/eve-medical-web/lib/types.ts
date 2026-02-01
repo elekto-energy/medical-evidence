@@ -51,6 +51,7 @@ export interface Reaction {
 
 export interface QueryResponse {
   status: 'VERIFIED' | 'NO_MATCH' | 'ERROR'
+  eve_decision_id?: string
   corpus_version: string
   root_hash: string
   response_hash: string
