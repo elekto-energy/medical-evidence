@@ -2,12 +2,14 @@
  * Natural Language Query Endpoint
  * 
  * Trinity Pipeline:
- *   1. Claude L2 (Parser) - Tolkar fråga → strukturerade parametrar
- *   2. EVE L1 (Query) - Deterministisk query → verifierat resultat
- *   3. Claude L2 (Renderer) - Formaterar EVE-resultat → läsbart svar
+ *   1. Claude L2 (Parser) - Interprets question → structured parameters
+ *   2. EVE L1 (Query) - Deterministic query → verified result
+ *   3. Claude L2 (Renderer) - Formats EVE result → readable answer
  * 
- * Claude är ENDAST språklig adapter - aldrig expert.
- * All intelligens sker deterministiskt i EVE.
+ * Claude is ONLY a linguistic adapter - never an expert.
+ * All intelligence happens deterministically in EVE.
+ * 
+ * Language: User can ask in ANY language. Response is in same language.
  * 
  * Patent: EVE-PAT-2026-001
  */
@@ -27,32 +29,54 @@ const VALID_PARAMS = {
 };
 
 /**
+ * Detect language from question
+ */
+function detectLanguage(text) {
+  // Simple heuristics - extend as needed
+  const svWords = /\b(för|och|är|med|hos|alla|vilka|finns|det|rapporter|biverkningar|dödsfall|kvinnor|män|äldre)\b/i;
+  const deWords = /\b(für|und|ist|mit|bei|alle|welche|gibt|das|berichte|nebenwirkungen|todesfälle|frauen|männer)\b/i;
+  const frWords = /\b(pour|et|est|avec|chez|tous|quels|existe|des|rapports|effets|décès|femmes|hommes)\b/i;
+  
+  if (svWords.test(text)) return 'sv';
+  if (deWords.test(text)) return 'de';
+  if (frWords.test(text)) return 'fr';
+  return 'en'; // Default to English
+}
+
+/**
  * STEP 1: Parse natural language → structured query
  * Claude L2 - Parser role ONLY
  */
 async function parseQuestion(question, knownDrugs) {
-  const systemPrompt = `Du är en PARSER för medicinska frågor. Din ENDA uppgift är att extrahera strukturerade parametrar.
+  // System prompt is always in English for consistency
+  const systemPrompt = `You are a PARSER for medical queries. Your ONLY task is to extract structured parameters.
 
-TILLÅTNA PARAMETRAR:
-- drug: en av [${knownDrugs.join(', ')}]
-- sex: "Male" eller "Female" (eller null)
-- age_group: "0-17", "18-40", "41-64", "65-84", "85+" (eller null)
-- serious: true (allvarliga), false (icke-allvarliga), eller null (alla)
-- reaction: specifik reaktion om nämnd (eller null)
+ALLOWED PARAMETERS:
+- drug: one of [${knownDrugs.join(', ')}]
+- sex: "Male" or "Female" (or null)
+- age_group: "0-17", "18-40", "41-64", "65-84", "85+" (or null)
+- serious: true (serious), false (non-serious), or null (all)
+- reaction: specific reaction if mentioned (or null)
 
-REGLER:
-- Svara ENDAST med JSON
-- Inga förklaringar
-- Ingen medicinsk tolkning
-- Om läkemedel inte matchar listan, sätt drug: null
-- Om något är oklart, sätt null
+RULES:
+- Respond ONLY with JSON
+- No explanations
+- No medical interpretation
+- If drug doesn't match the list, set drug: null
+- If anything is unclear, set null
 
-EXEMPEL:
-Fråga: "Vilka biverkningar är vanligast för metformin hos kvinnor över 65?"
-Svar: {"drug":"metformin","sex":"Female","age_group":"65-84","serious":null,"reaction":null}
+EXAMPLES:
+Question: "What are the most common side effects for metformin in women over 65?"
+Answer: {"drug":"metformin","sex":"Female","age_group":"65-84","serious":null,"reaction":null}
 
-Fråga: "Allvarliga reaktioner för warfarin?"
-Svar: {"drug":"warfarin","sex":null,"age_group":null,"serious":true,"reaction":null}`;
+Question: "Serious reactions for warfarin?"
+Answer: {"drug":"warfarin","sex":null,"age_group":null,"serious":true,"reaction":null}
+
+Question: "Vilka biverkningar finns för aspirin?" (Swedish)
+Answer: {"drug":"aspirin","sex":null,"age_group":null,"serious":null,"reaction":null}
+
+Question: "Gibt es Todesfälle für metformin?" (German)
+Answer: {"drug":"metformin","sex":null,"age_group":null,"serious":null,"reaction":"death"}`;
 
   const response = await anthropic.messages.create({
     model: 'claude-sonnet-4-20250514',
@@ -76,30 +100,47 @@ Svar: {"drug":"warfarin","sex":null,"age_group":null,"serious":true,"reaction":n
 /**
  * STEP 3: Render EVE result → natural language
  * Claude L2 - Renderer role ONLY
+ * 
+ * Responds in the SAME language as the question
  */
 async function renderAnswer(eveResult, language, originalQuestion) {
-  const systemPrompt = `Du är en RENDERER för medicinska data. Din ENDA uppgift är att formulera EVE:s verifierade resultat som läsbar text.
+  const languageMap = {
+    en: 'English',
+    sv: 'Swedish',
+    de: 'German',
+    fr: 'French',
+    es: 'Spanish',
+    it: 'Italian',
+    nl: 'Dutch',
+    da: 'Danish',
+    no: 'Norwegian',
+    fi: 'Finnish'
+  };
+  
+  const langName = languageMap[language] || 'English';
+  
+  const systemPrompt = `You are a RENDERER for medical data. Your ONLY task is to formulate EVE's verified result as readable text.
 
-REGLER:
-- Använd ENDAST data från EVE-resultatet nedan
-- Lägg INTE till egen kunskap
-- Ge INGA rekommendationer eller tolkningar
-- Skriv på ${language === 'sv' ? 'svenska' : 'engelska'}
-- Håll svaret koncist (2-4 meningar)
-- Nämn antal rapporter och procent för topp-reaktioner
-- Avsluta med att detta är rapporterad data, inte medicinsk rådgivning
+RULES:
+- Use ONLY data from the EVE result below
+- Do NOT add your own knowledge
+- Give NO recommendations or interpretations
+- Write in ${langName}
+- Keep the response concise (2-4 sentences)
+- Mention the number of reports and percentages for top reactions
+- End by stating this is reported data, not medical advice
 
-EVE-RESULTAT:
+EVE RESULT:
 ${JSON.stringify(eveResult.results, null, 2)}
 
-FILTER SOM ANVÄNDES:
+FILTERS USED:
 ${eveResult.applied_filters.join(', ')}`;
 
   const response = await anthropic.messages.create({
     model: 'claude-sonnet-4-20250514',
     max_tokens: 500,
     system: systemPrompt,
-    messages: [{ role: 'user', content: `Formulera ett svar på frågan: "${originalQuestion}"` }]
+    messages: [{ role: 'user', content: `Formulate an answer to: "${originalQuestion}"` }]
   });
 
   return response.content[0].text.trim();
@@ -110,6 +151,10 @@ ${eveResult.applied_filters.join(', ')}`;
  */
 async function processNaturalQuery(question, language, guidedQueryFn, knownDrugs) {
   const startTime = Date.now();
+  
+  // Auto-detect language from question
+  const detectedLanguage = language || detectLanguage(question);
+  
   const pipeline = {
     parse: { model: 'CLAUDE_L2', status: 'pending' },
     query: { model: 'EVE_L1', status: 'pending' },
@@ -129,9 +174,16 @@ async function processNaturalQuery(question, language, guidedQueryFn, knownDrugs
 
     // Validate drug was found
     if (!params.drug) {
+      const noMatchMsg = {
+        en: 'Could not identify a drug in the question.',
+        sv: 'Kunde inte identifiera något läkemedel i frågan.',
+        de: 'Konnte kein Medikament in der Frage identifizieren.',
+        fr: 'Impossible d\'identifier un médicament dans la question.'
+      };
+      
       return {
         status: 'NO_MATCH',
-        error: 'Kunde inte identifiera något läkemedel i frågan.',
+        error: noMatchMsg[detectedLanguage] || noMatchMsg.en,
         available_drugs: knownDrugs,
         trinity: pipeline,
         processing_time_ms: Date.now() - startTime
@@ -158,13 +210,21 @@ async function processNaturalQuery(question, language, guidedQueryFn, knownDrugs
       };
     }
 
-    // STEP 3: Render answer
+    // STEP 3: Render answer (in detected language)
     const renderStart = Date.now();
-    const answerText = await renderAnswer(eveResult, language, question);
+    const answerText = await renderAnswer(eveResult, detectedLanguage, question);
     pipeline.render = {
       model: 'CLAUDE_L2',
       status: 'complete',
       time_ms: Date.now() - renderStart
+    };
+
+    // Disclaimer in user's language
+    const disclaimers = {
+      en: 'This is descriptive statistics from reported adverse events in FDA FAERS. It does not constitute medical advice and does not imply causality.',
+      sv: 'Detta är deskriptiv statistik baserad på rapporterade biverkningar i FDA FAERS. Det utgör inte medicinsk rådgivning och implicerar inte kausalitet.',
+      de: 'Dies ist deskriptive Statistik aus gemeldeten Nebenwirkungen in FDA FAERS. Sie stellt keine medizinische Beratung dar und impliziert keine Kausalität.',
+      fr: 'Il s\'agit de statistiques descriptives basées sur les effets indésirables signalés dans FDA FAERS. Cela ne constitue pas un avis médical et n\'implique pas de causalité.'
     };
 
     // Build final response
@@ -185,7 +245,7 @@ async function processNaturalQuery(question, language, guidedQueryFn, knownDrugs
       },
       
       answer: {
-        language: language,
+        language: detectedLanguage,
         text: answerText
       },
       
@@ -203,9 +263,7 @@ async function processNaturalQuery(question, language, guidedQueryFn, knownDrugs
         reproducible: true
       },
       
-      disclaimer: language === 'sv' 
-        ? 'Detta är deskriptiv statistik baserad på rapporterade biverkningar i FDA FAERS. Det utgör inte medicinsk rådgivning och implicerar inte kausalitet.'
-        : 'This is descriptive statistics from reported adverse events in FDA FAERS. It does not constitute medical advice and does not imply causality.',
+      disclaimer: disclaimers[detectedLanguage] || disclaimers.en,
       
       processing_time_ms: Date.now() - startTime
     };
@@ -220,4 +278,4 @@ async function processNaturalQuery(question, language, guidedQueryFn, knownDrugs
   }
 }
 
-module.exports = { processNaturalQuery, parseQuestion, renderAnswer };
+module.exports = { processNaturalQuery, parseQuestion, renderAnswer, detectLanguage };
