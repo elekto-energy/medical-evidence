@@ -52,9 +52,13 @@ export interface Reaction {
 export interface QueryResponse {
   status: 'VERIFIED' | 'NO_MATCH' | 'ERROR'
   eve_decision_id?: string
-  corpus_version: string
-  root_hash: string
-  response_hash: string
+  corpus_version?: string // legacy
+  root_hash?: string // legacy
+  corpus?: {
+    version: string
+    root_hash: string
+  }
+  response_hash?: string
   drug: string
   atc_code?: string | null
   atc_name?: string | null

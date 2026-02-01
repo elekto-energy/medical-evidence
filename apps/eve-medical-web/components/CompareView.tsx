@@ -29,7 +29,10 @@ export function CompareView({ drugA, drugB }: Props) {
         ])
         
         // EVE governance: corpus must match
-        if (resA.corpus_version !== resB.corpus_version) {
+        const versionA = resA.corpus?.version || resA.corpus_version
+        const versionB = resB.corpus?.version || resB.corpus_version
+        
+        if (versionA !== versionB) {
           setError('Comparison unavailable: datasets originate from different evidence snapshots.')
           return
         }
@@ -99,8 +102,8 @@ export function CompareView({ drugA, drugB }: Props) {
 
       {/* Corpus verification */}
       <div className="text-center text-xs text-eve-muted p-4 bg-eve-bg-subtle rounded-xl">
-        <div>Corpus: <span className="font-mono text-eve-accent">{dataA.corpus_version}</span></div>
-        <div className="mt-1">Root Hash: <span className="font-mono">{dataA.root_hash.slice(0, 32)}...</span></div>
+        <div>Corpus: <span className="font-mono text-eve-accent">{dataA.corpus?.version || dataA.corpus_version}</span></div>
+        <div className="mt-1">Root Hash: <span className="font-mono">{(dataA.corpus?.root_hash || dataA.root_hash || '').slice(0, 32)}...</span></div>
       </div>
     </div>
   )
