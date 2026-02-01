@@ -45,6 +45,7 @@
     "witness-mode"
   ],
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.72.1"
+    "@anthropic-ai/sdk": "^0.72.1",
+    "franc-min": "^6.2.0"
   }
 }

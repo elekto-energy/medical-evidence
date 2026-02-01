@@ -17,6 +17,21 @@ const crypto = require('crypto');
 const { processGuidedQuery } = require('./guided-query');
 const { processNaturalQuery } = require('./natural-query');
 const { processCompareQuery } = require('./compare-query');
+// ============================================
+// Safe String Helpers (L1 never crashes)
+// ============================================
+
+function safeLower(v) {
+  return typeof v === 'string' ? v.toLowerCase() : '';
+}
+
+
+// Fatal error logging
+process.on('uncaughtException', err => {
+  console.error('FATAL L1 ERROR:', err.stack);
+});
+
+
 
 // ============================================
 // Configuration
@@ -283,7 +298,7 @@ function processQuery(query, requestedVersion) {
   
   const manifests = loadManifests(version);
   const queryLower = query.toLowerCase().trim();
-  const knownDrugs = manifests.map(m => m.drug.toLowerCase());
+  const knownDrugs = manifests.map(m => m.drug?.toLowerCase?.() || "").filter(Boolean);
   
   let matchedDrug = null;
   for (const drug of knownDrugs) {
@@ -306,7 +321,7 @@ function processQuery(query, requestedVersion) {
     };
   }
   
-  const manifest = manifests.find(m => m.drug.toLowerCase() === matchedDrug);
+  const manifest = manifests.find(m => m.drug?.toLowerCase?.() || "" === matchedDrug);
   const objects = loadObjects(version, matchedDrug);
   const statsDoc = loadStats(version, matchedDrug);
   const metadata = loadDrugsMetadata(version);
@@ -441,7 +456,7 @@ const server = http.createServer(async (req, res) => {
       
       drugs.forEach(d => {
         for (const [area, list] of Object.entries(THERAPEUTIC_AREAS)) {
-          if (list.includes(d.drug.toLowerCase())) {
+          if (list.includes(d.drug?.toLowerCase?.() || "")) {
             d.therapeutic_area = area;
             d.atc_code = area.charAt(0);
             break;
@@ -577,7 +592,7 @@ const server = http.createServer(async (req, res) => {
       const language = body.lang || body.language || 'auto';
       const version = getLatestVersion();
       const manifests = version ? loadManifests(version) : [];
-      const knownDrugs = manifests.map(m => m.drug.toLowerCase());
+      const knownDrugs = manifests.map(m => m.drug?.toLowerCase?.() || "").filter(Boolean);
       
       const guidedQueryFn = (params) => processGuidedQuery(params, {
         loadRawEvents,
@@ -630,6 +645,7 @@ const server = http.createServer(async (req, res) => {
     res.end(JSON.stringify({ error: 'Not found' }));
     
   } catch (err) {
+    console.error("STACK:", err.stack);
     res.writeHead(500);
     res.end(JSON.stringify({ error: err.message }));
   }
