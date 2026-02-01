@@ -18,22 +18,14 @@ const ATC_COLORS: Record<string, string> = {
   'M': 'bg-atc-M/20 text-atc-M',
   'J': 'bg-atc-J/20 text-atc-J',
   'R': 'bg-atc-R/20 text-atc-R',
-}
-
-// Map drug to ATC code
-const DRUG_ATC: Record<string, string> = {
-  'metformin': 'A', 'insulin': 'A', 'glimepiride': 'A', 'sitagliptin': 'A', 'empagliflozin': 'A', 'liraglutide': 'A',
-  'atorvastatin': 'C', 'simvastatin': 'C', 'warfarin': 'C', 'apixaban': 'C', 'metoprolol': 'C', 'amlodipine': 'C', 'lisinopril': 'C',
-  'sertraline': 'N', 'fluoxetine': 'N', 'escitalopram': 'N', 'venlafaxine': 'N', 'quetiapine': 'N', 'risperidone': 'N', 'diazepam': 'N',
-  'ibuprofen': 'M', 'aspirin': 'M', 'paracetamol': 'M', 'naproxen': 'M', 'diclofenac': 'M', 'tramadol': 'M',
-  'amoxicillin': 'J', 'ciprofloxacin': 'J', 'doxycycline': 'J', 'azithromycin': 'J', 'vancomycin': 'J',
-  'salbutamol': 'R', 'budesonide': 'R', 'fluticasone': 'R', 'montelukast': 'R', 'cetirizine': 'R',
+  '?': 'bg-gray-100 text-gray-400',
 }
 
 export function DrugDetail({ data }: Props) {
   const [selectedReaction, setSelectedReaction] = useState<string | null>(null)
   
-  const atcCode = DRUG_ATC[data.drug.toLowerCase()] || '?'
+  // ATC code now comes from corpus metadata (deterministic)
+  const atcCode = data.atc_code || '?'
   const stats = data.stats
   
   const seriousPercent = stats 

@@ -114,6 +114,14 @@ function loadObjects(version, drug) {
   return JSON.parse(fs.readFileSync(objectsPath, 'utf-8'));
 }
 
+function loadDrugsMetadata(version) {
+  const metadataPath = path.join(CORPUS_DIR, version, 'drugs_metadata.json');
+  
+  if (!fs.existsSync(metadataPath)) return null;
+  
+  return JSON.parse(fs.readFileSync(metadataPath, 'utf-8'));
+}
+
 function loadProof(version) {
   const proofPath = path.join(PROOFS_DIR, `${version}_proof.json`);
   
@@ -294,6 +302,8 @@ function processQuery(query, requestedVersion) {
   const manifest = manifests.find(m => m.drug.toLowerCase() === matchedDrug);
   const objects = loadObjects(version, matchedDrug);
   const statsDoc = loadStats(version, matchedDrug);
+  const metadata = loadDrugsMetadata(version);
+  const drugMeta = metadata?.drugs?.[matchedDrug] || null;
   
   const citations = objects.slice(0, 10).map(obj => ({
     id: obj.id,
@@ -315,6 +325,8 @@ function processQuery(query, requestedVersion) {
     status: 'VERIFIED',
     eve_decision_id: decision.eve_decision_id,
     drug: matchedDrug,
+    atc_code: drugMeta?.atc_code || null,
+    atc_name: drugMeta?.atc_name || null,
     corpus: {
       version: version,
       root_hash: proof.root_hash

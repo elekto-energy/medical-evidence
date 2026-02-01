@@ -56,6 +56,8 @@ export interface QueryResponse {
   root_hash: string
   response_hash: string
   drug: string
+  atc_code?: string | null
+  atc_name?: string | null
   summary: {
     total_events: number
     total_in_fda: number
