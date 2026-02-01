@@ -1,0 +1,259 @@
+{
+  "corpus_version": "v20260131-01",
+  "generated_at": "2026-02-01T14:49:23.904Z",
+  "source": "PubChem",
+  "structures": [
+    {
+      "drug": "metformin",
+      "cid": 4091,
+      "file": "metformin_4091.sdf",
+      "structure_type": "3d",
+      "sha256": "540903b566ab5776aa4af83e631c1f45f30b6c22afe03c0e4c278585827a8548"
+    },
+    {
+      "drug": "insulin",
+      "cid": 16129672,
+      "file": "insulin_16129672.sdf",
+      "structure_type": "2d",
+      "sha256": "d6685220d713073a3fb7de7c4f34931b5266ed5894056a91156610bc89940a9d"
+    },
+    {
+      "drug": "glimepiride",
+      "cid": 3476,
+      "file": "glimepiride_3476.sdf",
+      "structure_type": "3d",
+      "sha256": "3da90faacf98fe956f712889e7e69cfe942cae6aceb3a18f0eed3cebeea4173d"
+    },
+    {
+      "drug": "sitagliptin",
+      "cid": 4369359,
+      "file": "sitagliptin_4369359.sdf",
+      "structure_type": "3d",
+      "sha256": "cd8137c14a4a2e69734c5cb6e3b335cc15fb1d23f07c4002746e83f4795282ec"
+    },
+    {
+      "drug": "empagliflozin",
+      "cid": 11949646,
+      "file": "empagliflozin_11949646.sdf",
+      "structure_type": "3d",
+      "sha256": "5c9828284e06a89afc5a06910484854a4880ea5c35eae639d8b7f4dd009e4900"
+    },
+    {
+      "drug": "liraglutide",
+      "cid": 16134956,
+      "file": "liraglutide_16134956.sdf",
+      "structure_type": "2d",
+      "sha256": "4ac890a12cec5409500c94c439267a32f0fa62e69bfaf871f6db05e7a18eb48e"
+    },
+    {
+      "drug": "atorvastatin",
+      "cid": 60823,
+      "file": "atorvastatin_60823.sdf",
+      "structure_type": "3d",
+      "sha256": "102785f1c20cbc43ac7f26fb1021b2e8099b6d8e42f43009c6ca1410937cedae"
+    },
+    {
+      "drug": "simvastatin",
+      "cid": 54454,
+      "file": "simvastatin_54454.sdf",
+      "structure_type": "3d",
+      "sha256": "1f730f8f60f30ccf2536ced12cc6725d7cf34d930f562157a3ff616e406072ab"
+    },
+    {
+      "drug": "warfarin",
+      "cid": 54678486,
+      "file": "warfarin_54678486.sdf",
+      "structure_type": "3d",
+      "sha256": "3e67ee09bd9eb9030930fb2369b544959530b5cca6291b2d4cccaa6acdb74324"
+    },
+    {
+      "drug": "apixaban",
+      "cid": 10182969,
+      "file": "apixaban_10182969.sdf",
+      "structure_type": "3d",
+      "sha256": "fd3bae46401851ee4f1e433287114d2db481a9973c5345bbd62f9f9ae7c2b346"
+    },
+    {
+      "drug": "metoprolol",
+      "cid": 4171,
+      "file": "metoprolol_4171.sdf",
+      "structure_type": "3d",
+      "sha256": "7af0de0a98a72a4934a8e797b8710d6454616764edbe40f5bf59df2f466838fb"
+    },
+    {
+      "drug": "amlodipine",
+      "cid": 2162,
+      "file": "amlodipine_2162.sdf",
+      "structure_type": "3d",
+      "sha256": "667ffdcdc58bb326a3f861624b0fcb7a8c3c894e95bc4f513f34b66e9a4a21a4"
+    },
+    {
+      "drug": "lisinopril",
+      "cid": 5362119,
+      "file": "lisinopril_5362119.sdf",
+      "structure_type": "3d",
+      "sha256": "f0193c51f375630cd5bafcd120e884f3bc4a889c59c1c4d318c1bbc7e8d2f299"
+    },
+    {
+      "drug": "sertraline",
+      "cid": 68617,
+      "file": "sertraline_68617.sdf",
+      "structure_type": "3d",
+      "sha256": "c82dac6878ab5fe889cf9c777f585c75354124d6f63efdfa9cadc8afbf422480"
+    },
+    {
+      "drug": "fluoxetine",
+      "cid": 3386,
+      "file": "fluoxetine_3386.sdf",
+      "structure_type": "3d",
+      "sha256": "3d9fb3cfa053448a4343557010d8ebde80fec7438f1243c76246eafe4271e623"
+    },
+    {
+      "drug": "escitalopram",
+      "cid": 146570,
+      "file": "escitalopram_146570.sdf",
+      "structure_type": "3d",
+      "sha256": "10291c25b5d7900a496e6b779ad382b0e9cb7b44b1c91d5c873b1f9fc1fffcb9"
+    },
+    {
+      "drug": "venlafaxine",
+      "cid": 5656,
+      "file": "venlafaxine_5656.sdf",
+      "structure_type": "3d",
+      "sha256": "7ad4048d12832904225216e3d562c779b614eb7774f01d6ee9d7c1e99702f5a0"
+    },
+    {
+      "drug": "quetiapine",
+      "cid": 5002,
+      "file": "quetiapine_5002.sdf",
+      "structure_type": "3d",
+      "sha256": "f7853f8468697f4d45459c46d256b020592b6bc7ab84844155c5cd0c4f61e6fb"
+    },
+    {
+      "drug": "risperidone",
+      "cid": 5073,
+      "file": "risperidone_5073.sdf",
+      "structure_type": "3d",
+      "sha256": "e6b79f29c3d6264c15163651a8d7f0c0c69d5f716b7b8b54645dd3c6fe0e5072"
+    },
+    {
+      "drug": "diazepam",
+      "cid": 3016,
+      "file": "diazepam_3016.sdf",
+      "structure_type": "3d",
+      "sha256": "a797216339a096c53a0e0757544e66e7170f19669d7772ab6430c1f816c69c00"
+    },
+    {
+      "drug": "ibuprofen",
+      "cid": 3672,
+      "file": "ibuprofen_3672.sdf",
+      "structure_type": "3d",
+      "sha256": "4c97b5af3c3c10e3904e3c77c53c22fb047028df9a8d2241a34a73d9f2dcadd8"
+    },
+    {
+      "drug": "aspirin",
+      "cid": 2244,
+      "file": "aspirin_2244.sdf",
+      "structure_type": "3d",
+      "sha256": "56103efb48c917889c10dd541289d88461a6ae05255567cb7bb678552da9d1ff"
+    },
+    {
+      "drug": "paracetamol",
+      "cid": 1983,
+      "file": "paracetamol_1983.sdf",
+      "structure_type": "3d",
+      "sha256": "29b75e90f99324610c5acbe3edbdffe8b7cb23c1fb5c0fae40727c53ab64f350"
+    },
+    {
+      "drug": "naproxen",
+      "cid": 156391,
+      "file": "naproxen_156391.sdf",
+      "structure_type": "3d",
+      "sha256": "389c256e2ee65eb3ead2a078ea787b95eeb558f2a2291fb4a0f1042f8338890e"
+    },
+    {
+      "drug": "diclofenac",
+      "cid": 3033,
+      "file": "diclofenac_3033.sdf",
+      "structure_type": "3d",
+      "sha256": "34ba5ea120083c4476105a67c7b91fa38e56dd0b4123edaeebdc958791bb83ee"
+    },
+    {
+      "drug": "tramadol",
+      "cid": 33741,
+      "file": "tramadol_33741.sdf",
+      "structure_type": "3d",
+      "sha256": "922da914dc75f57c4e3e6fbb20f840458a32bc5b6951fdbd1fd1cd4c6dc1f531"
+    },
+    {
+      "drug": "amoxicillin",
+      "cid": 33613,
+      "file": "amoxicillin_33613.sdf",
+      "structure_type": "3d",
+      "sha256": "14948d102bd6b42fdc7aa2bebf8dd6179e2dee646d0529197be4e2d0a2ce3ea2"
+    },
+    {
+      "drug": "ciprofloxacin",
+      "cid": 2764,
+      "file": "ciprofloxacin_2764.sdf",
+      "structure_type": "3d",
+      "sha256": "3cd0f3bf9d1735a01e93ccec3428bd62083c4b51a573b02d5ee7abf6f6eb0cb1"
+    },
+    {
+      "drug": "doxycycline",
+      "cid": 54671203,
+      "file": "doxycycline_54671203.sdf",
+      "structure_type": "3d",
+      "sha256": "731027ac8e1ef8f3b5174ffeffbd28c195df25c78ef18d264fbf96472f6f132f"
+    },
+    {
+      "drug": "azithromycin",
+      "cid": 447043,
+      "file": "azithromycin_447043.sdf",
+      "structure_type": "2d",
+      "sha256": "19099ed9338a951a812c62b67d32b016e31ef396f3767a393a98b5dc2bd24b7f"
+    },
+    {
+      "drug": "vancomycin",
+      "cid": 14969,
+      "file": "vancomycin_14969.sdf",
+      "structure_type": "2d",
+      "sha256": "357535fde2a69d604e3e296e3694246c6f386e86cbf30ebebbafa3a8eb623301"
+    },
+    {
+      "drug": "salbutamol",
+      "cid": 2083,
+      "file": "salbutamol_2083.sdf",
+      "structure_type": "3d",
+      "sha256": "3f7e75d081ef0ab3de7cdf1c8a23127f7c16582283fdf6ac09670e1154da49ef"
+    },
+    {
+      "drug": "budesonide",
+      "cid": 5281004,
+      "file": "budesonide_5281004.sdf",
+      "structure_type": "3d",
+      "sha256": "fbcbce82ab441f71f9519a4f2f2e35055fa76e53a4cc1d362873867c902a0142"
+    },
+    {
+      "drug": "fluticasone",
+      "cid": 444036,
+      "file": "fluticasone_444036.sdf",
+      "structure_type": "3d",
+      "sha256": "c065b753e46454eba7e1f80790d4ed328631152d64eb7ac8d120f01ed8198fd0"
+    },
+    {
+      "drug": "montelukast",
+      "cid": 5281040,
+      "file": "montelukast_5281040.sdf",
+      "structure_type": "3d",
+      "sha256": "da0454ea59c504360d0049bef9e734a8ee4cbfa8a18daee74a45098521eec4f0"
+    },
+    {
+      "drug": "cetirizine",
+      "cid": 2678,
+      "file": "cetirizine_2678.sdf",
+      "structure_type": "3d",
+      "sha256": "404b017762642551df997626afea7772be9314b9a7f7b64f856bd9933f34a703"
+    }
+  ]
+}

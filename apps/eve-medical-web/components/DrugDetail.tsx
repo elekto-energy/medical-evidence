@@ -1,10 +1,11 @@
-'use client'
+﻿'use client'
 
 import { useState } from 'react'
 import type { QueryResponse } from '@/lib/types'
 import { BarChart } from './charts/BarChart'
 import { ReactionDrawer } from './ReactionDrawer'
 import { ExportPdfButton } from './ExportPdfButton'
+import { MoleculeViewer } from './MoleculeViewer'
 
 interface Props {
   data: QueryResponse
@@ -153,10 +154,21 @@ export function DrugDetail({ data }: Props) {
           
           {/* Disclaimer */}
           <div className="disclaimer">
-            <span className="disclaimer-icon">ℹ</span>
+            <span className="disclaimer-icon">â„¹</span>
             {data.disclaimer}
           </div>
         </div>
+      </div>
+      
+            {/* Molecular Structure - Reference Section (separate from evidence flow) */}
+      <div className="evidence-card mt-6">
+        <h3 className="text-sm font-medium text-eve-muted mb-1">
+          Molecular Structure <span className="font-normal">(reference)</span>
+        </h3>
+        <p className="text-xs text-eve-muted mb-4">
+          Structural visualization for identification only.
+        </p>
+        <MoleculeViewer drugName={data.drug} />
       </div>
       
       {/* Reaction Drawer */}
@@ -171,3 +183,4 @@ export function DrugDetail({ data }: Props) {
     </>
   )
 }
+
