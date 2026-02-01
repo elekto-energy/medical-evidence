@@ -163,7 +163,7 @@ function generateReportElement(data: QueryResponse): string {
     <div style="font-family:SF Mono,Monaco,Consolas,monospace;font-size:10px;color:#64748b;line-height:2;">
       <div><span style="color:#0d9488;font-weight:500;">EVE Decision ID:</span> ${eveDecisionId}</div>
       <div><span style="color:#0d9488;font-weight:500;">Corpus Version:</span> ${corpusVersion}</div>
-      <div><span style="color:#0d9488;font-weight:500;">Root Hash:</span> ${data.root_hash || 'N/A'}</div>
+      <div><span style="color:#0d9488;font-weight:500;">Root Hash:</span> ${data.corpus.root_hash || 'N/A'}</div>
       <div><span style="color:#0d9488;font-weight:500;">Stats Hash:</span> ${data.stats_hash || 'N/A'}</div>
     </div>
   </div>
@@ -177,4 +177,5 @@ function generateReportElement(data: QueryResponse): string {
   </div>
 </div>`
 }
+
 
