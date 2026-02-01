@@ -63,7 +63,7 @@ export function ExportPdfButton({ data }: Props) {
         heightLeft -= pdfHeight
       }
       
-      const filename = `${data.drug}_adverse_events_${data.corpus_version || 'draft'}.pdf`
+      const filename = `${data.drug}_adverse_events_${data.corpus.version || 'draft'}.pdf`
       pdf.save(filename)
       
     } catch (error) {
