@@ -71,7 +71,7 @@ export function DrugDetail({ data }: Props) {
             <ul className="text-xs text-eve-muted space-y-1">
               <li>• Reported adverse events from FDA FAERS</li>
               <li>• Descriptive statistics from a locked corpus</li>
-              <li>• Verifiable data with cryptographic hashes</li>
+              <li>• Data verified with cryptographic hashes</li>
             </ul>
           </div>
           <div className="p-4 bg-eve-bg-subtle border border-eve-border rounded-xl">
@@ -92,6 +92,7 @@ export function DrugDetail({ data }: Props) {
             <div className="evidence-stat">
               <div className="evidence-stat-value">{data.summary.total_events}</div>
               <div className="evidence-stat-label">Events in Corpus</div>
+              <div className="text-[10px] text-eve-muted mt-1">{data.corpus_version}</div>
             </div>
             <div className="evidence-stat">
               <div className="evidence-stat-value">{data.summary.total_in_fda.toLocaleString()}</div>
@@ -207,6 +208,9 @@ export function DrugDetail({ data }: Props) {
     </>
   )
 }
+
+
+
 
 
 
