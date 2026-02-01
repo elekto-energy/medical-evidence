@@ -90,16 +90,28 @@ export interface Report {
 
 export interface ReactionQueryResponse {
   status: 'VERIFIED' | 'ERROR'
+  eve_decision_id?: string
   filter_type: 'REACTION'
   drug: string
   reaction: string
-  corpus_version: string
-  root_hash: string
-  total_events_in_corpus: number
-  filtered_count: number
-  reports: Report[]
+  corpus: {
+    version: string
+    root_hash: string
+  }
+  results: {
+    total_events_in_corpus: number
+    filtered_count: number
+    reports: Report[]
+  }
+  verification: {
+    query_hash: string
+    result_hash: string
+    context_hash: string
+    governance: string
+    policy: string
+    reproducible: boolean
+  }
   generation_mode: 'VERIFIED_DETERMINISTIC'
-  verification_status: 'VERIFIED'
-  note: string
+  disclaimer: string
   processing_time_ms: number
 }

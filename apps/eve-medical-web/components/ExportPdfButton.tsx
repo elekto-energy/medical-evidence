@@ -16,13 +16,11 @@ export function ExportPdfButton({ data }: Props) {
     setLoading(true)
     
     try {
-      // Dynamically import libraries (client-side only)
       const [{ default: jsPDF }, { default: html2canvas }] = await Promise.all([
         import('jspdf'),
         import('html2canvas')
       ])
       
-      // Create a temporary container with the report content
       const reportHtml = generateReportElement(data)
       const container = document.createElement('div')
       container.innerHTML = reportHtml
@@ -30,7 +28,7 @@ export function ExportPdfButton({ data }: Props) {
       container.style.left = '-9999px'
       container.style.top = '0'
       container.style.width = '794px'
-      container.style.background = '#ffffff'
+      container.style.background = '#fafaf9'
       document.body.appendChild(container)
       
       await new Promise(resolve => setTimeout(resolve, 100))
@@ -39,16 +37,12 @@ export function ExportPdfButton({ data }: Props) {
         scale: 2,
         useCORS: true,
         logging: false,
-        backgroundColor: '#ffffff'
+        backgroundColor: '#fafaf9'
       })
       
       document.body.removeChild(container)
       
-      const pdf = new jsPDF({
-        orientation: 'portrait',
-        unit: 'mm',
-        format: 'a4'
-      })
+      const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' })
       
       const imgData = canvas.toDataURL('image/png')
       const pdfWidth = pdf.internal.pageSize.getWidth()
@@ -103,98 +97,83 @@ function generateReportElement(data: QueryResponse): string {
   const generatedDate = new Date().toISOString().slice(0, 10)
   
   const topReactions = data.summary.top_reactions.slice(0, 10)
-    .map(r => `<span style="background:#f5f6f8;border:1px solid #dce0e6;padding:4px 10px;border-radius:4px;font-size:11px;display:inline-block;margin:2px;">${r.reaction} (${r.count})</span>`)
+    .map(r => `<span style="background:#f5f5f4;border:1px solid #e7e5e4;padding:5px 12px;border-radius:6px;font-size:12px;display:inline-block;margin:3px;color:#44403c;">${r.reaction} <span style="color:#0d9488;font-weight:600;">${r.count}</span></span>`)
     .join(' ')
   
-  const sexRows = stats ? Object.entries(stats.sex_distribution)
-    .filter(([, v]) => v > 0)
-    .map(([k, v]) => `<tr><td style="padding:8px 12px;border-bottom:1px solid #dce0e6;">${k}</td><td style="padding:8px 12px;border-bottom:1px solid #dce0e6;">${v}</td></tr>`)
-    .join('') : ''
+  const thStyle = 'text-align:left;padding:10px 14px;background:#f5f5f4;font-weight:600;color:#78716c;font-size:10px;text-transform:uppercase;letter-spacing:0.05em;border-bottom:1px solid #e7e5e4;'
+  const tdStyle = 'padding:10px 14px;border-bottom:1px solid #e7e5e4;color:#44403c;'
   
-  const ageRows = stats ? Object.entries(stats.age_distribution)
-    .filter(([, v]) => v > 0)
-    .map(([k, v]) => `<tr><td style="padding:8px 12px;border-bottom:1px solid #dce0e6;">${k}</td><td style="padding:8px 12px;border-bottom:1px solid #dce0e6;">${v}</td></tr>`)
-    .join('') : ''
-  
-  const outcomeRows = stats ? Object.entries(stats.outcome_distribution)
-    .filter(([, v]) => v > 0)
-    .map(([k, v]) => `<tr><td style="padding:8px 12px;border-bottom:1px solid #dce0e6;">${k}</td><td style="padding:8px 12px;border-bottom:1px solid #dce0e6;">${v}</td></tr>`)
-    .join('') : ''
+  const sexRows = stats ? Object.entries(stats.sex_distribution).filter(([, v]) => v > 0).map(([k, v]) => `<tr><td style="${tdStyle}">${k}</td><td style="${tdStyle}">${v}</td></tr>`).join('') : ''
+  const ageRows = stats ? Object.entries(stats.age_distribution).filter(([, v]) => v > 0).map(([k, v]) => `<tr><td style="${tdStyle}">${k}</td><td style="${tdStyle}">${v}</td></tr>`).join('') : ''
+  const outcomeRows = stats ? Object.entries(stats.outcome_distribution).filter(([, v]) => v > 0).map(([k, v]) => `<tr><td style="${tdStyle}">${k}</td><td style="${tdStyle}">${v}</td></tr>`).join('') : ''
 
-  return `<div style="font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif;padding:40px;color:#2d3748;line-height:1.5;background:#fff;">
-  <div style="border-bottom:1px solid #dce0e6;padding-bottom:16px;margin-bottom:24px;">
-    <h1 style="font-size:26px;font-weight:600;text-transform:capitalize;color:#1a202c;margin:0 0 4px 0;">${data.drug}</h1>
-    <div style="font-size:13px;color:#64748b;">Adverse Event Summary from FDA FAERS</div>
-    <div style="font-size:11px;color:#64748b;margin-top:6px;">Snapshot: ${corpusVersion}</div>
+  return `<div style="font-family:-apple-system,BlinkMacSystemFont,SF Pro Text,Segoe UI,Roboto,sans-serif;padding:44px;color:#44403c;line-height:1.6;background:#fafaf9;">
+  <div style="border-bottom:1px solid #e7e5e4;padding-bottom:20px;margin-bottom:28px;">
+    <h1 style="font-size:28px;font-weight:600;text-transform:capitalize;color:#1c1917;margin:0 0 6px 0;">${data.drug}</h1>
+    <div style="font-size:14px;color:#78716c;">Adverse Event Summary · FDA FAERS</div>
+    <div style="font-size:12px;color:#78716c;margin-top:8px;">Snapshot: ${corpusVersion}</div>
   </div>
-  
-  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px;">
-    <div style="background:#f5f6f8;border:1px solid #dce0e6;border-radius:6px;padding:14px;text-align:center;">
-      <div style="font-size:20px;font-weight:600;color:#1a202c;">${data.summary.total_events.toLocaleString()}</div>
-      <div style="font-size:9px;color:#64748b;margin-top:4px;text-transform:uppercase;letter-spacing:0.5px;">Events in Corpus</div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px;">
+    <div style="background:#fff;border:1px solid #e7e5e4;border-radius:10px;padding:18px;text-align:center;">
+      <div style="font-size:24px;font-weight:600;color:#1c1917;">${data.summary.total_events.toLocaleString()}</div>
+      <div style="font-size:10px;color:#78716c;margin-top:6px;text-transform:uppercase;letter-spacing:0.05em;font-weight:500;">Events in Corpus</div>
     </div>
-    <div style="background:#f5f6f8;border:1px solid #dce0e6;border-radius:6px;padding:14px;text-align:center;">
-      <div style="font-size:20px;font-weight:600;color:#1a202c;">${data.summary.total_in_fda.toLocaleString()}</div>
-      <div style="font-size:9px;color:#64748b;margin-top:4px;text-transform:uppercase;letter-spacing:0.5px;">Total in FDA</div>
+    <div style="background:#fff;border:1px solid #e7e5e4;border-radius:10px;padding:18px;text-align:center;">
+      <div style="font-size:24px;font-weight:600;color:#1c1917;">${data.summary.total_in_fda.toLocaleString()}</div>
+      <div style="font-size:10px;color:#78716c;margin-top:6px;text-transform:uppercase;letter-spacing:0.05em;font-weight:500;">Total in FDA</div>
     </div>
-    <div style="background:#f5f6f8;border:1px solid #dce0e6;border-radius:6px;padding:14px;text-align:center;">
-      <div style="font-size:20px;font-weight:600;color:#1a202c;">${seriousPercent}%</div>
-      <div style="font-size:9px;color:#64748b;margin-top:4px;text-transform:uppercase;letter-spacing:0.5px;">Serious Reports</div>
+    <div style="background:#fff;border:1px solid #e7e5e4;border-radius:10px;padding:18px;text-align:center;">
+      <div style="font-size:24px;font-weight:600;color:#1c1917;">${seriousPercent}%</div>
+      <div style="font-size:10px;color:#78716c;margin-top:6px;text-transform:uppercase;letter-spacing:0.05em;font-weight:500;">Serious Reports</div>
     </div>
-    <div style="background:#f5f6f8;border:1px solid #dce0e6;border-radius:6px;padding:14px;text-align:center;">
-      <div style="font-size:20px;font-weight:600;color:#1a202c;">${fatalCount.toLocaleString()}</div>
-      <div style="font-size:9px;color:#64748b;margin-top:4px;text-transform:uppercase;letter-spacing:0.5px;">Fatal Outcomes</div>
+    <div style="background:#fff;border:1px solid #e7e5e4;border-radius:10px;padding:18px;text-align:center;">
+      <div style="font-size:24px;font-weight:600;color:#1c1917;">${fatalCount.toLocaleString()}</div>
+      <div style="font-size:10px;color:#78716c;margin-top:6px;text-transform:uppercase;letter-spacing:0.05em;font-weight:500;">Fatal Outcomes</div>
     </div>
   </div>
-  
-  <div style="margin-bottom:20px;">
-    <h3 style="font-size:10px;font-weight:600;color:#64748b;margin:0 0 10px 0;text-transform:uppercase;letter-spacing:0.5px;">Top Reported Reactions</h3>
-    <div style="line-height:2.2;">${topReactions}</div>
+  <div style="margin-bottom:24px;">
+    <h3 style="font-size:11px;font-weight:600;color:#78716c;margin:0 0 12px 0;text-transform:uppercase;letter-spacing:0.05em;">Top Reported Reactions</h3>
+    <div style="line-height:2.4;">${topReactions}</div>
   </div>
-  
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:16px;">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:20px;">
     <div>
-      <h3 style="font-size:10px;font-weight:600;color:#64748b;margin:0 0 8px 0;text-transform:uppercase;letter-spacing:0.5px;">Sex Distribution</h3>
-      <table style="width:100%;border-collapse:collapse;font-size:11px;">
-        <tr><th style="text-align:left;padding:8px 12px;background:#f5f6f8;font-weight:600;color:#64748b;font-size:9px;text-transform:uppercase;border-bottom:1px solid #dce0e6;">Sex</th><th style="text-align:left;padding:8px 12px;background:#f5f6f8;font-weight:600;color:#64748b;font-size:9px;text-transform:uppercase;border-bottom:1px solid #dce0e6;">Count</th></tr>
+      <h3 style="font-size:11px;font-weight:600;color:#78716c;margin:0 0 10px 0;text-transform:uppercase;letter-spacing:0.05em;">Sex Distribution</h3>
+      <table style="width:100%;border-collapse:collapse;font-size:13px;background:#fff;border-radius:8px;overflow:hidden;border:1px solid #e7e5e4;">
+        <tr><th style="${thStyle}">Sex</th><th style="${thStyle}">Count</th></tr>
         ${sexRows}
       </table>
     </div>
     <div>
-      <h3 style="font-size:10px;font-weight:600;color:#64748b;margin:0 0 8px 0;text-transform:uppercase;letter-spacing:0.5px;">Age Distribution</h3>
-      <table style="width:100%;border-collapse:collapse;font-size:11px;">
-        <tr><th style="text-align:left;padding:8px 12px;background:#f5f6f8;font-weight:600;color:#64748b;font-size:9px;text-transform:uppercase;border-bottom:1px solid #dce0e6;">Age Group</th><th style="text-align:left;padding:8px 12px;background:#f5f6f8;font-weight:600;color:#64748b;font-size:9px;text-transform:uppercase;border-bottom:1px solid #dce0e6;">Count</th></tr>
+      <h3 style="font-size:11px;font-weight:600;color:#78716c;margin:0 0 10px 0;text-transform:uppercase;letter-spacing:0.05em;">Age Distribution</h3>
+      <table style="width:100%;border-collapse:collapse;font-size:13px;background:#fff;border-radius:8px;overflow:hidden;border:1px solid #e7e5e4;">
+        <tr><th style="${thStyle}">Age Group</th><th style="${thStyle}">Count</th></tr>
         ${ageRows}
       </table>
     </div>
   </div>
-  
-  <div style="margin-bottom:20px;">
-    <h3 style="font-size:10px;font-weight:600;color:#64748b;margin:0 0 8px 0;text-transform:uppercase;letter-spacing:0.5px;">Outcome Distribution</h3>
-    <table style="width:100%;border-collapse:collapse;font-size:11px;">
-      <tr><th style="text-align:left;padding:8px 12px;background:#f5f6f8;font-weight:600;color:#64748b;font-size:9px;text-transform:uppercase;border-bottom:1px solid #dce0e6;">Outcome</th><th style="text-align:left;padding:8px 12px;background:#f5f6f8;font-weight:600;color:#64748b;font-size:9px;text-transform:uppercase;border-bottom:1px solid #dce0e6;">Count</th></tr>
+  <div style="margin-bottom:24px;">
+    <h3 style="font-size:11px;font-weight:600;color:#78716c;margin:0 0 10px 0;text-transform:uppercase;letter-spacing:0.05em;">Outcome Distribution</h3>
+    <table style="width:100%;border-collapse:collapse;font-size:13px;background:#fff;border-radius:8px;overflow:hidden;border:1px solid #e7e5e4;">
+      <tr><th style="${thStyle}">Outcome</th><th style="${thStyle}">Count</th></tr>
       ${outcomeRows}
     </table>
   </div>
-  
-  <div style="background:#f5f6f8;border:1px solid #dce0e6;border-radius:6px;padding:14px;margin-bottom:16px;">
-    <h3 style="font-size:10px;font-weight:600;color:#5a7a94;margin:0 0 10px 0;text-transform:uppercase;letter-spacing:0.5px;">Verification Data</h3>
-    <div style="font-family:SF Mono,Monaco,Consolas,monospace;font-size:9px;color:#64748b;line-height:1.8;">
-      <div><span style="color:#5a7a94;font-weight:500;">EVE Decision ID:</span> ${eveDecisionId}</div>
-      <div><span style="color:#5a7a94;font-weight:500;">Corpus Version:</span> ${corpusVersion}</div>
-      <div><span style="color:#5a7a94;font-weight:500;">Root Hash:</span> ${data.root_hash || 'N/A'}</div>
-      <div><span style="color:#5a7a94;font-weight:500;">Stats Hash:</span> ${data.stats_hash || 'N/A'}</div>
+  <div style="background:rgba(100,116,139,0.08);border:1px solid #e7e5e4;border-radius:10px;padding:18px;margin-bottom:18px;">
+    <h3 style="font-size:11px;font-weight:600;color:#64748b;margin:0 0 12px 0;text-transform:uppercase;letter-spacing:0.05em;">Verification Data</h3>
+    <div style="font-family:SF Mono,Monaco,Consolas,monospace;font-size:10px;color:#64748b;line-height:2;">
+      <div><span style="color:#0d9488;font-weight:500;">EVE Decision ID:</span> ${eveDecisionId}</div>
+      <div><span style="color:#0d9488;font-weight:500;">Corpus Version:</span> ${corpusVersion}</div>
+      <div><span style="color:#0d9488;font-weight:500;">Root Hash:</span> ${data.root_hash || 'N/A'}</div>
+      <div><span style="color:#0d9488;font-weight:500;">Stats Hash:</span> ${data.stats_hash || 'N/A'}</div>
     </div>
   </div>
-  
-  <div style="background:#f5f6f8;border:1px solid #dce0e6;border-radius:6px;padding:14px;font-size:10px;color:#64748b;line-height:1.6;margin-bottom:20px;">
-    <strong style="color:#5a7a94;">Notice:</strong> This document is a visual export generated from EVE Medical Evidence. It reflects reported adverse event data from FDA FAERS and does not constitute medical advice or imply causality. Always consult qualified healthcare professionals for medical decisions.
+  <div style="background:rgba(217,119,6,0.08);border:1px solid rgba(217,119,6,0.15);border-radius:10px;padding:16px 18px;font-size:12px;color:#44403c;line-height:1.6;margin-bottom:24px;">
+    <strong style="color:#d97706;">Notice:</strong> This document is a visual export generated from EVE Medical Evidence. It reflects reported adverse event data from FDA FAERS and does not constitute medical advice or imply causality.
   </div>
-  
-  <div style="border-top:1px solid #dce0e6;padding-top:14px;text-align:center;font-size:9px;color:#64748b;">
-    <div style="color:#5a7a94;margin-bottom:4px;">Presented via EVE · Evidence & Verification Engine</div>
+  <div style="border-top:1px solid #e7e5e4;padding-top:18px;text-align:center;font-size:10px;color:#78716c;">
+    <div style="color:#0d9488;margin-bottom:6px;font-weight:500;">Presented via EVE · Evidence & Verification Engine</div>
     <div>Snapshot: ${corpusVersion} · Generated: ${generatedDate}</div>
-    <div style="margin-top:4px;">Patent Pending EVE-PAT-2026-001</div>
+    <div style="margin-top:6px;">Patent Pending EVE-PAT-2026-001</div>
   </div>
 </div>`
 }
