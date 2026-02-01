@@ -8,43 +8,54 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // EVE Medical — Clinical Archive Palette
-        // Neutral, low-affect, evidence-focused
+        // EVE Medical — 2026 Archive Palette
+        // Modern, calm, confident, color-controlled
         'eve': {
-          // Backgrounds — neutral gray
-          'bg': '#f5f6f8',
+          // Base — warm off-white
+          'bg': '#fafaf9',
+          'bg-subtle': '#f5f5f4',
           'card': '#ffffff',
-          'border': '#dce0e6',
+          'border': '#e7e5e4',
+          'border-strong': '#d6d3d1',
           
-          // Text
-          'text': '#2d3748',
-          'text-strong': '#1a202c',
-          'muted': '#64748b',
+          // Text — warm darks
+          'text': '#44403c',
+          'text-strong': '#1c1917',
+          'muted': '#78716c',
           
-          // Accent — muted blue-gray (not AI-blue)
-          'accent': '#5a7a94',
-          'accent-dim': 'rgba(90, 122, 148, 0.15)',
+          // Primary — slate teal
+          'accent': '#0d9488',
+          'accent-hover': '#0f766e',
+          'accent-soft': 'rgba(13, 148, 136, 0.1)',
           
-          // Verification — subtle
-          'verify': '#6b7c93',
+          // Secondary — slate blue
+          'slate': '#64748b',
+          'slate-soft': 'rgba(100, 116, 139, 0.1)',
           
-          // Functional — minimal
-          'info': '#5a7a94',
-          'caution': '#8b7355',
+          // Status
+          'verified': '#059669',
+          'notice': '#d97706',
+          
+          // Functional (legacy support)
+          'info': '#0d9488',
+          'caution': '#d97706',
         },
-        // ATC therapeutic area colors — muted, categorical
+        // ATC therapeutic areas — distinguishable but calm
         'atc': {
-          'A': '#7a8c6e',  // Metabolism
-          'C': '#6e7a8c',  // Cardiovascular
-          'N': '#8c7a6e',  // CNS
-          'M': '#7a6e8c',  // Musculoskeletal
-          'J': '#6e8c7a',  // Anti-infectives
-          'R': '#8c6e7a',  // Respiratory
+          'A': '#059669',  // Metabolism
+          'C': '#dc2626',  // Cardiovascular
+          'N': '#7c3aed',  // CNS
+          'M': '#2563eb',  // Musculoskeletal
+          'J': '#ca8a04',  // Anti-infectives
+          'R': '#db2777',  // Respiratory
         }
       },
       fontFamily: {
         'mono': ['SF Mono', 'Monaco', 'Consolas', 'monospace'],
-        'sans': ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+        'sans': ['-apple-system', 'BlinkMacSystemFont', 'SF Pro Text', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+      },
+      borderRadius: {
+        'eve': '10px',
       },
     },
   },

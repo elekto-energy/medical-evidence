@@ -3,58 +3,73 @@
 @tailwind utilities;
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   EVE MEDICAL — Clinical Archive Design System
+   EVE MEDICAL — 2026 Archive Design System
    
-   Principle: Neutral, low-affect, evidence-focused
-   No AI-aesthetics, no advisory signals, no emotional color coding
+   Principle: Modern, calm, confident, color-controlled
+   Think: Finansinspektion 2026 + Apple system UI + archive aesthetic
    
-   "If it would work in a printed PDF, it's right for EVE Medical"
+   NOT: Hospital 2008, neon AI, or recommendation-signaling gradients
 ═══════════════════════════════════════════════════════════════════════════ */
 
 :root {
-  /* Base — Neutral Medical Gray */
-  --eve-bg: #f5f6f8;
+  /* Base — Warm off-white, not clinical white */
+  --eve-bg: #fafaf9;
+  --eve-bg-subtle: #f5f5f4;
   --eve-card: #ffffff;
-  --eve-border: #dce0e6;
-  --eve-text: #2d3748;
-  --eve-text-strong: #1a202c;
-  --eve-muted: #64748b;
+  --eve-border: #e7e5e4;
+  --eve-border-strong: #d6d3d1;
   
-  /* Accent — Muted Blue-Gray (not AI-blue) */
-  --eve-accent: #5a7a94;
-  --eve-accent-dim: rgba(90, 122, 148, 0.15);
+  /* Text — Warm darks */
+  --eve-text: #44403c;
+  --eve-text-strong: #1c1917;
+  --eve-muted: #78716c;
   
-  /* Verification — Subtle, not celebratory */
-  --eve-verify: #6b7c93;
+  /* Primary Accent — Slate teal / petrol */
+  --eve-accent: #0d9488;
+  --eve-accent-hover: #0f766e;
+  --eve-accent-soft: rgba(13, 148, 136, 0.1);
   
-  /* Functional — Minimal, not emotional */
-  --eve-info: #5a7a94;
-  --eve-caution: #8b7355;
+  /* Secondary — Muted slate blue for metadata */
+  --eve-slate: #64748b;
+  --eve-slate-soft: rgba(100, 116, 139, 0.1);
   
-  /* ATC Therapeutic Areas — Muted, categorical only */
-  --atc-A: #7a8c6e;  /* Metabolism */
-  --atc-C: #6e7a8c;  /* Cardiovascular */
-  --atc-N: #8c7a6e;  /* CNS */
-  --atc-M: #7a6e8c;  /* Musculoskeletal */
-  --atc-J: #6e8c7a;  /* Anti-infectives */
-  --atc-R: #8c6e7a;  /* Respiratory */
+  /* Status — Controlled, not emotional */
+  --eve-verified: #059669;
+  --eve-verified-soft: rgba(5, 150, 105, 0.1);
+  --eve-notice: #d97706;
+  --eve-notice-soft: rgba(217, 119, 6, 0.08);
+  
+  /* ATC Therapeutic Areas — Distinguishable but calm */
+  --atc-A: #059669;  /* Metabolism — teal green */
+  --atc-C: #dc2626;  /* Cardiovascular — muted red */
+  --atc-N: #7c3aed;  /* CNS — muted purple */
+  --atc-M: #2563eb;  /* Musculoskeletal — blue */
+  --atc-J: #ca8a04;  /* Anti-infectives — amber */
+  --atc-R: #db2777;  /* Respiratory — pink */
 }
 
 .dark {
-  /* Dark mode — Same philosophy, inverted */
-  --eve-bg: #121518;
-  --eve-card: #1a1e24;
-  --eve-border: #2d333b;
-  --eve-text: #c9d1d9;
-  --eve-text-strong: #f0f3f6;
-  --eve-muted: #768390;
+  --eve-bg: #1c1917;
+  --eve-bg-subtle: #292524;
+  --eve-card: #292524;
+  --eve-border: #44403c;
+  --eve-border-strong: #57534e;
   
-  --eve-accent: #7d9eb5;
-  --eve-accent-dim: rgba(125, 158, 181, 0.15);
-  --eve-verify: #8b9eb3;
+  --eve-text: #e7e5e4;
+  --eve-text-strong: #fafaf9;
+  --eve-muted: #a8a29e;
   
-  --eve-info: #7d9eb5;
-  --eve-caution: #b5a07d;
+  --eve-accent: #2dd4bf;
+  --eve-accent-hover: #5eead4;
+  --eve-accent-soft: rgba(45, 212, 191, 0.15);
+  
+  --eve-slate: #94a3b8;
+  --eve-slate-soft: rgba(148, 163, 184, 0.15);
+  
+  --eve-verified: #34d399;
+  --eve-verified-soft: rgba(52, 211, 153, 0.15);
+  --eve-notice: #fbbf24;
+  --eve-notice-soft: rgba(251, 191, 36, 0.1);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -64,12 +79,13 @@
 body {
   background: var(--eve-bg);
   color: var(--eve-text);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   Component Classes
+   Utility Classes
 ═══════════════════════════════════════════════════════════════════════════ */
 
 .bg-eve-bg { background-color: var(--eve-bg) !important; }
@@ -79,7 +95,7 @@ body {
 .text-eve-accent { color: var(--eve-accent) !important; }
 .text-eve-text { color: var(--eve-text) !important; }
 
-/* ATC Color Classes */
+/* ATC Colors */
 .bg-atc-A { background-color: var(--atc-A); }
 .bg-atc-C { background-color: var(--atc-C); }
 .bg-atc-N { background-color: var(--atc-N); }
@@ -94,121 +110,177 @@ body {
 .text-atc-J { color: var(--atc-J); }
 .text-atc-R { color: var(--atc-R); }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   Verification Panel — Subtle, informational
-═══════════════════════════════════════════════════════════════════════════ */
-
-.verification-panel {
-  background: var(--eve-card);
-  border: 1px solid var(--eve-border);
-  border-radius: 8px;
-}
-
-.hash-text {
-  font-family: 'SF Mono', Monaco, 'Consolas', monospace;
-  color: var(--eve-muted);
-  font-size: 11px;
-  letter-spacing: 0.3px;
-}
+.bg-atc-A\/20 { background-color: rgba(5, 150, 105, 0.15); }
+.bg-atc-C\/20 { background-color: rgba(220, 38, 38, 0.15); }
+.bg-atc-N\/20 { background-color: rgba(124, 58, 237, 0.15); }
+.bg-atc-M\/20 { background-color: rgba(37, 99, 235, 0.15); }
+.bg-atc-J\/20 { background-color: rgba(202, 138, 4, 0.15); }
+.bg-atc-R\/20 { background-color: rgba(219, 39, 119, 0.15); }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   Status Badges — Typographic, not emotional
-═══════════════════════════════════════════════════════════════════════════ */
-
-.badge-verified {
-  background: var(--eve-accent-dim);
-  border: 1px solid var(--eve-border);
-  color: var(--eve-accent);
-  font-size: 11px;
-  font-weight: 500;
-  padding: 4px 8px;
-  border-radius: 4px;
-}
-
-.badge-corpus {
-  background: var(--eve-card);
-  border: 1px solid var(--eve-border);
-  color: var(--eve-muted);
-  font-size: 11px;
-  padding: 4px 8px;
-  border-radius: 4px;
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   Evidence Display — Archive aesthetic
+   Evidence Card — The main container
 ═══════════════════════════════════════════════════════════════════════════ */
 
 .evidence-card {
   background: var(--eve-card);
   border: 1px solid var(--eve-border);
-  border-radius: 8px;
-  padding: 16px;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
 .evidence-header {
   border-bottom: 1px solid var(--eve-border);
-  padding-bottom: 12px;
-  margin-bottom: 12px;
+  padding-bottom: 16px;
+  margin-bottom: 20px;
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   Stats Display — Clean, modern metrics
+═══════════════════════════════════════════════════════════════════════════ */
+
 .evidence-stat {
-  background: var(--eve-bg);
-  border-radius: 6px;
-  padding: 12px;
+  background: var(--eve-bg-subtle);
+  border-radius: 10px;
+  padding: 16px;
   text-align: center;
+  border: 1px solid var(--eve-border);
 }
 
 .evidence-stat-value {
-  font-size: 24px;
+  font-size: 26px;
   font-weight: 600;
   color: var(--eve-text-strong);
+  letter-spacing: -0.02em;
 }
 
 .evidence-stat-label {
   font-size: 11px;
   color: var(--eve-muted);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-top: 4px;
+  letter-spacing: 0.05em;
+  margin-top: 6px;
+  font-weight: 500;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   Disclaimer — Present, not alarming
+   Verification Panel — Confident, not hidden
+═══════════════════════════════════════════════════════════════════════════ */
+
+.verification-panel {
+  background: var(--eve-slate-soft);
+  border: 1px solid var(--eve-border);
+  border-radius: 10px;
+}
+
+.hash-text {
+  font-family: 'SF Mono', Monaco, 'Consolas', monospace;
+  color: var(--eve-slate);
+  font-size: 11px;
+  letter-spacing: 0.02em;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Badges — Status indicators
+═══════════════════════════════════════════════════════════════════════════ */
+
+.badge-verified {
+  background: var(--eve-verified-soft);
+  border: 1px solid rgba(5, 150, 105, 0.2);
+  color: var(--eve-verified);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.badge-corpus {
+  background: var(--eve-slate-soft);
+  border: 1px solid var(--eve-border);
+  color: var(--eve-slate);
+  font-size: 11px;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Disclaimer — Present but not alarming
 ═══════════════════════════════════════════════════════════════════════════ */
 
 .disclaimer {
-  background: var(--eve-bg);
-  border: 1px solid var(--eve-border);
-  border-radius: 6px;
-  padding: 12px 16px;
+  background: var(--eve-notice-soft);
+  border: 1px solid rgba(217, 119, 6, 0.15);
+  border-radius: 10px;
+  padding: 14px 18px;
   font-size: 13px;
-  color: var(--eve-muted);
+  color: var(--eve-text);
+  line-height: 1.5;
 }
 
 .disclaimer-icon {
-  color: var(--eve-caution);
+  color: var(--eve-notice);
   margin-right: 8px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Buttons — Confident interactions
+═══════════════════════════════════════════════════════════════════════════ */
+
+.btn-primary {
+  background: var(--eve-accent);
+  color: white;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 14px;
+  transition: background 0.15s ease;
+}
+
+.btn-primary:hover {
+  background: var(--eve-accent-hover);
+}
+
+.btn-secondary {
+  background: var(--eve-card);
+  color: var(--eve-text);
+  border: 1px solid var(--eve-border);
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 14px;
+  transition: all 0.15s ease;
+}
+
+.btn-secondary:hover {
+  border-color: var(--eve-accent);
+  color: var(--eve-accent);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
    Forms & Inputs
 ═══════════════════════════════════════════════════════════════════════════ */
 
-.dark select, 
-.dark input {
+input, select {
   background-color: var(--eve-card);
-  border-color: var(--eve-border);
+  border: 1px solid var(--eve-border);
   color: var(--eve-text);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 14px;
+  transition: border-color 0.15s ease;
 }
 
-input:focus, 
-select:focus {
+input:focus, select:focus {
   border-color: var(--eve-accent);
   outline: none;
+  box-shadow: 0 0 0 3px var(--eve-accent-soft);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   Scrollbar — Minimal
+   Scrollbar — Subtle
 ═══════════════════════════════════════════════════════════════════════════ */
 
 ::-webkit-scrollbar {
@@ -217,11 +289,11 @@ select:focus {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--eve-bg);
+  background: var(--eve-bg-subtle);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--eve-border);
+  background: var(--eve-border-strong);
   border-radius: 4px;
 }
 
@@ -230,14 +302,14 @@ select:focus {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   Utility — No animations, no glow, no gradients
+   Transitions
 ═══════════════════════════════════════════════════════════════════════════ */
 
 .transition-colors {
   transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
 }
 
-/* Remove any accidental glow/gradient classes from old code */
+/* Remove old glow/gradient classes */
 .glow-accent,
 .glow-verify,
 .animated-border {
