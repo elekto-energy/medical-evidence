@@ -106,6 +106,7 @@ function loadManifests(version) {
 }
 
 function loadObjects(version, drug) {
+  if (!drug || typeof drug !== 'string') return [];
   const drugSafe = drug.toLowerCase().replace(/[^a-z0-9]/g, '_');
   const objectsPath = path.join(CORPUS_DIR, version, `${drugSafe}_objects.json`);
   
@@ -131,6 +132,7 @@ function loadProof(version) {
 }
 
 function loadStats(version, drug) {
+  if (!drug || typeof drug !== 'string') return null;
   const drugSafe = drug.toLowerCase().replace(/[^a-z0-9]/g, '_');
   const statsPath = path.join(CORPUS_DIR, version, `${drugSafe}_stats.json`);
   
@@ -140,6 +142,11 @@ function loadStats(version, drug) {
 }
 
 function loadRawEvents(drug) {
+  // Guard: L1 must never crash on invalid input
+  if (!drug || typeof drug !== 'string') {
+    return [];
+  }
+  
   const drugSafe = drug.toLowerCase().replace(/[^a-z0-9]/g, '_');
   const version = getLatestVersion();
   
