@@ -44,6 +44,12 @@ export default async function MedicalPage() {
             >
               💬 Ask EVE
             </Link>
+            <Link 
+              href="/medical/compare"
+              className="px-3 py-1 text-xs rounded-full bg-eve-card border border-eve-border text-eve-muted hover:border-eve-accent hover:text-eve-accent transition"
+            >
+              ⚖️ Compare
+            </Link>
           </div>
         </header>
         
