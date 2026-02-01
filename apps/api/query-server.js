@@ -1,11 +1,13 @@
 /**
  * apps/api/query-server.js
  * 
- * Minimal Query API for Medical Evidence
- * Patent Krav 5, 19: Evidensbaserad AI-assistans
+ * EVE - Evidence & Verification Engine
+ * Medical Evidence Query API
+ * 
+ * Patent: EVE-PAT-2026-001
+ * Governance: GOVERNANCE_v1
  * 
  * Run: node apps/api/query-server.js
- * Test: curl -X POST http://localhost:3050/query -H "Content-Type: application/json" -d '{"query":"metformin"}'
  */
 
 const http = require('http');
@@ -24,6 +26,10 @@ const PORT = 3050;
 const CORPUS_DIR = path.join(__dirname, '..', '..', 'data', 'corpus');
 const PROOFS_DIR = path.join(__dirname, '..', '..', 'data', 'proofs');
 
+// Governance v1: System must never provide medical advice
+const GOVERNANCE_VERSION = 'GOVERNANCE_v1';
+const POLICY_VERSION = 'NO_MEDICAL_ADVICE_v1';
+
 // Patent Krav 20: Blockerade fraser
 const BLOCKED_PHRASES = [
   'jag rekommenderar', 'du bör', 'det är tillrådligt',
@@ -32,9 +38,44 @@ const BLOCKED_PHRASES = [
 ];
 
 const DISCLAIMER = {
-  sv: '⚠️ Detta är rapporterad data från FDA FAERS, inte medicinsk rådgivning. Konsultera alltid kvalificerad vårdpersonal.',
-  en: '⚠️ This output reports adverse events from FDA FAERS. It does not constitute medical advice.'
+  sv: 'Detta är rapporterad data från FDA FAERS, inte medicinsk rådgivning. Konsultera alltid kvalificerad vårdpersonal.',
+  en: 'This output reports adverse events from FDA FAERS. It does not constitute medical advice.'
 };
+
+// ============================================
+// EVE Decision ID Generator
+// ============================================
+
+function generateEVEDecisionID(decisionType, queryHash, resultHash, corpusVersion) {
+  const timestamp = new Date();
+  const dateStr = timestamp.toISOString().slice(0, 10).replace(/-/g, '');
+  
+  // Create decision context hash
+  const decisionContext = {
+    domain: 'medical',
+    decision_type: decisionType,
+    query_hash: queryHash,
+    result_hash: resultHash,
+    corpus_version: corpusVersion,
+    policy: POLICY_VERSION,
+    governance: GOVERNANCE_VERSION,
+    timestamp: timestamp.toISOString()
+  };
+  
+  const contextHash = crypto.createHash('sha256')
+    .update(JSON.stringify(decisionContext))
+    .digest('hex');
+  
+  // EVE-MED-YYYYMMDD-{short hash}
+  const shortHash = contextHash.slice(0, 6);
+  const eveId = `EVE-MED-${dateStr}-${shortHash}`;
+  
+  return {
+    eve_decision_id: eveId,
+    decision_context: decisionContext,
+    context_hash: contextHash
+  };
+}
 
 // ============================================
 // Corpus Functions
@@ -96,15 +137,13 @@ function loadRawEvents(drug) {
   
   if (!version) return [];
   
-  // Load from corpus objects (already processed and verified)
   const objectsPath = path.join(CORPUS_DIR, version, `${drugSafe}_objects.json`);
   
   if (!fs.existsSync(objectsPath)) return [];
   
   const objects = JSON.parse(fs.readFileSync(objectsPath, 'utf-8'));
   
- // Extract the raw event data from each object
-  // Content may be a JSON string that needs parsing
+  // Extract raw event data, parsing JSON strings if needed
   return objects.map(obj => {
     if (!obj.content) return null;
     if (typeof obj.content === 'string') {
@@ -116,9 +155,10 @@ function loadRawEvents(drug) {
     }
     return obj.content;
   }).filter(Boolean);
+}
 
 // ============================================
-// Reaction Filter (same snapshot, just filtered)
+// Reaction Filter
 // ============================================
 
 function filterByReaction(drugName, reactionName, requestedVersion) {
@@ -134,13 +174,11 @@ function filterByReaction(drugName, reactionName, requestedVersion) {
     return { status: 'ERROR', error: `No proof found for version ${version}` };
   }
   
-  // Load raw events
   const events = loadRawEvents(drugName);
   if (events.length === 0) {
     return { status: 'ERROR', error: `No data for drug: ${drugName}` };
   }
   
-  // Filter by reaction
   const filtered = events.filter(event => {
     const reactions = event.patient?.reaction || [];
     return reactions.some(r => 
@@ -148,7 +186,6 @@ function filterByReaction(drugName, reactionName, requestedVersion) {
     );
   });
   
-  // Extract report details (no interpretation, just data)
   const reports = filtered.map(event => {
     const patient = event.patient || {};
     const reactions = patient.reaction || [];
@@ -173,62 +210,66 @@ function filterByReaction(drugName, reactionName, requestedVersion) {
     };
   });
   
+  const queryHash = crypto.createHash('sha256')
+    .update(JSON.stringify({ drug: drugName, reaction: reactionName, version }))
+    .digest('hex');
+  
+  const resultHash = crypto.createHash('sha256')
+    .update(JSON.stringify({ filtered_count: filtered.length, reports: reports.slice(0, 10) }))
+    .digest('hex');
+  
+  const decision = generateEVEDecisionID('EvidenceFilterDecision', queryHash, resultHash, version);
+  
   return {
     status: 'VERIFIED',
+    eve_decision_id: decision.eve_decision_id,
     filter_type: 'REACTION',
     drug: drugName,
     reaction: reactionName,
-    corpus_version: version,
-    root_hash: proof.root_hash,
-    
-    total_events_in_corpus: events.length,
-    filtered_count: filtered.length,
-    
-    reports: reports,
-    
+    corpus: {
+      version: version,
+      root_hash: proof.root_hash
+    },
+    results: {
+      total_events_in_corpus: events.length,
+      filtered_count: filtered.length,
+      reports: reports
+    },
+    verification: {
+      query_hash: queryHash,
+      result_hash: resultHash,
+      context_hash: decision.context_hash,
+      governance: GOVERNANCE_VERSION,
+      policy: POLICY_VERSION,
+      reproducible: true
+    },
     generation_mode: 'VERIFIED_DETERMINISTIC',
-    verification_status: 'VERIFIED',
-    note: 'This view is filtered from the same verified snapshot. No new calculations.',
-    
+    disclaimer: DISCLAIMER.en,
     processing_time_ms: Date.now() - startTime
   };
 }
 
 // ============================================
-// Query Processing (Deterministic - No LLM)
+// Query Processing
 // ============================================
 
 function processQuery(query, requestedVersion) {
   const startTime = Date.now();
   
-  // Get corpus version
   const version = requestedVersion || getLatestVersion();
   if (!version) {
-    return {
-      status: 'ERROR',
-      error: 'No corpus available',
-      generation_mode: 'NONE'
-    };
+    return { status: 'ERROR', error: 'No corpus available', generation_mode: 'NONE' };
   }
   
-  // Load proof
   const proof = loadProof(version);
   if (!proof) {
-    return {
-      status: 'ERROR',
-      error: `No proof found for version ${version}`,
-      generation_mode: 'NONE'
-    };
+    return { status: 'ERROR', error: `No proof found for version ${version}`, generation_mode: 'NONE' };
   }
   
-  // Load manifests
   const manifests = loadManifests(version);
-  
-  // Parse query - extract drug name
   const queryLower = query.toLowerCase().trim();
   const knownDrugs = manifests.map(m => m.drug.toLowerCase());
   
-  // Find matching drug
   let matchedDrug = null;
   for (const drug of knownDrugs) {
     if (queryLower.includes(drug)) {
@@ -238,7 +279,6 @@ function processQuery(query, requestedVersion) {
   }
   
   if (!matchedDrug) {
-    // Return available drugs
     return {
       status: 'NO_MATCH',
       corpus_version: version,
@@ -246,46 +286,39 @@ function processQuery(query, requestedVersion) {
       message: `Query did not match any drug in corpus. Available: ${knownDrugs.join(', ')}`,
       available_drugs: knownDrugs,
       generation_mode: 'VERIFIED_DETERMINISTIC',
-      verification_status: 'VERIFIED',
       disclaimer: DISCLAIMER.en,
       processing_time_ms: Date.now() - startTime
     };
   }
   
-  // Load manifest for matched drug
   const manifest = manifests.find(m => m.drug.toLowerCase() === matchedDrug);
-  
-  // Load objects for citations
   const objects = loadObjects(version, matchedDrug);
-  
-  // Load stats (if available)
   const statsDoc = loadStats(version, matchedDrug);
   
-  // Extract citations (first 10 object IDs)
   const citations = objects.slice(0, 10).map(obj => ({
     id: obj.id,
     hash: obj.content_hash.slice(0, 16) + '...',
     source: obj.source_type
   }));
   
-  // Build response hash (for this specific query)
-  const responseData = {
-    query: query,
-    drug: matchedDrug,
-    version: version,
-    timestamp: new Date().toISOString()
-  };
-  const response_hash = crypto.createHash('sha256')
-    .update(JSON.stringify(responseData))
+  const queryHash = crypto.createHash('sha256')
+    .update(JSON.stringify({ query: query, drug: matchedDrug, version: version }))
     .digest('hex');
+  
+  const resultHash = crypto.createHash('sha256')
+    .update(JSON.stringify({ drug: matchedDrug, events: manifest.total_events, top_reactions: manifest.top_reactions }))
+    .digest('hex');
+  
+  const decision = generateEVEDecisionID('EvidenceQueryDecision', queryHash, resultHash, version);
   
   return {
     status: 'VERIFIED',
-    corpus_version: version,
-    root_hash: proof.root_hash,
-    response_hash: response_hash,
-    
+    eve_decision_id: decision.eve_decision_id,
     drug: matchedDrug,
+    corpus: {
+      version: version,
+      root_hash: proof.root_hash
+    },
     summary: {
       total_events: manifest.total_events,
       total_in_fda: manifest.total_available,
@@ -293,19 +326,19 @@ function processQuery(query, requestedVersion) {
       api_last_updated: manifest.api_last_updated,
       top_reactions: manifest.top_reactions.slice(0, 10)
     },
-    
     citations: citations,
     citation_count: objects.length,
-    
-    // Stats (verifiable, derived from same corpus)
     stats: statsDoc ? statsDoc.stats : null,
-    stats_hash: statsDoc ? statsDoc.stats_hash : null,
-    stats_disclaimer: statsDoc ? statsDoc.disclaimer : null,
-    
+    verification: {
+      query_hash: queryHash,
+      result_hash: resultHash,
+      context_hash: decision.context_hash,
+      governance: GOVERNANCE_VERSION,
+      policy: POLICY_VERSION,
+      reproducible: true
+    },
     generation_mode: 'VERIFIED_DETERMINISTIC',
-    verification_status: 'VERIFIED',
     trinity_level: 1,
-    
     disclaimer: DISCLAIMER.en,
     processing_time_ms: Date.now() - startTime
   };
@@ -331,7 +364,6 @@ function parseBody(req) {
 }
 
 const server = http.createServer(async (req, res) => {
-  // CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -343,7 +375,6 @@ const server = http.createServer(async (req, res) => {
     return;
   }
   
-  // Routes
   const url = new URL(req.url, `http://localhost:${PORT}`);
   
   try {
@@ -353,7 +384,8 @@ const server = http.createServer(async (req, res) => {
       res.writeHead(200);
       res.end(JSON.stringify({
         status: 'OK',
-        service: '005-medical-evidence',
+        service: 'EVE Medical Evidence',
+        governance: GOVERNANCE_VERSION,
         corpus_version: version,
         timestamp: new Date().toISOString()
       }));
@@ -366,7 +398,6 @@ const server = http.createServer(async (req, res) => {
       const manifests = version ? loadManifests(version) : [];
       const proof = version ? loadProof(version) : null;
       
-      // Load stats for each drug
       const drugs = manifests.map(m => {
         const stats = loadStats(version, m.drug);
         return {
@@ -380,7 +411,6 @@ const server = http.createServer(async (req, res) => {
         };
       });
       
-      // Group by therapeutic area
       const THERAPEUTIC_AREAS = {
         'A - Metabolism/Diabetes': ['metformin', 'insulin', 'glimepiride', 'sitagliptin', 'empagliflozin', 'liraglutide'],
         'C - Cardiovascular': ['atorvastatin', 'simvastatin', 'warfarin', 'apixaban', 'metoprolol', 'amlodipine', 'lisinopril'],
@@ -390,7 +420,6 @@ const server = http.createServer(async (req, res) => {
         'R - Respiratory/Allergy': ['salbutamol', 'budesonide', 'fluticasone', 'montelukast', 'cetirizine'],
       };
       
-      // Add therapeutic area to each drug
       drugs.forEach(d => {
         for (const [area, list] of Object.entries(THERAPEUTIC_AREAS)) {
           if (list.includes(d.drug.toLowerCase())) {
@@ -405,12 +434,13 @@ const server = http.createServer(async (req, res) => {
       res.end(JSON.stringify({
         version: version,
         root_hash: proof?.root_hash,
+        governance: GOVERNANCE_VERSION,
         total_events: drugs.reduce((sum, d) => sum + d.events, 0),
         total_substances: drugs.length,
         therapeutic_areas: Object.keys(THERAPEUTIC_AREAS).length,
         drugs: drugs,
         proof_available: !!proof,
-        disclaimer: 'Derived from verified snapshot. Does not imply causality or risk.'
+        disclaimer: DISCLAIMER.en
       }, null, 2));
       return;
     }
@@ -418,41 +448,34 @@ const server = http.createServer(async (req, res) => {
     // POST /query
     if (req.method === 'POST' && url.pathname === '/query') {
       const body = await parseBody(req);
-      
       if (!body.query) {
         res.writeHead(400);
         res.end(JSON.stringify({ error: 'Missing "query" field' }));
         return;
       }
-      
       const result = processQuery(body.query, body.version);
-      
       res.writeHead(200);
       res.end(JSON.stringify(result, null, 2));
       return;
     }
     
-    // POST /query/reaction - Filter events by reaction
+    // POST /query/reaction
     if (req.method === 'POST' && url.pathname === '/query/reaction') {
       const body = await parseBody(req);
-      
       if (!body.drug || !body.reaction) {
         res.writeHead(400);
         res.end(JSON.stringify({ error: 'Missing "drug" or "reaction" field' }));
         return;
       }
-      
       const result = filterByReaction(body.drug, body.reaction, body.version);
-      
       res.writeHead(200);
       res.end(JSON.stringify(result, null, 2));
       return;
     }
     
-    // POST /query/guided - Guided Evidence Query (GEQ)
+    // POST /query/guided
     if (req.method === 'POST' && url.pathname === '/query/guided') {
       const body = await parseBody(req);
-      
       if (!body.drug) {
         res.writeHead(400);
         res.end(JSON.stringify({ error: 'Missing required "drug" field' }));
@@ -465,15 +488,27 @@ const server = http.createServer(async (req, res) => {
         getLatestVersion
       });
       
+      if (result.status === 'VERIFIED') {
+        const decision = generateEVEDecisionID(
+          'EvidenceQueryDecision',
+          result.verification.query_hash,
+          result.verification.result_hash,
+          result.corpus_version
+        );
+        result.eve_decision_id = decision.eve_decision_id;
+        result.verification.context_hash = decision.context_hash;
+        result.verification.governance = GOVERNANCE_VERSION;
+        result.verification.policy = POLICY_VERSION;
+      }
+      
       res.writeHead(200);
       res.end(JSON.stringify(result, null, 2));
       return;
     }
     
-    // POST /query/compare - Compare Evidence Query (Kontrafaktisk jämförelse)
+    // POST /query/compare
     if (req.method === 'POST' && url.pathname === '/query/compare') {
       const body = await parseBody(req);
-      
       if (!body.group_a || !body.group_b) {
         res.writeHead(400);
         res.end(JSON.stringify({ 
@@ -492,15 +527,27 @@ const server = http.createServer(async (req, res) => {
         getLatestVersion
       });
       
+      if (result.status === 'VERIFIED') {
+        const decision = generateEVEDecisionID(
+          'EvidenceComparisonDecision',
+          result.verification.comparison_hash,
+          result.verification.diff_hash,
+          result.corpus_version
+        );
+        result.eve_decision_id = decision.eve_decision_id;
+        result.verification.context_hash = decision.context_hash;
+        result.verification.governance = GOVERNANCE_VERSION;
+        result.verification.policy = POLICY_VERSION;
+      }
+      
       res.writeHead(200);
       res.end(JSON.stringify(result, null, 2));
       return;
     }
     
-    // POST /query/natural - Natural Language Query (Trinity Pipeline)
+    // POST /query/natural
     if (req.method === 'POST' && url.pathname === '/query/natural') {
       const body = await parseBody(req);
-      
       if (!body.question) {
         res.writeHead(400);
         res.end(JSON.stringify({ error: 'Missing required "question" field' }));
@@ -508,13 +555,10 @@ const server = http.createServer(async (req, res) => {
       }
       
       const language = body.language || 'sv';
-      
-      // Get known drugs from manifests
       const version = getLatestVersion();
       const manifests = version ? loadManifests(version) : [];
       const knownDrugs = manifests.map(m => m.drug.toLowerCase());
       
-      // Guided query function for pipeline
       const guidedQueryFn = (params) => processGuidedQuery(params, {
         loadRawEvents,
         loadProof,
@@ -528,6 +572,20 @@ const server = http.createServer(async (req, res) => {
         knownDrugs
       );
       
+      if (result.status === 'VERIFIED') {
+        const decision = generateEVEDecisionID(
+          'EvidenceNarrativeDecision',
+          result.verification.query_hash,
+          result.verification.result_hash,
+          result.corpus.version
+        );
+        result.eve_decision_id = decision.eve_decision_id;
+        result.verification.context_hash = decision.context_hash;
+        result.verification.governance = GOVERNANCE_VERSION;
+        result.verification.policy = POLICY_VERSION;
+        result.verification.trinity_levels = ['L2_parse', 'L1_query', 'L2_render'];
+      }
+      
       res.writeHead(200);
       res.end(JSON.stringify(result, null, 2));
       return;
@@ -537,13 +595,11 @@ const server = http.createServer(async (req, res) => {
     if (req.method === 'GET' && url.pathname.startsWith('/proof/')) {
       const version = url.pathname.replace('/proof/', '');
       const proof = loadProof(version);
-      
       if (!proof) {
         res.writeHead(404);
         res.end(JSON.stringify({ error: `Proof not found for version: ${version}` }));
         return;
       }
-      
       res.writeHead(200);
       res.end(JSON.stringify(proof, null, 2));
       return;
@@ -566,23 +622,21 @@ const server = http.createServer(async (req, res) => {
 server.listen(PORT, () => {
   console.log('');
   console.log('═══════════════════════════════════════════════════════════');
-  console.log('  005 Medical Evidence - Query API');
-  console.log('  Patent Krav 5, 19: Evidensbaserad AI-assistans');
+  console.log('  EVE - Evidence & Verification Engine');
+  console.log('  Medical Evidence API');
+  console.log('  Patent: EVE-PAT-2026-001 | Governance: ' + GOVERNANCE_VERSION);
   console.log('═══════════════════════════════════════════════════════════');
   console.log(`  Server:   http://localhost:${PORT}`);
   console.log(`  Corpus:   ${getLatestVersion() || 'NOT FOUND'}`);
   console.log('');
   console.log('  Endpoints:');
-  console.log('    GET  /health    - Service status');
-  console.log('    GET  /corpus    - Available drugs and proof');
-  console.log('    POST /query     - Query adverse events');
-  console.log('    GET  /proof/:v  - Get Merkle proof');
-  console.log('');
-  console.log('  Example:');
-  console.log('    curl http://localhost:3050/corpus');
-  console.log('    curl -X POST http://localhost:3050/query \\');
-  console.log('         -H "Content-Type: application/json" \\');
-  console.log('         -d \'{"query":"metformin adverse events"}\'');
+  console.log('    GET  /health         - Service status');
+  console.log('    GET  /corpus         - Available substances');
+  console.log('    POST /query          - Basic query');
+  console.log('    POST /query/guided   - Guided Evidence Query');
+  console.log('    POST /query/natural  - Natural Language (Trinity)');
+  console.log('    POST /query/compare  - Comparison Query');
+  console.log('    GET  /proof/:v       - Merkle proof');
   console.log('═══════════════════════════════════════════════════════════');
   console.log('');
 });
