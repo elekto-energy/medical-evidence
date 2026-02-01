@@ -1,5 +1,7 @@
-﻿import { Suspense } from 'react'
+import { Suspense } from 'react'
 import { CompareView } from '@/components/CompareView'
+import { CompareSelector } from '@/components/CompareSelector'
+import Link from 'next/link'
 
 export default function ComparePage({
   searchParams,
@@ -9,29 +11,26 @@ export default function ComparePage({
   const drugA = searchParams.a
   const drugB = searchParams.b
 
-  if (!drugA || !drugB) {
+  // If both params provided, show comparison
+  if (drugA && drugB) {
     return (
       <main className="min-h-screen p-8">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-2xl font-semibold text-eve-text-strong mb-4">Compare Substances</h1>
-          <p className="text-eve-muted mb-6">
-            Select two substances to compare side-by-side using the same evidence snapshot.
-          </p>
-          <div className="p-6 bg-eve-card border border-eve-border rounded-xl">
-            <p className="text-sm text-eve-muted">
-              Usage: <code className="bg-eve-bg px-2 py-1 rounded">/medical/compare?a=warfarin&b=apixaban</code>
-            </p>
-          </div>
-        </div>
+        <Suspense fallback={<div className="text-eve-muted">Loading comparison...</div>}>
+          <CompareView drugA={drugA} drugB={drugB} />
+        </Suspense>
       </main>
     )
   }
 
+  // Otherwise show selector
   return (
     <main className="min-h-screen p-8">
-      <Suspense fallback={<div className="text-eve-muted">Loading comparison...</div>}>
-        <CompareView drugA={drugA} drugB={drugB} />
-      </Suspense>
+      <div className="mb-6">
+        <Link href="/medical" className="text-sm text-eve-muted hover:text-eve-accent">
+          ← Back to all substances
+        </Link>
+      </div>
+      <CompareSelector />
     </main>
   )
 }
