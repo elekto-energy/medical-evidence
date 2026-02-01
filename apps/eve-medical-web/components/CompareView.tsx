@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
@@ -29,10 +29,7 @@ export function CompareView({ drugA, drugB }: Props) {
         ])
         
         // EVE governance: corpus must match
-        const versionA = resA.corpus?.version || resA.corpus_version
-        const versionB = resB.corpus?.version || resB.corpus_version
-        
-        if (versionA !== versionB) {
+        if (resA.corpus.version !== resB.corpus.version) {
           setError('Comparison unavailable: datasets originate from different evidence snapshots.')
           return
         }
@@ -102,8 +99,8 @@ export function CompareView({ drugA, drugB }: Props) {
 
       {/* Corpus verification */}
       <div className="text-center text-xs text-eve-muted p-4 bg-eve-bg-subtle rounded-xl">
-        <div>Corpus: <span className="font-mono text-eve-accent">{dataA.corpus?.version || dataA.corpus_version}</span></div>
-        <div className="mt-1">Root Hash: <span className="font-mono">{(dataA.corpus?.root_hash || dataA.root_hash || '').slice(0, 32)}...</span></div>
+        <div>Corpus: <span className="font-mono text-eve-accent">{dataA.corpus.version}</span></div>
+        <div className="mt-1">Root Hash: <span className="font-mono">{dataA.corpus.root_hash.slice(0, 32)}...</span></div>
       </div>
     </div>
   )

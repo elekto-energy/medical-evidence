@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import { useState } from 'react'
 import type { QueryResponse } from '@/lib/types'
@@ -24,7 +24,7 @@ const ATC_COLORS: Record<string, string> = {
 export function DrugDetail({ data }: Props) {
   const [selectedReaction, setSelectedReaction] = useState<string | null>(null)
   
-  // ATC code now comes from corpus metadata (deterministic)
+  // ATC code from corpus metadata (deterministic)
   const atcCode = data.atc_code || '?'
   const stats = data.stats
   
@@ -40,7 +40,7 @@ export function DrugDetail({ data }: Props) {
         {/* Header */}
         <div className="evidence-header flex justify-between items-center">
           <div className="flex items-center gap-4">
-            <span className={`w-10 h-10 rounded-lg flex items-center justify-center text-sm font-semibold ${ATC_COLORS[atcCode]}`}>
+            <span className={`w-10 h-10 rounded-lg flex items-center justify-center text-sm font-semibold ${ATC_COLORS[atcCode] ?? ATC_COLORS['?']}`}>
               {atcCode}
             </span>
             <h1 className="text-2xl font-semibold capitalize text-eve-text-strong">{data.drug}</h1>
@@ -84,7 +84,7 @@ export function DrugDetail({ data }: Props) {
             <div className="evidence-stat">
               <div className="evidence-stat-value">{data.summary.total_events}</div>
               <div className="evidence-stat-label">Events in Corpus</div>
-              <div className="text-[10px] text-eve-muted mt-1">{data.corpus?.version || data.corpus_version}</div>
+              <div className="text-[10px] text-eve-muted mt-1">{data.corpus.version}</div>
             </div>
             <div className="evidence-stat">
               <div className="evidence-stat-value">{data.summary.total_in_fda.toLocaleString()}</div>
@@ -160,8 +160,8 @@ export function DrugDetail({ data }: Props) {
           <div className="verification-panel p-4 mb-4">
             <h3 className="text-sm font-medium text-eve-muted mb-2">Verification Data</h3>
             <div className="hash-text space-y-1">
-              <div><span className="text-eve-accent">Corpus Version:</span> {data.corpus?.version || data.corpus_version}</div>
-              <div><span className="text-eve-accent">Root Hash:</span> {data.corpus?.root_hash || data.root_hash}</div>
+              <div><span className="text-eve-accent">Corpus Version:</span> {data.corpus.version}</div>
+              <div><span className="text-eve-accent">Root Hash:</span> {data.corpus.root_hash}</div>
               <div><span className="text-eve-accent">Stats Hash:</span> {data.stats_hash || 'N/A'}</div>
               {data.eve_decision_id && (
                 <div><span className="text-eve-accent">EVE Decision ID:</span> {data.eve_decision_id}</div>
@@ -171,13 +171,13 @@ export function DrugDetail({ data }: Props) {
           
           {/* Disclaimer */}
           <div className="disclaimer">
-            <span className="disclaimer-icon">â„¹</span>
+            <span className="disclaimer-icon">ℹ</span>
             {data.disclaimer}
           </div>
         </div>
       </div>
       
-            {/* Molecular Structure - Reference Section (separate from evidence flow) */}
+      {/* Molecular Structure - Reference Section */}
       <div className="evidence-card mt-6">
         <h3 className="text-sm font-medium text-eve-muted mb-1">
           Molecular Structure <span className="font-normal">(reference)</span>
@@ -193,16 +193,10 @@ export function DrugDetail({ data }: Props) {
         <ReactionDrawer
           drug={data.drug}
           reaction={selectedReaction}
-          corpusVersion={data.corpus?.version || data.corpus_version || ''}
+          corpusVersion={data.corpus.version}
           onClose={() => setSelectedReaction(null)}
         />
       )}
     </>
   )
 }
-
-
-
-
-
-

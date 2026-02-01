@@ -49,26 +49,36 @@ export interface Reaction {
   count: number
 }
 
+export interface Corpus {
+  version: string
+  root_hash: string
+}
+
+export interface Summary {
+  total_events: number
+  total_in_fda: number
+  source: string
+  api_last_updated: string
+  top_reactions: Reaction[]
+}
+
+export interface Verification {
+  query_hash: string
+  result_hash: string
+  context_hash: string
+  governance: string
+  policy: string
+  reproducible: boolean
+}
+
 export interface QueryResponse {
   status: 'VERIFIED' | 'NO_MATCH' | 'ERROR'
   eve_decision_id?: string
-  corpus_version?: string // legacy
-  root_hash?: string // legacy
-  corpus?: {
-    version: string
-    root_hash: string
-  }
-  response_hash?: string
   drug: string
   atc_code?: string | null
   atc_name?: string | null
-  summary: {
-    total_events: number
-    total_in_fda: number
-    source: string
-    api_last_updated: string
-    top_reactions: Reaction[]
-  }
+  corpus: Corpus
+  summary: Summary
   citations: Array<{
     id: string
     hash: string
@@ -76,10 +86,10 @@ export interface QueryResponse {
   }>
   citation_count: number
   stats: Stats | null
-  stats_hash: string | null
-  stats_disclaimer: string | null
+  stats_hash?: string | null
+  stats_disclaimer?: string | null
+  verification: Verification
   generation_mode: 'VERIFIED_DETERMINISTIC'
-  verification_status: 'VERIFIED'
   trinity_level: number
   disclaimer: string
   processing_time_ms: number
@@ -100,23 +110,13 @@ export interface ReactionQueryResponse {
   filter_type: 'REACTION'
   drug: string
   reaction: string
-  corpus: {
-    version: string
-    root_hash: string
-  }
+  corpus: Corpus
   results: {
     total_events_in_corpus: number
     filtered_count: number
     reports: Report[]
   }
-  verification: {
-    query_hash: string
-    result_hash: string
-    context_hash: string
-    governance: string
-    policy: string
-    reproducible: boolean
-  }
+  verification: Verification
   generation_mode: 'VERIFIED_DETERMINISTIC'
   disclaimer: string
   processing_time_ms: number
