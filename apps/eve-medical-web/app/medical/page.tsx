@@ -14,12 +14,15 @@ export default async function MedicalPage() {
         {/* Header */}
         <header className="text-center mb-8">
           <Link href="/" className="inline-block mb-4 text-eve-muted hover:text-eve-accent transition text-sm">
-            ← Tillbaka till startsidan
+            ← Back to home
           </Link>
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-eve-accent to-eve-blue bg-clip-text text-transparent">
-            EVE Medical Evidence
+          <h1 className="text-3xl font-bold">
+            <span className="text-eve-accent">EVE</span> <span className="text-eve-text-strong">Medical Evidence</span>
           </h1>
-          <p className="text-eve-muted text-sm mt-1">
+          <p className="text-eve-muted text-xs mt-1">
+            Evidence & Verification Engine
+          </p>
+          <p className="text-eve-muted text-sm mt-2">
             Verified Adverse Event Data from FDA FAERS
           </p>
           <div className="flex justify-center gap-3 mt-4">
@@ -37,9 +40,9 @@ export default async function MedicalPage() {
             </Link>
             <Link 
               href="/medical/ask"
-              className="px-3 py-1 text-xs rounded-full bg-gradient-to-r from-eve-accent to-eve-blue text-black font-medium hover:opacity-90 transition"
+              className="px-3 py-1 text-xs rounded-full bg-eve-accent text-white font-medium hover:bg-eve-accent-hover transition"
             >
-              💬 Fråga EVE
+              💬 Ask EVE
             </Link>
           </div>
         </header>
@@ -50,15 +53,15 @@ export default async function MedicalPage() {
         {/* Table */}
         <div className="bg-eve-card border border-eve-border rounded-2xl overflow-hidden">
           <div className="px-6 py-4 border-b border-eve-border">
-            <h2 className="font-semibold">All Substances</h2>
+            <h2 className="font-semibold text-eve-text-strong">All Substances</h2>
             <p className="text-xs text-eve-muted mt-1">Click a substance to explore detailed, deterministic evidence</p>
           </div>
           <MasterTable drugs={corpus.drugs} />
         </div>
         
         {/* Footer */}
-        <footer className="text-center mt-12 text-xs text-eve-muted/50">
-          <p>EVE Medical Evidence · Patent Pending EVE-PAT-2026-001</p>
+        <footer className="text-center mt-12 text-xs text-eve-muted">
+          <p>EVE · Evidence & Verification Engine · Patent Pending EVE-PAT-2026-001</p>
           <p className="mt-1">© 2026 Organiq Sweden AB</p>
         </footer>
       </div>
