@@ -1,10 +1,10 @@
-/**
+﻿/**
  * Natural Language Query Endpoint
  * 
  * Trinity Pipeline:
- *   1. Claude L2 (Parser) - Interprets question → structured parameters
- *   2. EVE L1 (Query) - Deterministic query → verified result
- *   3. Claude L2 (Renderer) - Formats EVE result → readable answer
+ *   1. Claude L2 (Parser) - Interprets question â†’ structured parameters
+ *   2. EVE L1 (Query) - Deterministic query â†’ verified result
+ *   3. Claude L2 (Renderer) - Formats EVE result â†’ readable answer
  * 
  * Claude is ONLY a linguistic adapter - never an expert.
  * All intelligence happens deterministically in EVE.
@@ -39,27 +39,27 @@ function detectLanguage(text) {
   const langPatterns = {
     de: {
       // German-specific words with umlauts and unique patterns
-      words: ['über', 'gibt', 'für', 'und', 'ist', 'bei', 'alle', 'welche', 'berichte', 'nebenwirkungen', 'todesfälle', 'frauen', 'männer', 'wie', 'viele', 'sind', 'die', 'der', 'ein', 'eine', 'es', 'auf', 'zu', 'haben', 'werden', 'können'],
+      words: ['Ã¼ber', 'gibt', 'fÃ¼r', 'und', 'ist', 'bei', 'alle', 'welche', 'berichte', 'nebenwirkungen', 'todesfÃ¤lle', 'frauen', 'mÃ¤nner', 'wie', 'viele', 'sind', 'die', 'der', 'ein', 'eine', 'auf', 'zu', 'haben', 'werden', 'kÃ¶nnen'],
       score: 0
     },
     sv: {
-      // Swedish-specific words with ö, ä, å
-      words: ['för', 'och', 'är', 'hos', 'alla', 'vilka', 'finns', 'det', 'rapporter', 'biverkningar', 'dödsfall', 'kvinnor', 'män', 'äldre', 'hur', 'många', 'vad', 'som', 'på', 'att', 'av', 'kan', 'har', 'ska', 'blir'],
+      // Swedish-specific words with Ã¶, Ã¤, Ã¥
+      words: ['fÃ¶r', 'och', 'Ã¤r', 'hos', 'alla', 'vilka', 'finns', 'det', 'rapporter', 'biverkningar', 'dÃ¶dsfall', 'kvinnor', 'mÃ¤n', 'Ã¤ldre', 'hur', 'mÃ¥nga', 'vad', 'som', 'pÃ¥', 'att', 'av', 'kan', 'har', 'ska', 'blir'],
       score: 0
     },
     fr: {
       // French-specific words with accents
-      words: ['pour', 'sont', 'avec', 'chez', 'tous', 'quels', 'existe', 'rapports', 'effets', 'décès', 'femmes', 'hommes', 'combien', 'les', 'sur', 'dans', 'que', 'qui', 'des', 'il', 'elle', 'ont', 'été', 'être', 'avoir'],
+      words: ['pour', 'sont', 'avec', 'chez', 'tous', 'quels', 'existe', 'rapports', 'effets', 'dÃ©cÃ¨s', 'femmes', 'hommes', 'combien', 'les', 'sur', 'dans', 'que', 'qui', 'des', 'ont', 'Ã©tÃ©', 'Ãªtre', 'avoir'],
       score: 0
     },
     es: {
       // Spanish-specific words
-      words: ['para', 'cuántos', 'sobre', 'hay', 'con', 'los', 'las', 'efectos', 'muertes', 'mujeres', 'hombres', 'qué', 'son', 'tiene', 'están', 'puede', 'estos', 'estas'],
+      words: ['para', 'cuÃ¡ntos', 'sobre', 'hay', 'con', 'los', 'las', 'efectos', 'muertes', 'mujeres', 'hombres', 'quÃ©', 'son', 'tiene', 'estÃ¡n', 'puede', 'estos', 'estas'],
       score: 0
     },
     en: {
-      // English-specific words
-      words: ['for', 'and', 'are', 'there', 'how', 'many', 'what', 'the', 'reports', 'deaths', 'effects', 'women', 'men', 'about', 'show', 'serious', 'common', 'side', 'have', 'been', 'which', 'does', 'this', 'that'],
+      // English-specific words - expanded list with common question words
+      words: ['what', 'are', 'the', 'there', 'how', 'many', 'reports', 'deaths', 'effects', 'women', 'men', 'about', 'show', 'serious', 'common', 'side', 'have', 'been', 'which', 'does', 'this', 'that', 'most', 'any', 'with', 'from', 'were', 'reactions', 'patients', 'elderly', 'young', 'reported', 'adverse', 'events', 'over', 'under', 'between'],
       score: 0
     }
   };
@@ -91,7 +91,7 @@ function detectLanguage(text) {
 }
 
 /**
- * STEP 1: Parse natural language → structured query
+ * STEP 1: Parse natural language â†’ structured query
  * Claude L2 - Parser role ONLY
  */
 async function parseQuestion(question, knownDrugs) {
@@ -119,10 +119,10 @@ Answer: {"drug":"metformin","sex":"Female","age_group":"65-84","serious":null,"r
 Question: "Serious reactions for warfarin?"
 Answer: {"drug":"warfarin","sex":null,"age_group":null,"serious":true,"reaction":null}
 
-Question: "Vilka biverkningar finns för aspirin?" (Swedish)
+Question: "Vilka biverkningar finns fÃ¶r aspirin?" (Swedish)
 Answer: {"drug":"aspirin","sex":null,"age_group":null,"serious":null,"reaction":null}
 
-Question: "Gibt es Todesfälle für metformin?" (German)
+Question: "Gibt es TodesfÃ¤lle fÃ¼r metformin?" (German)
 Answer: {"drug":"metformin","sex":null,"age_group":null,"serious":null,"reaction":"death"}`;
 
   const response = await anthropic.messages.create({
@@ -145,7 +145,7 @@ Answer: {"drug":"metformin","sex":null,"age_group":null,"serious":null,"reaction
 }
 
 /**
- * STEP 3: Render EVE result → natural language
+ * STEP 3: Render EVE result â†’ natural language
  * Claude L2 - Renderer role ONLY
  * 
  * Responds in the SAME language as the question
@@ -166,16 +166,27 @@ async function renderAnswer(eveResult, language, originalQuestion) {
   
   const langName = languageMap[language] || 'English';
   
-  const systemPrompt = `You are a RENDERER for medical data. Your ONLY task is to formulate EVE's verified result as readable text.
+  const systemPrompt = `You are a RENDERER.
 
-RULES:
+CRITICAL LANGUAGE REQUIREMENT:
+- You MUST respond ONLY in ${langName}.
+- Do NOT mix languages.
+- Do NOT explain language choice.
+- If the input question is in ${langName}, the output MUST be in ${langName}.
+- If you cannot comply, respond with: "[LANGUAGE ERROR]".
+
+OUTPUT RULES:
 - Use ONLY data from the EVE result below
-- Do NOT add your own knowledge
-- Give NO recommendations or interpretations
-- Write in ${langName}
+- Use neutral, factual language
+- No medical advice
+- No recommendations
+- No speculation
+- Describe data only
 - Keep the response concise (2-4 sentences)
 - Mention the number of reports and percentages for top reactions
 - End by stating this is reported data, not medical advice
+
+This is a hard requirement, not a preference.
 
 EVE RESULT:
 ${JSON.stringify(eveResult.results, null, 2)}
@@ -223,9 +234,9 @@ async function processNaturalQuery(question, language, guidedQueryFn, knownDrugs
     if (!params.drug) {
       const noMatchMsg = {
         en: 'Could not identify a drug in the question.',
-        sv: 'Kunde inte identifiera något läkemedel i frågan.',
+        sv: 'Kunde inte identifiera nÃ¥got lÃ¤kemedel i frÃ¥gan.',
         de: 'Konnte kein Medikament in der Frage identifizieren.',
-        fr: 'Impossible d\'identifier un médicament dans la question.'
+        fr: 'Impossible d\'identifier un mÃ©dicament dans la question.'
       };
       
       return {
@@ -269,9 +280,9 @@ async function processNaturalQuery(question, language, guidedQueryFn, knownDrugs
     // Disclaimer in user's language
     const disclaimers = {
       en: 'This is descriptive statistics from reported adverse events in FDA FAERS. It does not constitute medical advice and does not imply causality.',
-      sv: 'Detta är deskriptiv statistik baserad på rapporterade biverkningar i FDA FAERS. Det utgör inte medicinsk rådgivning och implicerar inte kausalitet.',
-      de: 'Dies ist deskriptive Statistik aus gemeldeten Nebenwirkungen in FDA FAERS. Sie stellt keine medizinische Beratung dar und impliziert keine Kausalität.',
-      fr: 'Il s\'agit de statistiques descriptives basées sur les effets indésirables signalés dans FDA FAERS. Cela ne constitue pas un avis médical et n\'implique pas de causalité.'
+      sv: 'Detta Ã¤r deskriptiv statistik baserad pÃ¥ rapporterade biverkningar i FDA FAERS. Det utgÃ¶r inte medicinsk rÃ¥dgivning och implicerar inte kausalitet.',
+      de: 'Dies ist deskriptive Statistik aus gemeldeten Nebenwirkungen in FDA FAERS. Sie stellt keine medizinische Beratung dar und impliziert keine KausalitÃ¤t.',
+      fr: 'Il s\'agit de statistiques descriptives basÃ©es sur les effets indÃ©sirables signalÃ©s dans FDA FAERS. Cela ne constitue pas un avis mÃ©dical et n\'implique pas de causalitÃ©.'
     };
 
     // Build final response
@@ -326,3 +337,4 @@ async function processNaturalQuery(question, language, guidedQueryFn, knownDrugs
 }
 
 module.exports = { processNaturalQuery, parseQuestion, renderAnswer, detectLanguage };
+
